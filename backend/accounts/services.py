@@ -32,4 +32,4 @@ def generate_new_jwt(user_id):
         'exp': datetime.datetime.now() + datetime.timedelta(weeks=52),
         'iat': datetime.datetime.now()
     }
-    return jwt.encode(payload, settings.SECRET_KEY, 'SH256')
+    return jwt.encode(payload, settings.SECRET_KEY, 'HS256')

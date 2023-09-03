@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -9,7 +10,7 @@ from backend.utils import transform_dict_keys_to_camel_case
 
 class SignUpView(APIView):
     def post(self, request):
-        serializer = UserSerializer(request.POST)
+        serializer = UserSerializer(data=request.POST)
         if not serializer.is_valid():
             return Response({'success': False})
         user = serializer.save()
@@ -22,7 +23,7 @@ class SignUpView(APIView):
 class SignInView(APIView):
     def post(self, request):
         username, password = request.POST.get('username'), request.POST.get('password')
-        user = authenticate(username, password)
+        user = authenticate(username=username, password=password)
         if user is None:
             return Response({'success': False})
         jwt = generate_new_jwt(user.pk)
@@ -47,4 +48,4 @@ class ProfileView(APIView):
 
 def is_logged_in(request):
     user = get_user_by_jwt(request)
-    return Response(bool(user))
+    return JsonResponse(bool(user), safe=False)
