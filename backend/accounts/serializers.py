@@ -29,7 +29,7 @@ class UserSerializer(serializers.ModelSerializer):
         return True
 
 
-class UserSerializerAllData(UserSerializer):
+class UserAllDataSerializer(UserSerializer):
     class Meta:
         model = User
         fields = ('pk', 'username', 'first_name', 'last_name', 'password',
