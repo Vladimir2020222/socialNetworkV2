@@ -1,3 +1,8 @@
+import datetime
+import os
+from random import choice
+
+from django.core.files.images import ImageFile
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -82,3 +87,13 @@ class Reply(CommentBase):
         related_name='replies',
         related_query_name='reply'
     )
+
+
+def image_upload_to(instance, filename):
+    upload_to = f'posts/images/%Y/%m/%d/{instance.post.pk}/{filename}'
+    return datetime.datetime.now().strftime(upload_to)
+
+
+class Image(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='images')
+    content = models.ImageField(upload_to=image_upload_to)
