@@ -5,7 +5,6 @@ from rest_framework.views import APIView
 
 from accounts.serializers import UserSerializer, UserAllDataSerializer
 from accounts.services import generate_new_jwt, get_user_by_jwt
-from backend.utils import transform_dict_keys_to_camel_case
 
 
 class SignUpView(APIView):
@@ -43,7 +42,7 @@ class ProfileView(APIView):
     def get(self, request):
         user = get_user_by_jwt(request)
         serializer = UserAllDataSerializer(instance=user)
-        return Response(transform_dict_keys_to_camel_case(serializer.data))
+        return Response(serializer.data)
 
 
 def is_logged_in(request):
