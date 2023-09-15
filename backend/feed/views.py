@@ -1,10 +1,14 @@
+from django.contrib.auth import get_user_model
 from django.views.generic.edit import ModelFormMixin
-from rest_framework.generics import ListCreateAPIView, GenericAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, GenericAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 from rest_framework.response import Response
 
 from feed.form import ImageForm
 from feed.models import Post
 from feed.serializers import PostSerializer
+
+
+User = get_user_model()
 
 
 class ListCreatePostView(ListCreateAPIView):
@@ -35,3 +39,12 @@ class AddImageToPostView(GenericAPIView, ModelFormMixin):
         if 'data' in kwargs:
             kwargs['data']['post'] = self.get_object().pk
         return kwargs
+
+
+class UserPostsView(ListAPIView):
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        author = User.objects.get(pk=pk)
+        return Post.objects.filter(author=author)
