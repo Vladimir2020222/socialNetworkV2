@@ -1,7 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.views.generic.edit import ModelFormMixin
-from rest_framework.generics import ListCreateAPIView, GenericAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
+from rest_framework.decorators import action
+from rest_framework.generics import GenericAPIView, ListAPIView
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
 from feed.form import ImageForm
 from feed.models import Post
@@ -9,16 +11,6 @@ from feed.serializers import PostSerializer
 
 
 User = get_user_model()
-
-
-class ListCreatePostView(ListCreateAPIView):
-    serializer_class = PostSerializer
-    queryset = Post.objects
-
-
-class PostView(RetrieveUpdateDestroyAPIView):
-    serializer_class = PostSerializer
-    queryset = Post.objects.all()
 
 
 class AddImageToPostView(GenericAPIView, ModelFormMixin):
@@ -41,10 +33,14 @@ class AddImageToPostView(GenericAPIView, ModelFormMixin):
         return kwargs
 
 
-class UserPostsView(ListAPIView):
+class PostViewSet(ModelViewSet):
+    queryset = Post.objects.all()
     serializer_class = PostSerializer
 
-    def get_queryset(self):
+    @action(methods=['get'], detail=True)
+    def user(self, request, pk):
         pk = self.kwargs['pk']
         author = User.objects.get(pk=pk)
-        return Post.objects.filter(author=author)
+        posts = Post.objects.filter(author=author)
+        serializer = self.get_serializer(instance=posts, many=True)
+        return Response(serializer.data)

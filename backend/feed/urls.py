@@ -1,13 +1,14 @@
-from django.urls import path
-from django.views.decorators.http import require_POST, require_GET
+from django.urls import path, include
+from rest_framework.routers import SimpleRouter
 
-from .views import ListCreatePostView, PostView, AddImageToPostView, UserPostsView
+from .views import PostViewSet, AddImageToPostView
+
+
+post_router = SimpleRouter()
+post_router.register('post', PostViewSet)
 
 
 urlpatterns = [
-    path('addPost', require_POST(ListCreatePostView.as_view())),
-    path('posts', require_GET(ListCreatePostView.as_view())),
-    path('post/<int:pk>', PostView.as_view()),
-    path('add_image_to_post/<int:pk>', AddImageToPostView.as_view()),
-    path('user_posts/<int:pk>', UserPostsView.as_view())
+    path('', include(post_router.urls)),
+    path('add_image_to_post/<int:pk>', AddImageToPostView.as_view())
 ]
