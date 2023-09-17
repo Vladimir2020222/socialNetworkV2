@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from django.core.handlers.wsgi import WSGIRequest
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -43,6 +44,17 @@ class ProfileView(APIView):
         user = get_user_by_jwt(request)
         serializer = UserAllDataSerializer(instance=user)
         return Response(serializer.data)
+
+
+class ChangeUserAva(APIView):
+    def post(self, request: WSGIRequest):
+        file = request.FILES.get('ava')
+        user = get_user_by_jwt(request)
+        if (not file) or (not user):
+            return Response({'success': False})
+        user.ava = file
+        user.save()
+        return Response({'success': True})
 
 
 def is_logged_in(request):
