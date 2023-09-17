@@ -33,7 +33,7 @@ class UserAllDataSerializer(UserSerializer):
     class Meta:
         model = User
         fields = ('pk', 'username', 'first_name', 'last_name', 'password',
-                  'last_login', 'is_superuser', 'email', 'date_joined')
+                  'last_login', 'is_superuser', 'email', 'date_joined', 'ava')
 
     def create(self, validated_data):
         raise NotImplementedError(f'To create User use UserSerializer, not {self.__class__.__name__}')

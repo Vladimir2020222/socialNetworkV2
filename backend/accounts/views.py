@@ -1,11 +1,11 @@
 from django.contrib.auth import authenticate
+from django.core.handlers.wsgi import WSGIRequest
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from accounts.serializers import UserSerializer, UserAllDataSerializer
 from accounts.services import generate_new_jwt, get_user_by_jwt
-from backend.utils import transform_dict_keys_to_camel_case
 
 
 class SignUpView(APIView):
@@ -43,7 +43,18 @@ class ProfileView(APIView):
     def get(self, request):
         user = get_user_by_jwt(request)
         serializer = UserAllDataSerializer(instance=user)
-        return Response(transform_dict_keys_to_camel_case(serializer.data))
+        return Response(serializer.data)
+
+
+class ChangeUserAva(APIView):
+    def post(self, request: WSGIRequest):
+        file = request.FILES.get('ava')
+        user = get_user_by_jwt(request)
+        if (not file) or (not user):
+            return Response({'success': False})
+        user.ava = file
+        user.save()
+        return Response({'success': True})
 
 
 def is_logged_in(request):
