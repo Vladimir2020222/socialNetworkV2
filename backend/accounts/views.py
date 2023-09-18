@@ -10,7 +10,7 @@ from accounts.services import generate_new_jwt, get_user_by_jwt
 
 class SignUpView(APIView):
     def post(self, request):
-        serializer = UserSerializer(data=request.POST)
+        serializer = UserSerializer(data=request.data)
         if not serializer.is_valid():
             return Response({'success': False})
         user = serializer.save()
@@ -22,7 +22,7 @@ class SignUpView(APIView):
 
 class SignInView(APIView):
     def post(self, request):
-        username, password = request.POST.get('username'), request.POST.get('password')
+        username, password = request.data.get('username'), request.data.get('password')
         user = authenticate(username=username, password=password)
         if user is None:
             return Response({'success': False})
@@ -47,7 +47,7 @@ class ProfileView(APIView):
 
 
 class ChangeUserAva(APIView):
-    def post(self, request: WSGIRequest):
+    def post(self, request):
         file = request.FILES.get('ava')
         user = get_user_by_jwt(request)
         if (not file) or (not user):
