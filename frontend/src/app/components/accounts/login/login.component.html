@@ -1,0 +1,15 @@
+<div>
+  <form [formGroup]="loginForm" (submit)="submit(); $event.preventDefault()">
+    <label for="username">
+      username:
+    </label>
+    <input type="text" id="username" formControlName="username">
+
+    <label for="password">
+      password:
+    </label>
+    <input type="password" id="password" formControlName="password">
+
+    <button type="submit">log in</button>
+  </form>
+</div>

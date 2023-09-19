@@ -1,1 +1,5 @@
-<p>profile works!</p>
+<div *ngIf="user">
+  <img [src]="user.ava" alt="ava">
+  <p>{{ user.username }}</p>
+  <p>{{ user.first_name }} {{ user.last_name }}</p>
+</div>

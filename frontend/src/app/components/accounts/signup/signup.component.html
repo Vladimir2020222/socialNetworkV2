@@ -1,0 +1,21 @@
+<div>
+  <form [formGroup]="signupForm" (submit)="submit(passwordVerification.value)">
+    <label for="username">username:</label>
+    <input type="text" id="username" formControlName="username">
+
+    <label for="firstName">first name:</label>
+    <input type="text" id="firstName" formControlName="firstName">
+
+    <label for="lastName">last name:</label>
+    <input type="text" id="lastName" formControlName="lastName">
+
+    <label for="password">password:</label>
+    <input type="password" id="password" formControlName="password">
+    <p *ngIf="!passwordMatches" style="color: red">passwords do not match</p>
+
+    <label for="password">password verification:</label>
+    <input type="password" id="passwordVerification" #passwordVerification>
+
+    <button type="submit">sign up</button>
+  </form>
+</div>

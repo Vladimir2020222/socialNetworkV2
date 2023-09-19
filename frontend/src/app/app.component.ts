@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AccountService} from "./services/account.service";
+import { ActivatedRoute, Data } from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -7,9 +7,15 @@ import {AccountService} from "./services/account.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private accountService: AccountService) {}
+  useMainContentWrapper: boolean = false;
 
-  ngOnInit() {
-    this.accountService.updateIsLoggedIn();
+  constructor(private activatedRoute: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe((data: Data): void => {
+      if (data.hasOwnProperty('useMainContentWrapper')) {
+        this.useMainContentWrapper = data['useMainContentWrapper'];
+      }
+    })
   }
 }
