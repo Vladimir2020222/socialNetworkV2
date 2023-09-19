@@ -46,8 +46,8 @@ class ProfileView(APIView):
 
 
 class ChangeUserAva(APIView):
-    def post(self, request):
-        file = request.FILES.get('ava')
+    def patch(self, request):
+        file = request.data.get('ava')
         user = get_user_by_jwt(request)
         if (not file) or (not user):
             return Response({'success': False})

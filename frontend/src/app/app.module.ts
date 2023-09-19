@@ -10,6 +10,7 @@ import { LoginComponent } from './components/accounts/login/login.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { LogoutComponent } from './components/accounts/logout/logout.component';
 import { SignupComponent } from "./components/accounts/signup/signup.component";
+import { ChangeAvaComponent } from './components/accounts/change-ava/change-ava.component';
 
 
 @NgModule({
@@ -18,7 +19,9 @@ import { SignupComponent } from "./components/accounts/signup/signup.component";
     ProfileComponent,
     LoginComponent,
     LogoutComponent,
-    SignupComponent
+    SignupComponent,
+    ChangeAvaComponent,
+
   ],
   imports: [
     BrowserModule,

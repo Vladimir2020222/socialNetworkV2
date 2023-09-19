@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { BehaviorSubject } from "rxjs";
 import { User } from "../models/user";
+import { serverUrl } from "../constants";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  private serverUrl: string = 'http://127.0.0.1:8000/';
   isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   userProfile: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
 
   constructor(private http: HttpClient) {}
 
   updateIsLoggedIn(): void {
-    this.http.get<boolean>(this.serverUrl + 'accounts/is_authenticated', {withCredentials: true})
+    this.http.get<boolean>(serverUrl + 'accounts/is_authenticated', {withCredentials: true})
       .subscribe((value: boolean): void => {
         this.isLoggedIn.next(value);
       })
@@ -24,20 +24,20 @@ export class AccountService {
     if (!this.isLoggedIn) {
       this.userProfile.next(null);
     }
-    this.http.get<User | null>(this.serverUrl + 'accounts/profile', {withCredentials: true})
+    this.http.get<User | null>(serverUrl + 'accounts/profile', {withCredentials: true})
       .subscribe((value: User | null): void => {
         this.userProfile.next(value);
       })
   }
 
   logout(): void {
-    this.http.post(this.serverUrl + 'accounts/logout', null, {withCredentials: true})
+    this.http.post(serverUrl + 'accounts/logout', null, {withCredentials: true})
       .subscribe(value => {});
   }
 
   login({username, password}: {username: string, password: string}): void {
     this.http.post(
-      this.serverUrl + 'accounts/login',
+      serverUrl + 'accounts/login',
       JSON.stringify({username: username, password: password}),
       {
         withCredentials: true,
@@ -52,7 +52,7 @@ export class AccountService {
       {username: string, password: string, firstName: string, lastName: string}
   ): void {
     this.http.post(
-      this.serverUrl + 'accounts/signup',
+      serverUrl + 'accounts/signup',
       JSON.stringify({username: username, password: password, first_name: firstName, last_name: lastName}),
       {
         withCredentials: true,
@@ -62,5 +62,15 @@ export class AccountService {
       }
     )
       .subscribe(value => {})
+  }
+
+  changeAva(file: File): void {
+    const formData: FormData = new FormData();
+    formData.append('ava', file, file.name);
+    this.http.patch(serverUrl + 'accounts/change_ava',
+      formData,
+      {
+        withCredentials: true,
+      }).subscribe(value => {})
   }
 }

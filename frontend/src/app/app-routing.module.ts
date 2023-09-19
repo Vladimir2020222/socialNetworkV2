@@ -4,6 +4,7 @@ import { ProfileComponent } from "./components/accounts/profile/profile.componen
 import { LoginComponent } from "./components/accounts/login/login.component";
 import { LogoutComponent } from "./components/accounts/logout/logout.component";
 import { SignupComponent } from "./components/accounts/signup/signup.component";
+import { ChangeAvaComponent } from "./components/accounts/change-ava/change-ava.component";
 
 const routes: Routes = [
   {
