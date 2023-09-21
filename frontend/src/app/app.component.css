@@ -1,0 +1,9 @@
+.main-content {
+  margin: 20px;
+  padding: 10px;
+  width: 750px;
+  left: 27%;
+  position: absolute;
+  background-color: #00000000;
+  display: inline-block;
+}
