@@ -1,5 +1,4 @@
 from django.contrib.auth import authenticate
-from django.core.handlers.wsgi import WSGIRequest
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -16,7 +15,7 @@ class SignUpView(APIView):
         user = serializer.save()
         jwt = generate_new_jwt(user.pk)
         response = Response({'success': True})
-        response.set_cookie(key='jwt', value=jwt)
+        response.set_cookie(key='jwt', value=jwt, httponly=True, samesite='none', secure=True)
         return response
 
 
@@ -28,14 +27,14 @@ class SignInView(APIView):
             return Response({'success': False})
         jwt = generate_new_jwt(user.pk)
         response = Response({'success': True})
-        response.set_cookie(key='jwt', value=jwt)
+        response.set_cookie(key='jwt', value=jwt, httponly=True, samesite='none', secure=True)
         return response
 
 
 class SignOutView(APIView):
     def post(self, request):
         response = Response({'success': True})
-        response.delete_cookie(key='jwt')
+        response.delete_cookie(key='jwt', samesite='none')
         return response
 
 
@@ -47,8 +46,8 @@ class ProfileView(APIView):
 
 
 class ChangeUserAva(APIView):
-    def post(self, request):
-        file = request.FILES.get('ava')
+    def patch(self, request):
+        file = request.data.get('ava')
         user = get_user_by_jwt(request)
         if (not file) or (not user):
             return Response({'success': False})
