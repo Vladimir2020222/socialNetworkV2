@@ -1,8 +1,4 @@
 import datetime
-import os
-from random import choice
-
-from django.core.files.images import ImageFile
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -30,27 +26,18 @@ class PostQuerySet(models.QuerySet):
     pass
 
 
-class Post(models.Model):
+class Post(LikeableMixin):
     objects = PostQuerySet.as_manager()
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.TextField(max_length=15000)
-    liked_by = models.ManyToManyField(
-        User, related_name='liked_posts',
-        related_query_name='liked_post')
-
-    disliked_by = models.ManyToManyField(
-        User,
-        related_name='disliked_posts',
-        related_query_name='disliked_post'
-    )
+    viewed_by = models.ManyToManyField(User, related_name='viewed_posts', related_query_name='related_post')
 
 
 class CommentBaseQuerySet(models.QuerySet):
     pass
 
 
-class CommentBase(models.Model):
+class CommentBase(LikeableMixin):
     objects = CommentBaseQuerySet.as_manager()
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -66,7 +53,6 @@ class CommentQuerySet(CommentBaseQuerySet):
 
 class Comment(CommentBase):
     objects = CommentQuerySet.as_manager()
-
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
 
@@ -81,7 +67,8 @@ class Reply(CommentBase):
         Comment,
         on_delete=models.CASCADE,
         related_name='replies',
-        related_query_name='reply')
+        related_query_name='reply'
+    )
     reply_to = models.ManyToManyField(
         'Reply',
         related_name='replies',
