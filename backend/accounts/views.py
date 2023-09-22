@@ -40,14 +40,14 @@ class SignOutView(APIView):
 
 class ProfileView(APIView):
     def get(self, request):
-        serializer = UserAllDataSerializer(request.user)
+        serializer = UserAllDataSerializer(get_user_by_jwt(request))
         return Response(serializer.data)
 
 
 class ChangeUserAva(APIView):
     def patch(self, request):
         file = request.data.get('ava')
-        user = request.user
+        user = get_user_by_jwt(request)
         if (not file) or (not user):
             return Response({'success': False})
         user.ava = file
