@@ -1,0 +1,21 @@
+.form-field {
+  margin: 8px 0 8px 0;
+}
+
+.form-input, .submit-button {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+  padding: 9px;
+  font-size: 16px;
+}
+
+.form-input {
+  width: 208px;
+  border-radius: 10px;
+}
+
+.submit-button {
+  width: 228px;
+  border-radius: 7px;
+}

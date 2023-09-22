@@ -1,0 +1,14 @@
+.ava {
+  display: inline-block;
+}
+
+.user-username-and-name-wrapper {
+  display: inline-block;
+  position: relative;
+  bottom: 140px;
+  width: 300px;
+}
+
+.main-user-info {
+  height: 239px;
+}

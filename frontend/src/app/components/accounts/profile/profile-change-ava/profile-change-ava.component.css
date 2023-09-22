@@ -1,0 +1,16 @@
+.input-wrapper {
+  display: inline;
+
+}
+
+.input-label {
+  display: inline-block;
+  text-align: center;
+  line-height: 40px;
+  width: 108px;
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid rgb(128, 128, 128);
+  background-color: var(--primary-color);
+  font-size: 20px;
+}

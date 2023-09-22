@@ -1,0 +1,15 @@
+.username-wrapper {
+  margin: 10px 10px 10px 10px;
+}
+
+.name-wrapper {
+  margin: 10px 10px 10px -15px;
+}
+
+.username {
+  font-size: 20px;
+}
+
+.name {
+  font-size: 37px;
+}

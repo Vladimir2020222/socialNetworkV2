@@ -1,0 +1,10 @@
+<div *ngIf="user">
+  <div class="main-user-info">
+    <div class="ava">
+      <app-profile-user-ava [user]="user"></app-profile-user-ava>
+    </div>
+    <div class="user-username-and-name-wrapper">
+      <app-profile-username-and-name [user]="user"></app-profile-username-and-name>
+    </div>
+  </div>
+</div>

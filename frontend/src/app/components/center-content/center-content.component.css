@@ -1,0 +1,9 @@
+.center-div-wrapper {
+  position: relative;
+}
+
+.center-div {
+  position: absolute;
+  left: 50%;
+  transform: translatex(-50%);
+}

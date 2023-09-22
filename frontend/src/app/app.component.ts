@@ -47,4 +47,6 @@ export class AppComponent {
       document.documentElement.style.setProperty('--' + key, value);
     })
   }
+
+    protected readonly localStorage = localStorage;
 }

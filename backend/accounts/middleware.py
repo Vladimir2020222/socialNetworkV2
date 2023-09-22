@@ -10,7 +10,7 @@ def get_user(request):
     user = get_user_by_session(request)
     if user.is_authenticated:
         return user
-    user = get_user_by_jwt(request, raise_exception=True) or AnonymousUser()
+    user = get_user_by_jwt(request) or AnonymousUser()
     request._cached_user = user
     return user
 

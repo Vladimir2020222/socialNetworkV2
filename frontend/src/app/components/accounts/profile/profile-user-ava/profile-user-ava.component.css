@@ -1,0 +1,17 @@
+.user-ava {
+  border-radius: 50%;
+  width: 230px;
+  height: 230px;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+}
+
+.profile-change-ava-wrapper {
+  position: absolute;
+  left: 65px;
+  bottom: 0;
+
+}
+
+.outer-element {
+  position: relative;
+}

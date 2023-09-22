@@ -6,4 +6,5 @@
   position: absolute;
   background-color: #00000000;
   display: inline-block;
+  border: 2px solid var(--secondary-color);
 }

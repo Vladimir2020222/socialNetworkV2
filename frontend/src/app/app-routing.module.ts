@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProfileComponent } from "./components/accounts/profile/profile.component";
+import { ProfileComponent } from "./components/accounts/profile/profile/profile.component";
 import { LoginComponent } from "./components/accounts/login/login.component";
 import { LogoutComponent } from "./components/accounts/logout/logout.component";
 import { SignupComponent } from "./components/accounts/signup/signup.component";
-import { ChangeAvaComponent } from "./components/accounts/change-ava/change-ava.component";
 
 const routes: Routes = [
   {

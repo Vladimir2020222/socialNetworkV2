@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from "../../../models/user";
-import { AccountService } from "../../../services/account.service";
-import { serverUrl } from "../../../constants";
+import { User } from "../../../../models/user";
+import { AccountService } from "../../../../services/account.service";
+import { serverUrl } from "../../../../constants";
 
 @Component({
   selector: 'app-profile',

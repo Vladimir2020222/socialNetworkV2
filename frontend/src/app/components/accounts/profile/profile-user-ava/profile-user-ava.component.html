@@ -1,0 +1,12 @@
+<div class="outer-element">
+  <img
+    class="user-ava"
+    [src]="serverUrl + user.ava"
+    alt="ava"
+    (mouseenter)="showChangeButton = true"
+    (mouseleave)="showChangeButton = false;"
+  >
+  <div class=profile-change-ava-wrapper [hidden]="!showChangeButton">
+    <app-profile-change-ava></app-profile-change-ava>
+  </div>
+</div>
