@@ -1,10 +1,9 @@
 from django.contrib.auth import authenticate
-from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from accounts.serializers import UserSerializer, UserAllDataSerializer
-from accounts.services import generate_new_jwt, get_user_by_jwt
+from accounts.services import generate_new_jwt, get_user_by_jwt, subscribe, unsubscribe, is_subscribed_to
 
 
 class SignUpView(APIView):
@@ -44,6 +43,12 @@ class ProfileView(APIView):
         return Response(serializer.data)
 
 
+class IsLoggedIn(APIView):
+    def get(self, request):
+        user = get_user_by_jwt(request)
+        return Response(bool(user))
+
+
 class ChangeUserAva(APIView):
     def patch(self, request):
         file = request.data.get('ava')
@@ -55,6 +60,24 @@ class ChangeUserAva(APIView):
         return Response({'success': True})
 
 
-def is_logged_in(request):
-    user = get_user_by_jwt(request)
-    return JsonResponse(bool(user), safe=False)
+class SubscribeView(APIView):
+    def post(self, request):
+        user = get_user_by_jwt(request)
+        subscribe_to = int(request.data.get('to'))
+        subscribe(user, subscribe_to)
+        return Response({'success': True})
+
+
+class UnsubscribeView(APIView):
+    def post(self, request):
+        user = get_user_by_jwt(request)
+        unsubscribe_from = int(request.data['from'])
+        unsubscribe(user, unsubscribe_from)
+        return Response({'success': True})
+
+
+class IsSubscribedView(APIView):
+    def post(self, request):
+        user = get_user_by_jwt(request)
+        to = int(request.data.get('from'))
+        return Response(is_subscribed_to(user, to))

@@ -12,3 +12,15 @@ def ava_upload_to(instance, filename):
 class User(AbstractUser):
     ava = models.ImageField(upload_to=ava_upload_to)
     subscribers = models.ManyToManyField('User', related_name='subscriptions', related_query_name='subscription')
+
+    def subscribe(self, to):
+        assert self != to, 'it is impossible to subscribe to yourself'
+        if self.is_subscribed_to(to):
+            return
+        to.subscribers.add(self)
+
+    def unsubscribe(self, from_):
+        from_.subscribers.remove(self)
+
+    def is_subscribed_to(self, to):
+        return to.subscribers.contains(self)
