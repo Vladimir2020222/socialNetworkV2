@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import SignUpView, SignOutView, SignInView, ChangeUserAva, ProfileView, IsLoggedIn, \
+from .views import SignUpView, SignOutView, SignInView, ChangeUserAvaView, ProfileView, IsLoggedInView, \
     IsSubscribedView, SubscribeView, UnsubscribeView
 
 
@@ -8,8 +8,8 @@ urlpatterns = [
     path('login', SignInView.as_view(), name='login'),
     path('signup', SignUpView.as_view(), name='signup'),
     path('profile', ProfileView.as_view(), name='profile'),
-    path('change_ava', ChangeUserAva.as_view(), name='change_ava'),
-    path('is_authenticated', IsLoggedIn.as_view(), name='is_authenticated'),
+    path('change_ava', ChangeUserAvaView.as_view(), name='change_ava'),
+    path('is_authenticated', IsLoggedInView.as_view(), name='is_authenticated'),
 
     path('subscribe', SubscribeView.as_view(), name='subscribe'),
     path('unsubscribe', UnsubscribeView.as_view(), name='unsubscribe'),
