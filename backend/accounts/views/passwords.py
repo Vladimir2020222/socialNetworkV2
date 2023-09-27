@@ -1,10 +1,16 @@
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
+from django.core.exceptions import ValidationError
+from django.utils.http import urlsafe_base64_decode
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from accounts.services import get_user_by_jwt
+
+
+User = get_user_model()
 
 
 class PasswordChangeView(APIView):
@@ -43,11 +49,37 @@ class PasswordResetView(APIView):
             "email_template_name": self.email_template_name,
             "subject_template_name": self.subject_template_name,
             "request": self.request,
-            "extra_email_context": self.extra_email_context,
+            "extra_email_context": self.extra_email_context | {'url': request.data.get('url')},
         }
         form.save(**opts)
         return Response()
 
 
 class PasswordResetConfirmView(APIView):
-    pass
+    token_generator = default_token_generator
+
+    def post(self, request, *args, **kwargs):
+        token = request.data.get('token')
+        user = self.get_user(request.data.get('uid'))
+        if not user:
+            return Response({'success': False, 'reason': 'invalid uid64'})
+        if self.token_generator.check_token(user, token):
+            new_password = request.data.get('password')
+            user.set_password(new_password)
+            user.save()
+            return Response({'success': True})
+        else:
+            return Response({'success': False, 'reason': 'invalid token'})
+
+    def get_user(self, uid):
+        try:
+            uid = urlsafe_base64_decode(uid).decode()
+            return User.objects.get(pk=uid)
+        except (
+            TypeError,
+            ValueError,
+            OverflowError,
+            User.DoesNotExist,
+            ValidationError
+        ):
+            return None
