@@ -10,7 +10,7 @@ def ava_upload_to(instance, filename):
 
 
 class User(AbstractUser):
-    ava = models.ImageField(upload_to=ava_upload_to)
+    ava = models.ImageField(upload_to=ava_upload_to, default='users/avas/default.png')
     subscribers = models.ManyToManyField('User', related_name='subscriptions', related_query_name='subscription')
 
     def subscribe(self, to):

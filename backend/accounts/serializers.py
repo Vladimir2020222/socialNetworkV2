@@ -7,9 +7,13 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
+    subscribers_count = serializers.SerializerMethodField(read_only=True)
+    posts_count = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'password')
+        fields = ('pk', 'username', 'first_name', 'last_name', 'password', 'posts_count',
+                  'last_login', 'is_superuser', 'email', 'date_joined', 'ava', 'subscribers_count')
 
     def create(self, validated_data):
         password = validated_data.pop('password')
@@ -27,19 +31,6 @@ class UserSerializer(serializers.ModelSerializer):
                 raise ValidationError('password must be set')
             return False
         return True
-
-
-class UserAllDataSerializer(UserSerializer):
-    subscribers_count = serializers.SerializerMethodField(read_only=True)
-    posts_count = serializers.SerializerMethodField(read_only=True)
-
-    class Meta:
-        model = User
-        fields = ('pk', 'username', 'first_name', 'last_name', 'password', 'posts_count',
-                  'last_login', 'is_superuser', 'email', 'date_joined', 'ava', 'subscribers_count')
-
-    def create(self, validated_data):
-        raise NotImplementedError(f'To create User use UserSerializer, not {self.__class__.__name__}')
 
     def get_subscribers_count(self, user):
         return user.subscribers.count()

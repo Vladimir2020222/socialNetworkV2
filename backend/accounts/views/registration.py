@@ -2,8 +2,8 @@ from django.contrib.auth import authenticate
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from accounts.serializers import UserSerializer, UserAllDataSerializer
-from accounts.services import generate_new_jwt, get_user_by_jwt, subscribe, unsubscribe, is_subscribed_to
+from accounts.serializers import UserSerializer
+from accounts.services import generate_new_jwt, get_user_by_jwt
 
 
 class SignUpAPIView(APIView):
@@ -37,24 +37,7 @@ class SignOutAPIView(APIView):
         return response
 
 
-class ProfileView(APIView):
-    def get(self, request):
-        serializer = UserAllDataSerializer(get_user_by_jwt(request))
-        return Response(serializer.data)
-
-
 class IsLoggedInAPIView(APIView):
     def get(self, request):
         user = get_user_by_jwt(request)
         return Response(bool(user))
-
-
-class ChangeUserAvaAPIView(APIView):
-    def patch(self, request):
-        file = request.data.get('ava')
-        user = get_user_by_jwt(request)
-        if (not file) or (not user):
-            return Response({'success': False})
-        user.ava = file
-        user.save()
-        return Response({'success': True})
