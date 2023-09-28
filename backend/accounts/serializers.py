@@ -26,7 +26,7 @@ class UserSerializer(serializers.ModelSerializer):
         is_valid = super().is_valid(raise_exception=raise_exception)
         if not is_valid:
             return False
-        if self._validated_data['password'] is None:
+        if 'password' in self.validated_data and self._validated_data['password'] is None:
             if raise_exception:
                 raise ValidationError('password must be set')
             return False

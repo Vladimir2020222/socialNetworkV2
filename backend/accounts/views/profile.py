@@ -1,31 +1,15 @@
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import UpdateModelMixin, RetrieveModelMixin
 
 from accounts.serializers import UserSerializer
-from accounts.services import get_user_by_jwt
+from accounts.views.mixins import GetUserMixin
 
 
-class ProfileView(APIView):
+class ProfileAPIView(GetUserMixin, RetrieveModelMixin, UpdateModelMixin, GenericAPIView):
+    serializer_class = UserSerializer
+
     def get(self, request):
-        serializer = UserSerializer(get_user_by_jwt(request))
-        return Response(serializer.data)
+        return self.retrieve(request)
 
-
-class ChangeUserAvaAPIView(APIView):
     def patch(self, request):
-        file = request.data.get('ava')
-        user = get_user_by_jwt(request)
-        if (not file) or (not user):
-            return Response({'success': False})
-        user.ava = file
-        user.save()
-        return Response({'success': True})
-
-
-class ProfileChangeAPIView(APIView):
-    def patch(self, request):
-        user = get_user_by_jwt(request)
-        serializer = UserSerializer(instance=user, data=request.data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+        return self.update(request, partial=True)
