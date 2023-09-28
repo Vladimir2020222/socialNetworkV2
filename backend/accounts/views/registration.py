@@ -1,10 +1,9 @@
 from django.contrib.auth import authenticate
-from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from accounts.serializers import UserSerializer, UserAllDataSerializer
-from accounts.services import generate_new_jwt, get_user_by_jwt
+from accounts.services import generate_new_jwt, get_user_by_jwt, subscribe, unsubscribe, is_subscribed_to
 
 
 class SignUpView(APIView):
@@ -44,7 +43,13 @@ class ProfileView(APIView):
         return Response(serializer.data)
 
 
-class ChangeUserAva(APIView):
+class IsLoggedInView(APIView):
+    def get(self, request):
+        user = get_user_by_jwt(request)
+        return Response(bool(user))
+
+
+class ChangeUserAvaView(APIView):
     def patch(self, request):
         file = request.data.get('ava')
         user = get_user_by_jwt(request)
@@ -53,8 +58,3 @@ class ChangeUserAva(APIView):
         user.ava = file
         user.save()
         return Response({'success': True})
-
-
-def is_logged_in(request):
-    user = get_user_by_jwt(request)
-    return JsonResponse(bool(user), safe=False)

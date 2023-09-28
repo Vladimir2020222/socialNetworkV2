@@ -30,10 +30,19 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserAllDataSerializer(UserSerializer):
+    subscribers_count = serializers.SerializerMethodField(read_only=True)
+    posts_count = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = User
-        fields = ('pk', 'username', 'first_name', 'last_name', 'password',
-                  'last_login', 'is_superuser', 'email', 'date_joined', 'ava')
+        fields = ('pk', 'username', 'first_name', 'last_name', 'password', 'posts_count',
+                  'last_login', 'is_superuser', 'email', 'date_joined', 'ava', 'subscribers_count')
 
     def create(self, validated_data):
         raise NotImplementedError(f'To create User use UserSerializer, not {self.__class__.__name__}')
+
+    def get_subscribers_count(self, user):
+        return user.subscribers.count()
+
+    def get_posts_count(self, user):
+        return user.post_set.count()
