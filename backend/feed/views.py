@@ -13,7 +13,7 @@ from feed.serializers import PostSerializer
 User = get_user_model()
 
 
-class AddImageToPostView(GenericAPIView, ModelFormMixin):
+class AddImageToPostAPIView(GenericAPIView, ModelFormMixin):
     form_class = ImageForm
     queryset = Post.objects.all()
 

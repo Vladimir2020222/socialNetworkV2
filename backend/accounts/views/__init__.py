@@ -1,3 +1,3 @@
-from .registration import ChangeUserAvaView, ProfileView, SignInView, SignOutView, SignUpView, IsLoggedInView
-from .subscriptions import SubscribeView, UnsubscribeView, IsSubscribedView
-from .passwords import PasswordChangeView, PasswordResetView, PasswordResetConfirmView
+from .registration import ChangeUserAvaAPIView, ProfileView, SignInAPIView, SignOutAPIView, SignUpAPIView, IsLoggedInAPIView
+from .subscriptions import SubscribeAPIView, UnsubscribeAPIView, IsSubscribedAPIView
+from .passwords import PasswordChangeAPIView, PasswordResetAPIView, PasswordResetConfirmAPIView

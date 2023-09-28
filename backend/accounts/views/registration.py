@@ -6,7 +6,7 @@ from accounts.serializers import UserSerializer, UserAllDataSerializer
 from accounts.services import generate_new_jwt, get_user_by_jwt, subscribe, unsubscribe, is_subscribed_to
 
 
-class SignUpView(APIView):
+class SignUpAPIView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if not serializer.is_valid():
@@ -18,7 +18,7 @@ class SignUpView(APIView):
         return response
 
 
-class SignInView(APIView):
+class SignInAPIView(APIView):
     def post(self, request):
         username, password = request.data.get('username'), request.data.get('password')
         user = authenticate(username=username, password=password)
@@ -30,7 +30,7 @@ class SignInView(APIView):
         return response
 
 
-class SignOutView(APIView):
+class SignOutAPIView(APIView):
     def post(self, request):
         response = Response({'success': True})
         response.delete_cookie(key='jwt', samesite='none')
@@ -43,13 +43,13 @@ class ProfileView(APIView):
         return Response(serializer.data)
 
 
-class IsLoggedInView(APIView):
+class IsLoggedInAPIView(APIView):
     def get(self, request):
         user = get_user_by_jwt(request)
         return Response(bool(user))
 
 
-class ChangeUserAvaView(APIView):
+class ChangeUserAvaAPIView(APIView):
     def patch(self, request):
         file = request.data.get('ava')
         user = get_user_by_jwt(request)

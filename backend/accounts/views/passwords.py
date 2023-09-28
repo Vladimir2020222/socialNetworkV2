@@ -13,7 +13,7 @@ from accounts.services import get_user_by_jwt
 User = get_user_model()
 
 
-class PasswordChangeView(APIView):
+class PasswordChangeAPIView(APIView):
     def post(self, request):
         user = get_user_by_jwt(request, raise_exception=True)
         old_password = request.data.get('old_password')
@@ -27,7 +27,7 @@ class PasswordChangeView(APIView):
         return Response({'success': True})
 
 
-class PasswordResetView(APIView):
+class PasswordResetAPIView(APIView):
     token_generator = default_token_generator
     from_email = settings.DEFAULT_FROM_EMAIL
     email_template_name = 'accounts/password_reset_email.html'
@@ -55,7 +55,7 @@ class PasswordResetView(APIView):
         return Response()
 
 
-class PasswordResetConfirmView(APIView):
+class PasswordResetConfirmAPIView(APIView):
     token_generator = default_token_generator
 
     def post(self, request, *args, **kwargs):
