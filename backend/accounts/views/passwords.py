@@ -4,16 +4,16 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
 from django.utils.http import urlsafe_base64_decode
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from accounts.services import get_user_by_jwt
-
+from accounts.views.mixins import GetUserMixin
 
 User = get_user_model()
 
 
-class PasswordChangeAPIView(APIView):
+class PasswordChangeAPIView(GetUserMixin, GenericAPIView):
     def post(self, request):
         user = get_user_by_jwt(request, raise_exception=True)
         old_password = request.data.get('old_password')
@@ -27,7 +27,7 @@ class PasswordChangeAPIView(APIView):
         return Response({'success': True})
 
 
-class PasswordResetAPIView(APIView):
+class PasswordResetAPIView(GenericAPIView):
     token_generator = default_token_generator
     from_email = settings.DEFAULT_FROM_EMAIL
     email_template_name = 'accounts/password_reset_email.html'
@@ -55,7 +55,7 @@ class PasswordResetAPIView(APIView):
         return Response()
 
 
-class PasswordResetConfirmAPIView(APIView):
+class PasswordResetConfirmAPIView(GenericAPIView):
     token_generator = default_token_generator
 
     def post(self, request, *args, **kwargs):

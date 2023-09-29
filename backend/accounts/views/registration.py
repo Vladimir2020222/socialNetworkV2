@@ -1,12 +1,14 @@
 from django.contrib.auth import authenticate
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from accounts.serializers import UserSerializer
 from accounts.services import generate_new_jwt, get_user_by_jwt
+from accounts.views.mixins import GetUserMixin
 
 
-class SignUpAPIView(APIView):
+class SignUpAPIView(GenericAPIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if not serializer.is_valid():
@@ -18,7 +20,7 @@ class SignUpAPIView(APIView):
         return response
 
 
-class SignInAPIView(APIView):
+class SignInAPIView(GetUserMixin, GenericAPIView):
     def post(self, request):
         username, password = request.data.get('username'), request.data.get('password')
         user = authenticate(username=username, password=password)
@@ -37,7 +39,6 @@ class SignOutAPIView(APIView):
         return response
 
 
-class IsLoggedInAPIView(APIView):
+class IsLoggedInAPIView(GetUserMixin, GenericAPIView):
     def get(self, request):
-        user = get_user_by_jwt(request)
-        return Response(bool(user))
+        return Response(bool(self.get_object()))
