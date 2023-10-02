@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from "../../../services/account.service";
 import { FormControl, FormGroup } from "@angular/forms";
 import { User } from "../../../models/user";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-change-profile',
@@ -12,7 +13,7 @@ export class ChangeProfileComponent implements OnInit {
   changeProfileForm!: FormGroup;
   user: User | null = null;
 
-  constructor(private accountService: AccountService) {
+  constructor(private accountService: AccountService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -43,5 +44,6 @@ export class ChangeProfileComponent implements OnInit {
   submit(): void {
     const data: Partial<User> = this.changeProfileForm.value;
     this.accountService.changeUserProfile(data);
+    this.router.navigate(['accounts/profile']);
   }
 }

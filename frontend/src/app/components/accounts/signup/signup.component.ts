@@ -30,6 +30,6 @@ export class SignupComponent {
       return;
     }
     this.accountService.signup(data);
-    // this.router.navigate(['accounts/profile']);
+    this.router.navigate(['accounts/profile']);
   }
 }

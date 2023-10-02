@@ -22,6 +22,6 @@ export class LoginComponent implements OnInit {
 
   submit(): void {
     this.accountService.login(this.loginForm.value);
-    // this.router.navigate(['accounts/profile']);
+    this.router.navigate(['accounts/profile']);
   }
 }
