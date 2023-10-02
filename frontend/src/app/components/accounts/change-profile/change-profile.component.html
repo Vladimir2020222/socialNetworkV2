@@ -1,0 +1,31 @@
+<div *ngIf="user">
+  <app-center-content>
+    <form [formGroup]="changeProfileForm" (submit)="submit()">
+      <div class="form-field">
+        <input type="text"
+               class="form-input"
+               formControlName="username"
+               placeholder="username:">
+      </div>
+      <div class="form-field">
+        <input type="text"
+               class="form-input"
+               formControlName="first_name"
+               placeholder="first name:">
+      </div>
+      <div class="form-field">
+        <input type="text"
+               class="form-input"
+               formControlName="last_name"
+               placeholder="last name:">
+      </div>
+      <div class="form-field">
+        <input type="text"
+               class="form-input"
+               formControlName="email"
+               placeholder="email:">
+      </div>
+      <button class="submit-button" type="submit">sign up</button>
+    </form>
+  </app-center-content>
+</div>

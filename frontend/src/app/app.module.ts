@@ -18,6 +18,7 @@ import {
   ProfileChangeAvaComponent
 } from "./components/accounts/profile/profile-change-ava/profile-change-ava.component";
 import { CenterContentComponent } from "./components/center-content/center-content.component";
+import { ChangeProfileComponent } from './components/accounts/change-profile/change-profile.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { CenterContentComponent } from "./components/center-content/center-conte
     ProfileChangeAvaComponent,
     ProfileUsernameAndNameComponent,
     CenterContentComponent,
+    ChangeProfileComponent,
   ],
   imports: [
     BrowserModule,
