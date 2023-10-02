@@ -26,18 +26,21 @@ class SignUpAPIView(RetrieveModelMixin, GenericAPIView):
         return self.user
 
 
-class SignInAPIView(GetUserMixin, RetrieveModelMixin, GenericAPIView):
+class SignInAPIView(RetrieveModelMixin, GenericAPIView):
     serializer_class = UserSerializer
 
     def post(self, request):
         username, password = request.data.get('username'), request.data.get('password')
-        user = authenticate(username=username, password=password)
+        user = self.user = authenticate(username=username, password=password)
         if user is None:
             return Response({'success': False})
         jwt = generate_new_jwt(user.pk)
         response = self.retrieve(request)
         response.set_cookie(key='jwt', value=jwt, httponly=True, samesite='none', secure=True)
         return response
+
+    def get_object(self):
+        return self.user
 
 
 class SignOutAPIView(APIView):
