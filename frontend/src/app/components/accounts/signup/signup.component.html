@@ -1,16 +1,16 @@
 <app-center-content>
   <form [formGroup]="signupForm" (submit)="submit(passwordVerification.value)">
     <div class="form-field">
-      <input class="form-input" type="text" id="username" formControlName="username" placeholder="username:">
+      <input class="form-input" type="text" formControlName="username" placeholder="username:">
     </div>
-      <input class="form-input" type="text" id="firstName" formControlName="firstName" placeholder="first name:">
+      <input class="form-input" type="text" formControlName="firstName" placeholder="first name:">
     <div class="form-field">
-      <input class="form-input" type="text" id="lastName" formControlName="lastName" placeholder="last name:">
+      <input class="form-input" type="text" formControlName="lastName" placeholder="last name:">
     </div>
-      <input class="form-input" type="password" id="password" formControlName="password" placeholder="password:">
+      <input class="form-input" type="password" formControlName="password" placeholder="password:">
       <p *ngIf="!passwordMatches" style="color: red">passwords do not match</p>
     <div class="form-field">
-      <input class="form-input" type="password" id="passwordVerification" #passwordVerification placeholder="password verification:">
+      <input class="form-input" type="password" #passwordVerification placeholder="password verification:">
     </div>
     <button class="submit-button" type="submit">sign up</button>
   </form>
