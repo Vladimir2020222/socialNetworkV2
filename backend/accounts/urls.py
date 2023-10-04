@@ -8,6 +8,8 @@ urlpatterns = [
     path('is_authenticated', IsLoggedInAPIView.as_view(), name='is_authenticated'),
 
     path('profile', ProfileAPIView.as_view(), name='profile'),
+    path('change_email', ChangeEmailAPIView.as_view(), name='change_email'),
+    path('change_email_confirm', ConfirmChangeEmailAPIView.as_view(), name='change_email_confirm'),
 
     path('subscribe', SubscribeAPIView.as_view(), name='subscribe'),
     path('unsubscribe', UnsubscribeAPIView.as_view(), name='unsubscribe'),

@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
@@ -14,6 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('pk', 'username', 'first_name', 'last_name', 'password', 'posts_count',
                   'last_login', 'is_superuser', 'email', 'date_joined', 'ava', 'subscribers_count')
+        read_only_fields = ['email']
 
     def create(self, validated_data):
         password = validated_data.pop('password')

@@ -49,7 +49,7 @@ class PasswordResetAPIView(GenericAPIView):
             "email_template_name": self.email_template_name,
             "subject_template_name": self.subject_template_name,
             "request": self.request,
-            "extra_email_context": self.extra_email_context | {'url': request.data.get('url')},
+            "extra_email_context": self.extra_email_context | {'url': request.data.get('confirm_reset_password_url')},
         }
         form.save(**opts)
         return Response()
