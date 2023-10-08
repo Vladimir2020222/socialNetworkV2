@@ -111,10 +111,52 @@ export class AccountService {
   changeAva(file: File): void {
     const formData: FormData = new FormData();
     formData.append('ava', file, file.name);
-    this.http.patch<User>(serverUrl + 'accounts/profile',
+    this.http.patch<User>(
+      serverUrl + 'accounts/profile',
       formData,
       {
         withCredentials: true
       }).subscribe(user => {this.userProfile.next(user)})
+  }
+
+  changePassword(data: {old_password: string, new_password: string}): void {
+    this.http.post<User>(
+      serverUrl + 'accounts/change_password',
+      JSON.stringify(data),
+      {
+        withCredentials: true,
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      }
+    ).subscribe(value => {})
+  }
+
+  resetPassword(email: string): void {
+    this.http.post(
+      serverUrl + 'accounts/password_reset',
+      JSON.stringify({
+        email: email,
+        confirm_reset_password_url: 'http://localhost:4200/accounts/reset_password_confirm'
+      }),
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      }
+    ).subscribe(value => {})
+  }
+
+  confirmResetPassword(token: string, password: string, uid: string): void {
+    this.http.post(
+      serverUrl + 'accounts/password_reset_confirm',
+      JSON.stringify({token: token, password: password, uid: uid}),
+      {
+        withCredentials: true,
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      }
+    ).subscribe(value => {})
   }
 }

@@ -6,6 +6,11 @@ import { LogoutComponent } from "./components/accounts/logout/logout.component";
 import { SignupComponent } from "./components/accounts/signup/signup.component";
 import { ChangeProfileComponent } from "./components/accounts/change-profile/change-profile.component";
 import { ConfirmChangeEmailComponent } from "./components/accounts/confirm-change-email/confirm-change-email.component";
+import { ChangePasswordComponent } from "./components/accounts/passwords/change-password/change-password.component";
+import { ResetPasswordComponent } from "./components/accounts/passwords/reset-password/reset-password.component";
+import {
+  ResetPasswordConfirmComponent
+} from "./components/accounts/passwords/reset-password-confirm/reset-password-confirm.component";
 
 const routes: Routes = [
   {
@@ -46,6 +51,27 @@ const routes: Routes = [
   {
     path: 'accounts/confirm_change_email/:token',
     component: ConfirmChangeEmailComponent,
+  },
+  {
+    path: 'accounts/change_password',
+    component: ChangePasswordComponent,
+    data: {
+      useMainContentWrapper: true
+    }
+  },
+  {
+    path: 'accounts/reset_password',
+    component: ResetPasswordComponent,
+    data: {
+      useMainContentWrapper: true
+    }
+  },
+  {
+    path: 'accounts/reset_password_confirm/:uid/:token',
+    component: ResetPasswordConfirmComponent,
+    data: {
+      useMainContentWrapper: true
+    }
   }
 ];
 

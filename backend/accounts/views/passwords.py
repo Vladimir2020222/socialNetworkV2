@@ -32,7 +32,7 @@ class PasswordResetAPIView(GenericAPIView):
     from_email = settings.DEFAULT_FROM_EMAIL
     email_template_name = 'accounts/password_reset_email.html'
     subject_template_name = 'accounts/password_reset_subject.txt'
-    extra_email_context = None
+    extra_email_context = {}
 
     def post(self, request):
         email = request.data.get('email')

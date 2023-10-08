@@ -7,7 +7,7 @@ import { ProfileComponent } from './components/accounts/profile/profile/profile.
 import { HttpClientModule } from "@angular/common/http";
 import { NgOptimizedImage } from "@angular/common";
 import { LoginComponent } from './components/accounts/login/login.component';
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { LogoutComponent } from './components/accounts/logout/logout.component';
 import { SignupComponent } from "./components/accounts/signup/signup.component";
 import { ProfileUserAvaComponent } from './components/accounts/profile/profile-user-ava/profile-user-ava.component';
@@ -20,6 +20,9 @@ import {
 import { CenterContentComponent } from "./components/center-content/center-content.component";
 import { ChangeProfileComponent } from './components/accounts/change-profile/change-profile.component';
 import { ConfirmChangeEmailComponent } from './components/accounts/confirm-change-email/confirm-change-email.component';
+import { ChangePasswordComponent } from './components/accounts/passwords/change-password/change-password.component';
+import { ResetPasswordComponent } from './components/accounts/passwords/reset-password/reset-password.component';
+import { ResetPasswordConfirmComponent } from './components/accounts/passwords/reset-password-confirm/reset-password-confirm.component';
 
 
 @NgModule({
@@ -35,14 +38,18 @@ import { ConfirmChangeEmailComponent } from './components/accounts/confirm-chang
     CenterContentComponent,
     ChangeProfileComponent,
     ConfirmChangeEmailComponent,
+    ChangePasswordComponent,
+    ResetPasswordComponent,
+    ResetPasswordConfirmComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    NgOptimizedImage,
-    ReactiveFormsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        NgOptimizedImage,
+        ReactiveFormsModule,
+        FormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
