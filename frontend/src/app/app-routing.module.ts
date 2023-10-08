@@ -5,6 +5,7 @@ import { LoginComponent } from "./components/accounts/login/login.component";
 import { LogoutComponent } from "./components/accounts/logout/logout.component";
 import { SignupComponent } from "./components/accounts/signup/signup.component";
 import { ChangeProfileComponent } from "./components/accounts/change-profile/change-profile.component";
+import { ConfirmChangeEmailComponent } from "./components/accounts/confirm-change-email/confirm-change-email.component";
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
     data: {
       useMainContentWrapper: true
     }
+  },
+  {
+    path: 'accounts/confirm_change_email/:token',
+    component: ConfirmChangeEmailComponent,
   }
 ];
 

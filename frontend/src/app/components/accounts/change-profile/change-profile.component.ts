@@ -43,6 +43,9 @@ export class ChangeProfileComponent implements OnInit {
 
   submit(): void {
     const data: Partial<User> = this.changeProfileForm.value;
+    if (this.user?.email !== this.changeProfileForm.value['email']) {
+      this.accountService.changeEmail(this.changeProfileForm.value['email'])
+    }
     this.accountService.changeUserProfile(data);
     this.router.navigate(['accounts/profile']);
   }

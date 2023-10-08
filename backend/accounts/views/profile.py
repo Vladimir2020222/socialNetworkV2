@@ -3,8 +3,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.template import loader
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import UpdateModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
@@ -57,7 +55,6 @@ class ConfirmChangeEmailAPIView(RetrieveModelMixin, GenericAPIView):
     serializer_class = UserSerializer
 
     def post(self, request):
-        print(request.data)
         user, email = get_user_and_email_by_jwt(request.data.get('token').encode())
         self.user = user
         user.email = email

@@ -76,6 +76,38 @@ export class AccountService {
     ).subscribe(user => {this.userProfile.next(user)})
   }
 
+  changeEmail(email: string): void {
+    this.http.post(
+      serverUrl + 'accounts/change_email',
+      JSON.stringify({
+        email: email,
+        site_name: 'socialNetwork',
+        confirm_email_url: 'http://localhost:4200/accounts/confirm_change_email'
+      }),
+      {
+        withCredentials: true,
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      }
+    ).subscribe(value => {})
+  }
+
+  confirmChangeEmail(token: string): void {
+    this.http.post<User>(
+      serverUrl + 'accounts/change_email_confirm',
+      JSON.stringify({
+        token: token
+      }),
+      {
+        withCredentials: true,
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      }
+    ).subscribe(user => {this.userProfile.next(user)})
+  }
+
   changeAva(file: File): void {
     const formData: FormData = new FormData();
     formData.append('ava', file, file.name);
