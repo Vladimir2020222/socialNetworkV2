@@ -7,7 +7,6 @@ from django.utils.http import urlsafe_base64_decode
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
-from accounts.services import get_user_by_jwt
 from accounts.views.mixins import GetUserMixin
 
 User = get_user_model()
@@ -15,7 +14,7 @@ User = get_user_model()
 
 class PasswordChangeAPIView(GetUserMixin, GenericAPIView):
     def post(self, request):
-        user = get_user_by_jwt(request, raise_exception=True)
+        user = request.user
         old_password = request.data.get('old_password')
         new_password = request.data.get('new_password')
         if not user.check_password(old_password):

@@ -145,3 +145,10 @@ DEFAULT_FROM_EMAIL = os.environ.get('default_from_email')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'accounts.authentication.JWTCOOKIESAuthentication',
+    ]
+}

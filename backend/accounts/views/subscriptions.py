@@ -1,8 +1,7 @@
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
-from accounts.services import get_user_by_jwt, subscribe, unsubscribe, is_subscribed_to
+from accounts.services import subscribe, unsubscribe, is_subscribed_to
 from accounts.views.mixins import GetUserMixin
 
 
