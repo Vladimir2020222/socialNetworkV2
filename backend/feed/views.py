@@ -1,39 +1,28 @@
 from django.contrib.auth import get_user_model
 from django.db.models import Subquery
-from django.views.generic.edit import ModelFormMixin
-from rest_framework.decorators import permission_classes
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, UpdateModelMixin, RetrieveModelMixin
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
 from accounts.views.mixins import GetUserMixin
-from feed.form import ImageForm
-from feed.models import Post
+from feed.models import Post, Image
 from feed.serializers import PostSerializer
 
 
 User = get_user_model()
 
 
-class AddImageToPostAPIView(GenericAPIView, ModelFormMixin):
-    form_class = ImageForm
+class AddImagesToPostAPIView(GenericAPIView):
     queryset = Post.objects.all()
 
-    def post(self, request):
-        form = self.get_form()
-        if form.is_valid():
-            self.form_valid(form)
-            return Response({'success': True})
-        else:
-            self.form_invalid(form)
-            return Response({'success': False})
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        if 'data' in kwargs:
-            kwargs['data']['post'] = self.get_object().pk
-        return kwargs
+    def post(self, request, pk):
+        post = Post.objects.get(pk=pk)
+        if not request.user == post.author:
+            return Response('You can not add images to this post because you are not ist author')
+        for file in request.FILES:
+            Image.objects.create(post=post, content=file)
+        return Response()
 
 
 class AddPostToViewedAPIView(GetUserMixin, GenericAPIView):
