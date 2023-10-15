@@ -10,6 +10,11 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = '__all__'
         read_only_fields = ['liked_by', 'disliked_by']
+        extra_kwargs = {
+            'author': {
+                'default': serializers.CurrentUserDefault()
+            }
+        }
 
     def get_images(self, obj):
         images = obj.images.values('content')

@@ -1,11 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.db.models import Subquery
 from django.views.generic.edit import ModelFormMixin
-from rest_framework.decorators import action
+from rest_framework.decorators import permission_classes
 from rest_framework.generics import GenericAPIView
-from rest_framework.pagination import PageNumberPagination
+from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, UpdateModelMixin, RetrieveModelMixin
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
 
 from accounts.views.mixins import GetUserMixin
 from feed.form import ImageForm
@@ -72,7 +72,37 @@ class GetAdditionalPostsForFeedAPIView(GetUserMixin, GenericAPIView):
         return Response(serializer.data)
 
 
-class PostViewSet(ModelViewSet):
-    queryset = Post.objects.all()
+class PostAPIView(CreateModelMixin,
+                  DestroyModelMixin,
+                  UpdateModelMixin,
+                  RetrieveModelMixin,
+                  GenericAPIView):
     serializer_class = PostSerializer
-    pagination_class = PageNumberPagination
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+
+    def get(self, request, pk):
+        return self.retrieve(request)
+
+    def post(self, request):
+        return self.create(request)
+
+    def delete(self, request, pk):
+        user = request.user
+        self.post_ = self.get_object()
+        if self.post_.author == user:
+            self.destroy(request)
+        else:
+            return Response('You can not delete this post because you are not its author')
+
+    def patch(self, request, pk):
+        user = request.user
+        self.post_ = self.get_object()
+        if self.post_.authour == user:
+            self.partial_update(request)
+        else:
+            return Response('You can not edit this post because you are not its author')
+
+    def get_object(self):
+        if hasattr(self, 'post_'):
+            return self.post_
+        return Post.objects.get(pk=self.kwargs.get('pk'))
