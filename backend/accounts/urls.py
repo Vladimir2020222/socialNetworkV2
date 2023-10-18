@@ -17,5 +17,7 @@ urlpatterns = [
 
     path('change_password', PasswordChangeAPIView.as_view(), name='password_change_view'),
     path('password_reset', PasswordResetAPIView.as_view(), name='password_reset'),
-    path('password_reset_confirm', PasswordResetConfirmAPIView.as_view(), name='password_reset_confirm')
+    path('password_reset_confirm', PasswordResetConfirmAPIView.as_view(), name='password_reset_confirm'),
+
+    path('user/<int:pk>', UserAPIView.as_view(), name='user')
 ]
