@@ -9,6 +9,13 @@
   width: 300px;
 }
 
+.user-stats-wrapper {
+  display: inline-block;
+  position: relative;
+  right: 300px;
+}
+
 .main-user-info {
   height: 239px;
 }
+

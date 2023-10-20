@@ -23,6 +23,9 @@ import { ConfirmChangeEmailComponent } from './components/accounts/confirm-chang
 import { ChangePasswordComponent } from './components/accounts/passwords/change-password/change-password.component';
 import { ResetPasswordComponent } from './components/accounts/passwords/reset-password/reset-password.component';
 import { ResetPasswordConfirmComponent } from './components/accounts/passwords/reset-password-confirm/reset-password-confirm.component';
+import {
+  ProfileUserStatsComponent
+} from "./components/accounts/profile/profile-user-stats/profile-user-stats.component";
 
 
 @NgModule({
@@ -41,6 +44,7 @@ import { ResetPasswordConfirmComponent } from './components/accounts/passwords/r
     ChangePasswordComponent,
     ResetPasswordComponent,
     ResetPasswordConfirmComponent,
+    ProfileUserStatsComponent,
   ],
     imports: [
         BrowserModule,
