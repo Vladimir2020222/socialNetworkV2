@@ -1,0 +1,7 @@
+<button
+  [ngClass]="{'subscribed': isSubscribed, 'unsubscribed': !isSubscribed}"
+  type="button"
+  (click)="click()"
+>
+  {{ isSubscribed? 'unsubscribe' : 'subscribe' }}
+</button>

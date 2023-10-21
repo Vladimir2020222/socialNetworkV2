@@ -11,11 +11,20 @@ import { ResetPasswordComponent } from "./components/accounts/passwords/reset-pa
 import {
   ResetPasswordConfirmComponent
 } from "./components/accounts/passwords/reset-password-confirm/reset-password-confirm.component";
+import { CurrentUserProfileComponent } from "./components/accounts/current-user-profile/current-user-profile.component";
+import { UserProfileComponent } from "./components/accounts/user-profile/user-profile.component";
 
 const routes: Routes = [
   {
     path: 'accounts/profile',
-    component: ProfileComponent,
+    component: CurrentUserProfileComponent,
+    data: {
+      useMainContentWrapper: true
+    }
+  },
+  {
+    path: 'user/:id',
+    component: UserProfileComponent,
     data: {
       useMainContentWrapper: true
     }

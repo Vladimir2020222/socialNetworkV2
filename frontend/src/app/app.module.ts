@@ -26,6 +26,9 @@ import { ResetPasswordConfirmComponent } from './components/accounts/passwords/r
 import {
   ProfileUserStatsComponent
 } from "./components/accounts/profile/profile-user-stats/profile-user-stats.component";
+import { ProfileSubscribeButtonComponent } from './components/accounts/profile/profile-subscribe-button/profile-subscribe-button.component';
+import { CurrentUserProfileComponent } from './components/accounts/current-user-profile/current-user-profile.component';
+import { UserProfileComponent } from './components/accounts/user-profile/user-profile.component';
 
 
 @NgModule({
@@ -45,6 +48,9 @@ import {
     ResetPasswordComponent,
     ResetPasswordConfirmComponent,
     ProfileUserStatsComponent,
+    ProfileSubscribeButtonComponent,
+    CurrentUserProfileComponent,
+    UserProfileComponent,
   ],
     imports: [
         BrowserModule,

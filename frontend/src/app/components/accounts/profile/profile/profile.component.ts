@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { User } from "../../../../models/user";
 import { AccountService } from "../../../../services/account.service";
-import { serverUrl } from "../../../../constants";
 
 @Component({
   selector: 'app-profile',
@@ -9,17 +8,27 @@ import { serverUrl } from "../../../../constants";
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  protected readonly serverUrl: string = serverUrl;
-  user: User | null = null;
-
+  @Input() user!: User | null;
+  userIsCurrentUser: boolean = true;  // if it would be false by default, ProfileSubscribeButtonComponents would send
+                                      // redundant request to server to check if current user is subscribed to this user
   constructor(private accountService: AccountService) {}
 
   ngOnInit(): void {
-    if (!this.accountService.userProfile.value) {
-      this.accountService.updateUserProfile();
-    }
-    this.accountService.userProfile.subscribe((value: User | null): void => {
-      this.user = value;
-    })
+    this.accountService.userIsInitialized
+      .subscribe(value => {
+        if (value) {
+          this.setUserIsCurrentUser();
+        }
+      })
+  }
+
+  setUserIsCurrentUser(): void {
+    this.accountService.userProfile
+      .subscribe((currentUserProfile: User | null): void => {
+        if (currentUserProfile && this.user) {
+          // console.log(currentUserProfile, this.user)
+          this.userIsCurrentUser = currentUserProfile?.pk === this.user.pk
+        } // else element is not necessary because the userIsCurrentUser field is already false by default
+      })
   }
 }
