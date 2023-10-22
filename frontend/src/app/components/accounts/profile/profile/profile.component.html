@@ -9,9 +9,8 @@
     <div class="user-stats-wrapper">
       <app-profile-user-stats [user]="user"></app-profile-user-stats>
     </div>
-    {{ userIsCurrentUser }}
     <div class="subscribe-button" *ngIf="!userIsCurrentUser">
-      <app-profile-subscribe-button></app-profile-subscribe-button>
+      <app-profile-subscribe-button [user]="user"></app-profile-subscribe-button>
     </div>
   </div>
 </div>

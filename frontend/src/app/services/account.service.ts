@@ -184,7 +184,7 @@ export class AccountService {
 
   isSubscribedTo(to: number): Observable<boolean> {
     return this.http.post<boolean>(
-      serverUrl + 'accounts/isSubscribedTo',
+      serverUrl + 'accounts/is_subscribed',
       JSON.stringify({to: to}),
       {
         withCredentials: true,

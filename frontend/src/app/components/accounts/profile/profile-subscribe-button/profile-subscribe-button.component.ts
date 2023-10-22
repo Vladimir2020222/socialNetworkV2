@@ -16,7 +16,6 @@ export class ProfileSubscribeButtonComponent {
   ngOnInit(): void {
     this.accountService.userProfile
       .subscribe((currentUser: User | null): void => {
-        console.log(currentUser, this.user, "THIS IS IT BRO");
         if (currentUser?.pk !== this.user.pk) {
           this.accountService.isSubscribedTo(this.user.pk)
             .subscribe((isSubscribed: boolean): void => {
