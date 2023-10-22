@@ -4,18 +4,26 @@
 
 .user-username-and-name-wrapper {
   display: inline-block;
-  position: relative;
-  bottom: 140px;
   width: 300px;
+  margin: 10px 0 10px 0;
 }
 
 .user-stats-wrapper {
   display: inline-block;
-  position: relative;
-  right: 300px;
 }
 
 .main-user-info {
+  margin-left: 20px;
+  display: inline-block;
+  width: 350px;
+}
+
+.user-info {
   height: 239px;
 }
 
+.subscribe-button-wrapper {
+  display: inline-block;
+  margin: 10px 0 10px 0;
+  height: 40px;
+}
