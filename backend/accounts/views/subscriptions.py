@@ -24,5 +24,5 @@ class UnsubscribeAPIView(GetUserMixin, GenericAPIView):
 class IsSubscribedAPIView(GetUserMixin, GenericAPIView):
     def post(self, request):
         user = self.get_object()
-        to = int(request.data.get('from'))
+        to = int(request.data.get('to'))
         return Response(is_subscribed_to(user, to))
