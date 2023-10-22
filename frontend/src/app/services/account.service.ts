@@ -205,7 +205,7 @@ export class AccountService {
           'Content-Type': 'application/json'
         })
       }
-    )
+    ).subscribe(value => {})
   }
 
   unsubscribe(from: number): void {
@@ -218,7 +218,7 @@ export class AccountService {
           'Content-Type': 'application/json'
         })
       }
-    )
+    ).subscribe(value => {})
   }
 
   getUserById(id: number): Observable<User | null> {
