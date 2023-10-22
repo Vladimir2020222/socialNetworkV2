@@ -26,6 +26,9 @@ export class ProfileSubscribeButtonComponent {
   }
 
   click(): void {
+    if (this.isSubscribed === null) {
+      return
+    }
     if (this.isSubscribed) {
       this.accountService.unsubscribe(this.user.pk)
     } else {

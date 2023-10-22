@@ -7,9 +7,11 @@
       <div class="user-username-and-name-wrapper">
         <app-profile-username-and-name [user]="user"></app-profile-username-and-name>
       </div>
-      <div class="subscribe-button-wrapper" *ngIf="!userIsCurrentUser">
+      <div class="subscribe-button-wrapper" *ngIf="!userIsCurrentUser; else sameuser">
         <app-profile-subscribe-button [user]="user"></app-profile-subscribe-button>
-      </div><br>
+      </div>
+      <ng-template #sameuser><div style="height: 40px;"></div></ng-template>
+      <br>
       <div class="user-stats-wrapper">
         <app-profile-user-stats [user]="user"></app-profile-user-stats>
       </div>
