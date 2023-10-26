@@ -3,4 +3,5 @@ export interface Post {
   liked_by: number[],
   disliked_by: number[],
   author: number,
+  images: string[],
 }
