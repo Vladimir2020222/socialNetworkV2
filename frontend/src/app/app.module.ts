@@ -29,6 +29,8 @@ import {
 import { ProfileSubscribeButtonComponent } from './components/accounts/profile/profile-subscribe-button/profile-subscribe-button.component';
 import { CurrentUserProfileComponent } from './components/accounts/current-user-profile/current-user-profile.component';
 import { UserProfileComponent } from './components/accounts/user-profile/user-profile.component';
+import { PostsComponent } from './components/posts/posts/posts.component';
+import { PostComponent } from './components/posts/post/post.component';
 
 
 @NgModule({
@@ -51,6 +53,8 @@ import { UserProfileComponent } from './components/accounts/user-profile/user-pr
     ProfileSubscribeButtonComponent,
     CurrentUserProfileComponent,
     UserProfileComponent,
+    PostsComponent,
+    PostComponent,
   ],
     imports: [
         BrowserModule,

@@ -13,6 +13,7 @@ import {
 } from "./components/accounts/passwords/reset-password-confirm/reset-password-confirm.component";
 import { CurrentUserProfileComponent } from "./components/accounts/current-user-profile/current-user-profile.component";
 import { UserProfileComponent } from "./components/accounts/user-profile/user-profile.component";
+import { PostsComponent } from "./components/posts/posts/posts.component";
 
 const routes: Routes = [
   {
@@ -78,6 +79,13 @@ const routes: Routes = [
   {
     path: 'accounts/reset_password_confirm/:uid/:token',
     component: ResetPasswordConfirmComponent,
+    data: {
+      useMainContentWrapper: true
+    }
+  },
+  {
+    path: 'feed',
+    component: PostsComponent,
     data: {
       useMainContentWrapper: true
     }
