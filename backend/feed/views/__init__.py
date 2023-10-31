@@ -1,4 +1,5 @@
-from .posts import PostAPIView, AddPostToViewedAPIView, GetAdditionalPostsForFeedAPIView, AddImagesToPostAPIView
+from .posts import PostAPIView, AddPostToViewedAPIView, GetAdditionalPostsForFeedAPIView, AddImagesToPostAPIView, \
+    PostLikedByAPIView, PostDislikedByAPIView
 from .likes import LikePostAIPView, RemoveLikeAPIView, RemoveDislikeAPIView, DislikePostAPIView
 
 
@@ -7,6 +8,8 @@ __all__ = [
     'AddImagesToPostAPIView',
     'AddPostToViewedAPIView',
     'GetAdditionalPostsForFeedAPIView',
+    'PostLikedByAPIView',
+    'PostDislikedByAPIView',
     'LikePostAIPView',
     'RemoveLikeAPIView',
     'DislikePostAPIView',
