@@ -19,7 +19,7 @@ class AddImagesToPostAPIView(GenericAPIView):
     def post(self, request, pk):
         post = Post.objects.get(pk=pk)
         if not request.user == post.author:
-            return Response('You can not add images to this post because you are not ist author')
+            return Response('You can not add images to this post because you are not its author')
         for file in request.FILES:
             Image.objects.create(post=post, content=file)
         return Response()
@@ -28,7 +28,7 @@ class AddImagesToPostAPIView(GenericAPIView):
 class AddPostToViewedAPIView(GetUserMixin, GenericAPIView):
     def get(self, request):
         user = self.get_object()
-        pk = request.GET.get('post_pk')
+        pk = request.GET.get('pk')
         if user:
             post = Post.objects.get(pk=pk)
             post.viewed_by.add(user)
@@ -95,3 +95,19 @@ class PostAPIView(CreateModelMixin,
         if hasattr(self, 'post_'):
             return self.post_
         return Post.objects.get(pk=self.kwargs.get('pk'))
+
+
+class PostLikedByAPIView(GenericAPIView):
+    def get(self, request):
+        pk = request.GET.get('pk')
+        post = Post.objects.get(pk=pk)
+        liked_by = post.liked_by.values_list('pk', flat=True)
+        return Response(liked_by)
+
+
+class PostDislikedByAPIView(GenericAPIView):
+    def get(self, request):
+        pk = request.GET.get('pk')
+        post = Post.objects.get(pk=pk)
+        disliked_by = post.dsiliked_by.values_list('pk', flat=True)
+        return Response(disliked_by)

@@ -9,7 +9,7 @@ class BaseRatePostAPIView(GenericAPIView):
     queryset = Post.objects.all()
     function = None
 
-    def post(self, request, pk):
+    def get(self, request, pk):
         assert self.function, 'base class must provide function to change user\' s rate'
         post = self.get_object()
         self.function(request.user, post)
