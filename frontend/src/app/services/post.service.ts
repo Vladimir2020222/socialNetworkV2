@@ -32,13 +32,4 @@ export class PostService {
       }
     );
   }
-
-  getPostRate(pk: number): Observable<PostRateEnum> {
-    return this.http.get<PostRateEnum>(
-      serverUrl + `feed/get_post_rate/${pk}`,
-      {
-        withCredentials: true
-      }
-    );
-  }
 }

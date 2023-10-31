@@ -14,16 +14,7 @@ export class PostComponent implements OnInit {
   constructor(private postService: PostService) {}
 
   ngOnInit(): void {
-    this.setPostRate();
-  }
-
-  setPostRate(): void {
-    this.postService.getPostRate(this.post.pk)
-      .subscribe(
-        (value: PostRateEnum): void => {
-          this.postRate = value
-        }
-      )
+    this.postRate = this.post.current_user_rate;
   }
 
   addPostToViewed(): void {
