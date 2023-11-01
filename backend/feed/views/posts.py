@@ -49,12 +49,13 @@ class GetAdditionalPostsForFeedAPIView(GetUserMixin, GenericAPIView):
     default_amount = 5
 
     def get(self, request):
-        amount = int(request.GET.get('amount')) or self.default_amount
+        amount = int(request.GET.get('amount') or self.default_amount)
         user = self.get_object()
         if user:
             viewed = Subquery(user.viewed_posts.values_list('pk', flat=True))
         else:
-            viewed = request.COOKIES.get('viewed_posts').split(',')
+            viewed = request.COOKIES.get('viewed_posts')
+            viewed = map(int, viewed.split(',')) if viewed else []
         not_viewed = Post.objects.exclude(pk__in=viewed)
         posts = not_viewed.order_by('?')[:amount]
         serializer = self.get_serializer(posts, many=True)

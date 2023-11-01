@@ -12,7 +12,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['likes', 'dislikes', 'images', 'author', 'text', 'current_user_rate']
+        fields = ['pk', 'likes', 'dislikes', 'images', 'author', 'text', 'current_user_rate']
         read_only_fields = ['liked_by', 'disliked_by']
         extra_kwargs = {
             'author': {
@@ -30,8 +30,10 @@ class PostSerializer(serializers.ModelSerializer):
     def get_likes(self, obj):
         return obj.liked_by.count()
 
-    def current_user_rate(self, obj):
+    def get_current_user_rate(self, obj):
         user = self.context['request'].user
+        if user.is_anonymous:
+            return PostRateEnum.none.value
         if obj.liked_by.contains(user):
             return PostRateEnum.like.value
         if obj.disliked_by.contains(user):
