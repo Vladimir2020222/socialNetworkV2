@@ -1,5 +1,7 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db.models import Subquery
+from django.http import HttpResponse
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, UpdateModelMixin, RetrieveModelMixin
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -26,15 +28,16 @@ class AddImagesToPostAPIView(GenericAPIView):
 
 
 class AddPostToViewedAPIView(GetUserMixin, GenericAPIView):
-    def get(self, request):
+    def get(self, request, pk):
         user = self.get_object()
-        pk = request.GET.get('pk')
+        file = open((settings.MEDIA_URL + '1x1.png')[1:], mode='rb')
+        response = HttpResponse(file.read(), content_type='image/jpeg')
+        file.close()
         if user:
             post = Post.objects.get(pk=pk)
             post.viewed_by.add(user)
-            return Response()
+            return response
         else:
-            response = Response()
             viewed_posts = request.COOKIES.get('viewed_posts')
             if viewed_posts is None:
                 viewed_posts = str(pk)
