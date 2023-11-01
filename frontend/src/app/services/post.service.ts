@@ -32,4 +32,16 @@ export class PostService {
       }
     );
   }
+
+  getPostLikedBy(pk: number): Observable<number[]> {
+    return this.http.get<number[]>(
+      serverUrl + 'feed/users_liked_post_list'
+    )
+  }
+
+  getPostDislikedBy(pk: number): Observable<number[]> {
+    return this.http.get<number[]>(
+      serverUrl + 'feed/users_disliked_post_list'
+    )
+  }
 }

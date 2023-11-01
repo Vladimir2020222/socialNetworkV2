@@ -9,6 +9,7 @@ import { PostService } from "../../../services/post.service";
 })
 export class PostComponent implements OnInit {
   @Input() post!: Post;
+  protected readonly PostRateEnum = PostRateEnum;
   postRate: PostRateEnum = PostRateEnum.none;
 
   constructor(private postService: PostService) {}
@@ -20,6 +21,4 @@ export class PostComponent implements OnInit {
   addPostToViewed(): void {
     this.postService.addPostToViewed(this.post.pk);
   }
-
-  protected readonly PostRateEnum = PostRateEnum;
 }
