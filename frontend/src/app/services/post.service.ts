@@ -20,19 +20,6 @@ export class PostService {
     )
   }
 
-  addPostToViewed(pk: number): void {
-    this.http.post(
-      serverUrl + 'feed/add_post_to_viewed',
-      JSON.stringify({pk: pk}),
-      {
-        withCredentials: true,
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json'
-        })
-      }
-    );
-  }
-
   getPostLikedBy(pk: number): Observable<number[]> {
     return this.http.get<number[]>(
       serverUrl + 'feed/users_liked_post_list'

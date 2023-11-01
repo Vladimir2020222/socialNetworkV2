@@ -1,19 +1,23 @@
-<div class="post">
+<div class="post" style="height: 2200px">
   <p>{{ post.text }}</p>
   <div>
     <div class="post-rate">
       {{ post.likes }}
-      <img *ngIf="postRate === PostRateEnum.like; else notLiked" ngSrc="assets/activeLikeButtion.svg">
+      <img *ngIf="postRate === PostRateEnum.like; else notLiked" src="assets/activeLikeButtion.svg">
       <ng-template #notLiked>
-        <img ngSrc="assets/likeButton.svg">
+        <img src="assets/likeButton.svg">
       </ng-template>
     </div>
     <div class="post-rate">
       {{ post.dislikes }}
-      <img *ngIf="postRate === PostRateEnum.dislike; else notDisliked" ngSrc="assets/activeDisikeButtion.svg">
+      <img *ngIf="postRate === PostRateEnum.dislike; else notDisliked" src="assets/activeDisikeButtion.svg">
       <ng-template #notDisliked>
-        <img ngSrc="assets/dislikeButton.svg">
+        <img src="assets/dislikeButton.svg">
       </ng-template>
     </div>
+    <img loading="lazy" [src]="getSrcForAddingPostToViewed()">
     </div>
+  <hr>
+  <hr>
+  <hr>
 </div>

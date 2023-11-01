@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Post, PostRateEnum } from "../../../models/post";
 import { PostService } from "../../../services/post.service";
+import { serverUrl } from "../../../constants";
 
 @Component({
   selector: 'app-post',
@@ -18,7 +19,7 @@ export class PostComponent implements OnInit {
     this.postRate = this.post.current_user_rate;
   }
 
-  addPostToViewed(): void {
-    this.postService.addPostToViewed(this.post.pk);
+  getSrcForAddingPostToViewed(): string {
+    return serverUrl + `feed/add_post_to_viewed/${this.post.pk}`
   }
 }
