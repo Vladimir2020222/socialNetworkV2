@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Post, PostRateEnum } from "../../../models/post";
-import { PostService } from "../../../services/post.service";
-import { serverUrl } from "../../../constants";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Post, PostRateEnum } from "../../../../models/post";
+import { PostService } from "../../../../services/post.service";
+import { serverUrl } from "../../../../constants";
+
 
 @Component({
   selector: 'app-post',
@@ -10,6 +11,7 @@ import { serverUrl } from "../../../constants";
 })
 export class PostComponent implements OnInit {
   @Input() post!: Post;
+  @Output() outPostIdViewed: EventEmitter<number> = new EventEmitter<number>;
   protected readonly PostRateEnum = PostRateEnum;
   postRate: PostRateEnum = PostRateEnum.none;
 
@@ -21,5 +23,9 @@ export class PostComponent implements OnInit {
 
   getSrcForAddingPostToViewed(): string {
     return serverUrl + `feed/add_post_to_viewed/${this.post.pk}`
+  }
+
+  postViewed(): void {
+    this.outPostIdViewed.emit(this.post.pk);
   }
 }

@@ -30,7 +30,7 @@ import { ProfileSubscribeButtonComponent } from './components/accounts/profile/p
 import { CurrentUserProfileComponent } from './components/accounts/current-user-profile/current-user-profile.component';
 import { UserProfileComponent } from './components/accounts/user-profile/user-profile.component';
 import { PostsComponent } from './components/posts/posts/posts.component';
-import { PostComponent } from './components/posts/post/post.component';
+import { PostComponent } from './components/posts/post/post/post.component';
 
 
 @NgModule({

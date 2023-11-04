@@ -22,4 +22,10 @@ export class PostsComponent implements OnInit {
         this.posts.push(...posts)
       })
   }
+
+  postViewed(postPk: number): void {
+    if (postPk === this.posts[this.posts.length - 1].pk) {
+      this.loadAdditionalPosts();
+    }
+  }
 }
