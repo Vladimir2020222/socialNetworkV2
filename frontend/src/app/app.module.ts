@@ -31,6 +31,7 @@ import { CurrentUserProfileComponent } from './components/accounts/current-user-
 import { UserProfileComponent } from './components/accounts/user-profile/user-profile.component';
 import { PostsComponent } from './components/posts/posts/posts.component';
 import { PostComponent } from './components/posts/post/post/post.component';
+import { PostImagesComponent } from "./components/posts/post/post-images/post-images.component";
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { PostComponent } from './components/posts/post/post/post.component';
     UserProfileComponent,
     PostsComponent,
     PostComponent,
+    PostImagesComponent,
   ],
     imports: [
         BrowserModule,
