@@ -14,6 +14,7 @@ import {
 import { CurrentUserProfileComponent } from "./components/accounts/current-user-profile/current-user-profile.component";
 import { UserProfileComponent } from "./components/accounts/user-profile/user-profile.component";
 import { PostsComponent } from "./components/posts/posts/posts.component";
+import { CreatePostComponent } from "./components/posts/create-post/create-post.component";
 
 const routes: Routes = [
   {
@@ -86,6 +87,13 @@ const routes: Routes = [
   {
     path: 'feed',
     component: PostsComponent,
+    data: {
+      useMainContentWrapper: true
+    }
+  },
+  {
+    path: 'create_post',
+    component: CreatePostComponent,
     data: {
       useMainContentWrapper: true
     }

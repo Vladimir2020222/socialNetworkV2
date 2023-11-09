@@ -1,6 +1,6 @@
 <div class="post">
   <p class="post-text">{{ post.text }}</p>
-  <app-post-images [images]="post.images"></app-post-images>
+  <app-post-images [images]="post.images" *ngIf="post.images.length"></app-post-images>
   <div class="post-rates">
     <div class="post-rate">
       {{ post.likes }}

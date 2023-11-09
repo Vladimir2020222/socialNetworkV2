@@ -1,0 +1,11 @@
+<app-center-content>
+  <form (submit)="submit(images.files, text.value)">
+    <div class="form-field">
+      <textarea class="form-input" #text></textarea>
+    </div>
+    <div class="form-field">
+      <input type="file" accept="image/*" multiple #images>
+    </div>
+    <button class="submit-button" type="submit">submit</button>
+  </form>
+</app-center-content>

@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 @Component({
   selector: 'app-reset-password-confirm',
   templateUrl: './reset-password-confirm.component.html',
-  styleUrls: ['./reset-password-confirm.component.css', '../../forms.css']
+  styleUrls: ['./reset-password-confirm.component.css', '../../../forms.css']
 })
 export class ResetPasswordConfirmComponent implements OnInit {
   token!: string;

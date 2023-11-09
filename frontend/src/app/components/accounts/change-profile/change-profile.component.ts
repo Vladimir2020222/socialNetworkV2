@@ -7,7 +7,7 @@ import { Router } from "@angular/router";
 @Component({
   selector: 'app-change-profile',
   templateUrl: './change-profile.component.html',
-  styleUrls: ['./change-profile.component.css', '../forms.css']
+  styleUrls: ['./change-profile.component.css', '../../forms.css']
 })
 export class ChangeProfileComponent implements OnInit {
   changeProfileForm!: FormGroup;
