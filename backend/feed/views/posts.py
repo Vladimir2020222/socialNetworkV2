@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.core.files.images import ImageFile
 from django.db.models import Subquery
 from django.http import HttpResponse
 from rest_framework.generics import GenericAPIView
@@ -22,9 +23,11 @@ class AddImagesToPostAPIView(GenericAPIView):
         post = Post.objects.get(pk=pk)
         if not request.user == post.author:
             return Response('You can not add images to this post because you are not its author')
-        for file in request.FILES:
-            Image.objects.create(post=post, content=file)
-        return Response()
+        files = request.FILES.getlist('images')
+        images = Image.objects.bulk_create(
+            [Image(post=post, content=ImageFile(file)) for file in files]
+        )
+        return Response({'images': [image.content.url for image in images]})
 
 
 class AddPostToViewedAPIView(GetUserMixin, GenericAPIView):
@@ -54,7 +57,7 @@ class GetAdditionalPostsForFeedAPIView(GetUserMixin, GenericAPIView):
     def get(self, request):
         amount = int(request.GET.get('amount') or self.default_amount)
         user = self.get_object()
-        if user:
+        if user.is_authenticated:
             viewed = Subquery(user.viewed_posts.values_list('pk', flat=True))
         else:
             viewed = request.COOKIES.get('viewed_posts')
