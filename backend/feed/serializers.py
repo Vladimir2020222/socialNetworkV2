@@ -21,8 +21,8 @@ class PostSerializer(serializers.ModelSerializer):
         }
 
     def get_images(self, obj):
-        images = obj.images.values('content')
-        return list(images)
+        images = obj.images.only('content')
+        return [image.content.url for image in images]
 
     def get_dislikes(self, obj):
         return obj.disliked_by.count()
