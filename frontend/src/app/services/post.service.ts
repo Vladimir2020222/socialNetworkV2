@@ -75,4 +75,10 @@ export class PostService {
       serverUrl + 'feed/users_disliked_post_list'
     )
   }
+
+  getPostsByUser(userPk: number, offset: number, amount: number): Observable<Post[]> {
+    return this.http.get<Post[]>(
+      serverUrl + `feed/posts/by/${userPk}?offset=${offset}&amount=${amount}`,
+    );
+  }
 }
