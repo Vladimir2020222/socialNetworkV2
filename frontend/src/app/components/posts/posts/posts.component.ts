@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PostService } from "../../../services/post.service";
 import { Post } from "../../../models/post";
 
@@ -8,23 +8,27 @@ import { Post } from "../../../models/post";
   styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit {
-  posts: Post[] = [];
+  @Input() posts: Post[] | null = null;
 
   constructor(private postService: PostService) {}
 
   ngOnInit(): void {
-    this.loadAdditionalPosts();
+    if (!this.posts) {
+      this.loadAdditionalPosts();
+    }
   }
 
   loadAdditionalPosts(): void {
     this.postService.getAdditionalPosts()
       .subscribe(posts => {
-        this.posts.push(...posts)
+        if (this.posts) {
+          this.posts.push(...posts)
+        }
       })
   }
 
   postViewed(postPk: number): void {
-    if (postPk === this.posts[this.posts.length - 1].pk) {
+    if (this.posts && postPk === this.posts[this.posts.length - 1].pk) {
       this.loadAdditionalPosts();
     }
   }
