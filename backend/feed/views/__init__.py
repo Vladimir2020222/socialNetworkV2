@@ -1,5 +1,5 @@
 from .posts import PostAPIView, AddPostToViewedAPIView, GetAdditionalPostsForFeedAPIView, AddImagesToPostAPIView, \
-    PostLikedByAPIView, PostDislikedByAPIView
+    PostLikedByAPIView, PostDislikedByAPIView, PostsByUserAPIView
 from .likes import LikePostAIPView, RemoveLikeAPIView, RemoveDislikeAPIView, DislikePostAPIView
 
 
@@ -13,5 +13,6 @@ __all__ = [
     'LikePostAIPView',
     'RemoveLikeAPIView',
     'DislikePostAPIView',
-    'RemoveDislikeAPIView'
+    'RemoveDislikeAPIView',
+    'PostsByUserAPIView'
 ]
