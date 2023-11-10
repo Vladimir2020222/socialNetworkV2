@@ -102,6 +102,17 @@ class PostAPIView(CreateModelMixin,
         if hasattr(self, 'post_'):
             return self.post_
         return Post.objects.get(pk=self.kwargs.get('pk'))
+        
+        
+class PostsByUserAPIView(GenericAPIView):
+    serializer_class = PostSerializer
+
+    def get(self, request, pk):
+        offset = int(request.GET.get('offset'))
+        amount = int(request.GET.get('amount'))
+        posts = Post.objects.filter(author_id=pk)[offset:offset+amount]
+        serializer = self.get_serializer(posts, many=True)
+        return Response(serializer.data)
 
 
 class PostLikedByAPIView(GenericAPIView):

@@ -11,6 +11,7 @@ urlpatterns = [
     path('users_disliked_post_list', PostDislikedByAPIView.as_view(), name='post_disliked_by'),
     path('post/<int:pk>', PostAPIView.as_view(), name='post'),
     path('post', PostAPIView.as_view(), name='post'),
+    path('posts/by/<int:pk>', PostsByUserAPIView.as_view(), name='posts_by_user'),
 
     path('like/<int:pk>', LikePostAIPView.as_view(), name='like_post'),
     path('remove_like/<int:pk>', RemoveLikeAPIView.as_view(), name='remove_like_from_post'),
