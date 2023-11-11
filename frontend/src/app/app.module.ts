@@ -34,6 +34,7 @@ import { PostComponent } from './components/posts/post/post/post.component';
 import { PostImagesComponent } from "./components/posts/post/post-images/post-images.component";
 import { CreatePostComponent } from './components/posts/create-post/create-post.component';
 import { ProfilePostsComponent } from './components/accounts/profile/profile-posts/profile-posts.component';
+import { LikeableRateComponent } from './components/posts/likeable-rate/likeable-rate.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { ProfilePostsComponent } from './components/accounts/profile/profile-pos
     PostImagesComponent,
     CreatePostComponent,
     ProfilePostsComponent,
+    LikeableRateComponent,
   ],
     imports: [
         BrowserModule,
