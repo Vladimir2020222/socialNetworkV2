@@ -11,7 +11,9 @@ urlpatterns = [
     path('users_disliked_post_list', PostDislikedByAPIView.as_view(), name='post_disliked_by'),
     path('post/<int:pk>', PostAPIView.as_view(), name='post'),
     path('post', PostAPIView.as_view(), name='post'),
-    path('posts/by/<int:pk>', PostsByUserAPIView.as_view(), name='posts_by_user'),
+    path('posts/by/<int:pk>', PostsByUserScrollableAPIView.as_view(), name='posts_by_user'),
+    path('comment_replies/<int:pk>', CommentRepliesScrollableAPIView.as_view(), name='comment_replies'),
+    path('post/<int:pk>/comments', PostCommentsScrollableAPIView.as_view(), name='post_comments'),
 
     path('like/<int:pk>', LikePostAIPView.as_view(), name='like_post'),
     path('remove_like/<int:pk>', RemoveLikeAPIView.as_view(), name='remove_like_from_post'),
