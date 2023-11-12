@@ -1,0 +1,12 @@
+<div class="comment content-block-border">
+  <p class="comment-text">
+    {{ comment.text }}
+  </p>
+  <app-likeable-rate [object]="comment"></app-likeable-rate>
+  <div class="replies-wrapper">
+      <app-comment-replies style="margin-left: 50px" [comment]="comment" *ngIf="showReplies"></app-comment-replies>
+  </div>
+  <div class="toggle-replies-button" (click)="toggleReplies()">
+    <p class="toggle-replies-button-text">{{ showReplies ? 'hide replies' : 'show replies' }}</p>
+  </div>
+</div>

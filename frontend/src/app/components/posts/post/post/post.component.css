@@ -1,6 +1,7 @@
 .post {
-  border-radius: 10px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  padding: 10px;
   margin: 20px 0 20px 0;
+}
+
+.comments-wrapper {
+  margin-left: 100px;
 }

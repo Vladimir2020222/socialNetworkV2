@@ -11,6 +11,7 @@ import { serverUrl } from "../../../../constants";
 })
 export class PostComponent {
   @Input() post!: Post;
+  showComments: boolean = false;
   @Output() outPostIdViewed: EventEmitter<number> = new EventEmitter<number>;
 
   constructor(private postService: PostService) {}

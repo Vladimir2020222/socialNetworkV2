@@ -12,3 +12,9 @@ body {
   background-color: var(--primary-color);
   color: var(--secondary-color);
 }
+
+.content-block-border {
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}

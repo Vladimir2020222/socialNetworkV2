@@ -25,9 +25,10 @@ export class PostsComponent implements OnInit {
   loadAdditionalPosts(): void {
     this.postService.getAdditionalPosts()
       .subscribe(posts => {
-        if (this.posts) {
-          this.posts.push(...posts)
+        if (!this.posts) {
+          this.posts = [];
         }
+        this.posts.push(...posts)
       })
   }
 
