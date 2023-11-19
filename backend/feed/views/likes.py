@@ -7,26 +7,36 @@ from feed.services import remove_like_from_post, remove_dislike_from_post, like_
 
 class BaseRatePostAPIView(GenericAPIView):
     queryset = Post.objects.all()
-    function = None
+
+    @staticmethod
+    def function(user, post):
+        raise NotImplemented('base class must provide function to change user\'s rate')
 
     def post(self, request, pk):
-        assert self.function, 'base class must provide function to change user\' s rate'
         post = self.get_object()
         self.function(request.user, post)
         return Response
 
 
 class LikePostAIPView(BaseRatePostAPIView):
-    function = like_post
+    @staticmethod
+    def function(user, post):
+        like_post(user, post)
 
 
 class RemoveLikeAPIView(BaseRatePostAPIView):
-    function = remove_like_from_post
+    @staticmethod
+    def function(user, post):
+        remove_like_from_post(user, post)
 
 
 class DislikePostAPIView(BaseRatePostAPIView):
-    function = dislike_post
+    @staticmethod
+    def function(user, post):
+        dislike_post(user, post)
 
 
 class RemoveDislikeAPIView(BaseRatePostAPIView):
-    function = remove_dislike_from_post
+    @staticmethod
+    def function(user, post):
+        remove_dislike_from_post(user, post)

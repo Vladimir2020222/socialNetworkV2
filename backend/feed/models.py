@@ -31,6 +31,7 @@ class Post(LikeableMixin):
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     viewed_by = models.ManyToManyField(User, related_name='viewed_posts', related_query_name='related_post')
+    text = models.TextField(max_length=25000)
 
 
 class CommentBaseQuerySet(models.QuerySet):

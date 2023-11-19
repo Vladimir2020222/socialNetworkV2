@@ -1,12 +1,15 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.core.files.images import ImageFile
 from django.db.models import Subquery
+from django.http import HttpResponse
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, UpdateModelMixin, RetrieveModelMixin
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
 from accounts.views.mixins import GetUserMixin
-from feed.models import Post, Image
+from feed.models import Post, Image, Reply, Comment
 from feed.serializers import PostSerializer
 
 
@@ -19,22 +22,25 @@ class AddImagesToPostAPIView(GenericAPIView):
     def post(self, request, pk):
         post = Post.objects.get(pk=pk)
         if not request.user == post.author:
-            return Response('You can not add images to this post because you are not ist author')
-        for file in request.FILES:
-            Image.objects.create(post=post, content=file)
-        return Response()
+            return Response('You can not add images to this post because you are not its author')
+        files = request.FILES.getlist('images')
+        images = Image.objects.bulk_create(
+            [Image(post=post, content=ImageFile(file)) for file in files]
+        )
+        return Response({'images': [image.content.url for image in images]})
 
 
 class AddPostToViewedAPIView(GetUserMixin, GenericAPIView):
-    def get(self, request):
+    def get(self, request, pk):
         user = self.get_object()
-        pk = request.GET.get('post_pk')
+        file = open((settings.MEDIA_URL + '1x1.png')[1:], mode='rb')
+        response = HttpResponse(file.read(), content_type='image/jpeg')
+        file.close()
         if user:
             post = Post.objects.get(pk=pk)
             post.viewed_by.add(user)
-            return Response()
+            return response
         else:
-            response = Response()
             viewed_posts = request.COOKIES.get('viewed_posts')
             if viewed_posts is None:
                 viewed_posts = str(pk)
@@ -49,12 +55,13 @@ class GetAdditionalPostsForFeedAPIView(GetUserMixin, GenericAPIView):
     default_amount = 5
 
     def get(self, request):
-        amount = int(request.GET.get('amount')) or self.default_amount
+        amount = int(request.GET.get('amount') or self.default_amount)
         user = self.get_object()
-        if user:
+        if user.is_authenticated:
             viewed = Subquery(user.viewed_posts.values_list('pk', flat=True))
         else:
-            viewed = request.COOKIES.get('viewed_posts').split(',')
+            viewed = request.COOKIES.get('viewed_posts')
+            viewed = map(int, viewed.split(',')) if viewed else []
         not_viewed = Post.objects.exclude(pk__in=viewed)
         posts = not_viewed.order_by('?')[:amount]
         serializer = self.get_serializer(posts, many=True)
@@ -95,3 +102,19 @@ class PostAPIView(CreateModelMixin,
         if hasattr(self, 'post_'):
             return self.post_
         return Post.objects.get(pk=self.kwargs.get('pk'))
+
+
+class PostLikedByAPIView(GenericAPIView):
+    def get(self, request):
+        pk = request.GET.get('pk')
+        post = Post.objects.get(pk=pk)
+        liked_by = post.liked_by.values_list('pk', flat=True)
+        return Response(liked_by)
+
+
+class PostDislikedByAPIView(GenericAPIView):
+    def get(self, request):
+        pk = request.GET.get('pk')
+        post = Post.objects.get(pk=pk)
+        disliked_by = post.dsiliked_by.values_list('pk', flat=True)
+        return Response(disliked_by)
