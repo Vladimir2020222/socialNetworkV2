@@ -1,14 +1,13 @@
 export interface User {
-  id: number,
-  password: string,
-  last_login: string | null,
-  is_superuser: boolean,
+  pk: number,
   username: string,
   first_name: string | null,
   last_name: string | null,
+  posts_count: number,
+  last_login: string | null,
+  is_superuser: boolean,
   email: string | null,
-  is_staff: boolean,
-  is_active: boolean,
   date_joined: string,
-  ava: string
+  ava: string,
+  subscribers_count: number
 }

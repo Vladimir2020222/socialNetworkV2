@@ -1,0 +1,13 @@
+<button
+  [ngClass]="{
+    'subscribed': isSubscribed,
+    'unsubscribed': !isSubscribed && isSubscribed !== null,
+    'subscribe-button': true
+  }"
+  type="button"
+  (click)="click()"
+>
+  <span *ngIf="isSubscribed !== null">
+    {{ isSubscribed ? 'unsubscribe' : 'subscribe' }}
+  </span>
+</button>

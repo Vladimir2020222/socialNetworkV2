@@ -23,6 +23,16 @@ import { ConfirmChangeEmailComponent } from './components/accounts/confirm-chang
 import { ChangePasswordComponent } from './components/accounts/passwords/change-password/change-password.component';
 import { ResetPasswordComponent } from './components/accounts/passwords/reset-password/reset-password.component';
 import { ResetPasswordConfirmComponent } from './components/accounts/passwords/reset-password-confirm/reset-password-confirm.component';
+import {
+  ProfileUserStatsComponent
+} from "./components/accounts/profile/profile-user-stats/profile-user-stats.component";
+import { ProfileSubscribeButtonComponent } from './components/accounts/profile/profile-subscribe-button/profile-subscribe-button.component';
+import { CurrentUserProfileComponent } from './components/accounts/current-user-profile/current-user-profile.component';
+import { UserProfileComponent } from './components/accounts/user-profile/user-profile.component';
+import { PostsComponent } from './components/posts/posts/posts.component';
+import { PostComponent } from './components/posts/post/post/post.component';
+import { PostImagesComponent } from "./components/posts/post/post-images/post-images.component";
+import { CreatePostComponent } from './components/posts/create-post/create-post.component';
 
 
 @NgModule({
@@ -41,6 +51,14 @@ import { ResetPasswordConfirmComponent } from './components/accounts/passwords/r
     ChangePasswordComponent,
     ResetPasswordComponent,
     ResetPasswordConfirmComponent,
+    ProfileUserStatsComponent,
+    ProfileSubscribeButtonComponent,
+    CurrentUserProfileComponent,
+    UserProfileComponent,
+    PostsComponent,
+    PostComponent,
+    PostImagesComponent,
+    CreatePostComponent,
   ],
     imports: [
         BrowserModule,

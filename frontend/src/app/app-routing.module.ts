@@ -11,11 +11,22 @@ import { ResetPasswordComponent } from "./components/accounts/passwords/reset-pa
 import {
   ResetPasswordConfirmComponent
 } from "./components/accounts/passwords/reset-password-confirm/reset-password-confirm.component";
+import { CurrentUserProfileComponent } from "./components/accounts/current-user-profile/current-user-profile.component";
+import { UserProfileComponent } from "./components/accounts/user-profile/user-profile.component";
+import { PostsComponent } from "./components/posts/posts/posts.component";
+import { CreatePostComponent } from "./components/posts/create-post/create-post.component";
 
 const routes: Routes = [
   {
     path: 'accounts/profile',
-    component: ProfileComponent,
+    component: CurrentUserProfileComponent,
+    data: {
+      useMainContentWrapper: true
+    }
+  },
+  {
+    path: 'user/:id',
+    component: UserProfileComponent,
     data: {
       useMainContentWrapper: true
     }
@@ -69,6 +80,20 @@ const routes: Routes = [
   {
     path: 'accounts/reset_password_confirm/:uid/:token',
     component: ResetPasswordConfirmComponent,
+    data: {
+      useMainContentWrapper: true
+    }
+  },
+  {
+    path: 'feed',
+    component: PostsComponent,
+    data: {
+      useMainContentWrapper: true
+    }
+  },
+  {
+    path: 'create_post',
+    component: CreatePostComponent,
     data: {
       useMainContentWrapper: true
     }

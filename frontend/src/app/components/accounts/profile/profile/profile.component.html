@@ -1,10 +1,21 @@
 <div *ngIf="user">
-  <div class="main-user-info">
+  <div class="user-info">
     <div class="ava">
       <app-profile-user-ava [user]="user"></app-profile-user-ava>
     </div>
-    <div class="user-username-and-name-wrapper">
-      <app-profile-username-and-name [user]="user"></app-profile-username-and-name>
+    <div class="main-user-info">
+      <div class="user-username-and-name-wrapper">
+        <app-profile-username-and-name [user]="user"></app-profile-username-and-name>
+      </div>
+      <div class="subscribe-button-wrapper" *ngIf="!userIsCurrentUser; else sameuser">
+        <app-profile-subscribe-button [user]="user"></app-profile-subscribe-button>
+      </div>
+      <ng-template #sameuser><div style="height: 40px;"></div></ng-template>
+      <br>
+      <div class="user-stats-wrapper">
+        <app-profile-user-stats [user]="user"></app-profile-user-stats>
+      </div>
     </div>
   </div>
 </div>
+

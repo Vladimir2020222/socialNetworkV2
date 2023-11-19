@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-center-content',
@@ -8,15 +8,17 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 export class CenterContentComponent implements OnInit {
   @ViewChild('centerDiv') centerDiv: ElementRef<HTMLDivElement> | undefined;
   @ViewChild('centerDivWrapper') centerDivWrapper: ElementRef<HTMLDivElement> | undefined;
+  @Input() useInterval: boolean = false;
+  @Input() time: number = 100;
 
   ngOnInit(): void {
-    let height: string | undefined;
-    const timeout: number = setTimeout((): void => {
+    const handler = (): void => {
       if (this.centerDiv) {
         height = getComputedStyle(this.centerDiv.nativeElement).height;
-        clearTimeout(timeout);
         this.centerDivWrapper!.nativeElement.style.height = height;
       }
-    }, 100)
+    }
+    let height: string | undefined;
+    (this.useInterval? setInterval : setTimeout)(handler, this.time)
   }
 }

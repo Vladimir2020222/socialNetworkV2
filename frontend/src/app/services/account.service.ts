@@ -1,8 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { User } from "../models/user";
 import { serverUrl } from "../constants";
+
+
+
+// class TestBehaviorSubject<T> extends BehaviorSubject<T> {
+//   override next(value: T): void {
+//     super.next(value);
+//     console.log('THE NEXT VALUE IS', value)
+//   }
+// }
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +20,11 @@ import { serverUrl } from "../constants";
 export class AccountService {
   isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   userProfile: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
+  userIsInitialized: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.initializeUserProfile();
+  }
 
   updateIsLoggedIn(): void {
     this.http.get<boolean>(serverUrl + 'accounts/is_authenticated', {withCredentials: true})
@@ -20,14 +33,23 @@ export class AccountService {
       })
   }
 
+  initializeUserProfile(): void {
+    this.getUpdateUserProfileObservable()
+      .subscribe(user => {
+        this.userProfile.next(user);
+        this.userIsInitialized.next(true);
+      })
+  }
+
   updateUserProfile(): void {
-    if (!this.isLoggedIn) {
-      this.userProfile.next(null);
-    }
-    this.http.get<User | null>(serverUrl + 'accounts/profile', {withCredentials: true})
+    this.getUpdateUserProfileObservable()
       .subscribe((value: User | null): void => {
         this.userProfile.next(value);
       })
+  }
+
+  getUpdateUserProfileObservable(): Observable<User | null> {
+    return this.http.get<User | null>(serverUrl + 'accounts/profile', {withCredentials: true});
   }
 
   logout(): void {
@@ -44,7 +66,7 @@ export class AccountService {
         headers: new HttpHeaders({
           'Content-Type': 'application/json'
         })
-    }).subscribe(user => {this.userProfile.next(user)})
+      }).subscribe(user => {this.userProfile.next(user)})
   }
 
   signup(
@@ -158,5 +180,50 @@ export class AccountService {
         })
       }
     ).subscribe(value => {})
+  }
+
+  isSubscribedTo(to: number): Observable<boolean> {
+    return this.http.post<boolean>(
+      serverUrl + 'accounts/is_subscribed',
+      JSON.stringify({to: to}),
+      {
+        withCredentials: true,
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      }
+    )
+  }
+
+  subscribe(to: number): void {
+    this.http.post(
+      serverUrl + 'accounts/subscribe',
+      JSON.stringify({to: to}),
+      {
+        withCredentials: true,
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      }
+    ).subscribe(value => {})
+  }
+
+  unsubscribe(from: number): void {
+    this.http.post(
+      serverUrl + 'accounts/unsubscribe',
+      JSON.stringify({from: from}),
+      {
+        withCredentials: true,
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      }
+    ).subscribe(value => {})
+  }
+
+  getUserById(id: number): Observable<User | null> {
+    return this.http.get<User | null>(
+      serverUrl + 'accounts/user/' + id
+    )
   }
 }
