@@ -1,7 +1,0 @@
-__pycache__/
-.idea
-media
-db.sqlite3
-q.py
-test.py
-django_in_file
