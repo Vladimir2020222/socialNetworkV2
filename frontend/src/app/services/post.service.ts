@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
-import { Post, PostRateEnum } from "../models/post";
+import { Post } from "../models/post";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { serverUrl } from "../constants";
+import { CommentReply } from "../models/comment-reply";
+import { Comment } from "../models/comment";
 
 @Injectable({
   providedIn: 'root'
@@ -74,5 +76,23 @@ export class PostService {
     return this.http.get<number[]>(
       serverUrl + 'feed/users_disliked_post_list'
     )
+  }
+
+  getPostsByUser(userPk: number, offset: number, amount: number): Observable<Post[]> {
+    return this.http.get<Post[]>(
+      serverUrl + `feed/posts/by/${userPk}?offset=${offset}&amount=${amount}`,
+    );
+  }
+
+  getCommentsReplies(commentPk: number, offset: number, amount: number): Observable<CommentReply[]> {
+    return this.http.get<CommentReply[]>(
+      serverUrl + `feed/comment_replies/${commentPk}?offset=${offset}&amount=${amount}`
+    )
+  }
+
+  getPostComments(postPk: number, offset: number, amount: number): Observable<Comment[]> {
+    return this.http.get<Comment[]>(
+      serverUrl + `feed/post/${postPk}/comments?offset=${offset}&amount=${amount}`
+    );
   }
 }

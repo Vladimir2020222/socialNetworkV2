@@ -1,16 +1,8 @@
-export enum PostRateEnum {
-  none,
-  like,
-  dislike
-}
+import { Likeable } from "./likeable";
 
-
-export interface Post {
+export interface Post extends Likeable{
   pk: number,
-  likes: number,
-  dislikes: number,
   author: number,
   images: string[],
   text: string,
-  current_user_rate: PostRateEnum;
 }

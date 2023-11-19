@@ -1,22 +1,10 @@
-<div class="post">
+<div class="post content-block-border">
   <p class="post-text">{{ post.text }}</p>
   <app-post-images [images]="post.images" *ngIf="post.images.length"></app-post-images>
-  <div class="post-rates">
-    <div class="post-rate">
-      {{ post.likes }}
-      <img *ngIf="postRate === PostRateEnum.like; else notLiked" src="assets/activeLikeButtion.svg">
-      <ng-template #notLiked>
-        <img src="assets/likeButton.svg">
-      </ng-template>
-    </div>
-    <div class="post-rate">
-      {{ post.dislikes }}
-      <img *ngIf="postRate === PostRateEnum.dislike; else notDisliked" src="assets/activeDisikeButtion.svg">
-      <ng-template #notDisliked>
-        <img src="assets/dislikeButton.svg">
-      </ng-template>
-    </div>
-    <img loading="lazy" [src]="getSrcForAddingPostToViewed()" (load)="postViewed()">
-    </div>
-  <hr>
+  <app-likeable-rate [object]="post"></app-likeable-rate>
+  <div class="comments-wrapper">
+    <app-comments [post]="post" *ngIf="showComments"></app-comments>
+  </div>
+  <div style="background-color: red; height: 20px; width: 20px" (click)="showComments=!showComments"></div>
+  <img loading="lazy" [src]="getSrcForAddingPostToViewed()" (load)="postViewed()">
 </div>
