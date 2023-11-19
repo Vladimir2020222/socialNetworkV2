@@ -30,7 +30,7 @@ class BaseScrollableAPIView(GenericAPIView):
     def get_fk_field_name(self):
         if self.fk_field_name:
             return self.fk_field_name
-        fields = self.model._meta
+        fields = self.model._meta.fields
         fks = [field for field in fields if isinstance(field, ForeignKey)]
         if len(fks) == 0:
             raise ValueError('Model %s has no ForeignKeys' % (self.model.__name__,))
