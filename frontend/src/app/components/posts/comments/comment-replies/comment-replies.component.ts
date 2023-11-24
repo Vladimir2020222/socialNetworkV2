@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommentReply } from "../../../../models/comment-reply";
 import { PostService } from "../../../../services/post.service";
 import { Comment } from "../../../../models/comment"
@@ -8,20 +8,23 @@ import { Comment } from "../../../../models/comment"
   templateUrl: './comment-replies.component.html',
   styleUrls: ['./comment-replies.component.css']
 })
-export class CommentRepliesComponent {
+export class CommentRepliesComponent implements OnChanges {
   @Input() comment!: Comment;
+  @Input() repliesAmount: number = 0;
   replies: CommentReply[] = [];
-  repliesAmountPerRequest = 5;
 
   constructor(private postService: PostService) {}
 
-  ngOnInit(): void {
-    this.loadAdditionalReplies();
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['repliesAmount']) {
+      console.log(this.repliesAmount - this.replies.length, " LOADED");
+      this.loadAdditionalReplies(this.repliesAmount - this.replies.length);
+    }
   }
 
-  loadAdditionalReplies = (): void => {
-    this.postService.getCommentsReplies(this.comment.pk, this.replies.length, this.repliesAmountPerRequest)
-      .subscribe(replies => {
+  loadAdditionalReplies(amount: number): void {
+    this.postService.getCommentsReplies(this.comment.pk, this.replies.length, amount)
+      .subscribe((replies: CommentReply[]): void => {
         this.replies.push(...replies);
       });
   };

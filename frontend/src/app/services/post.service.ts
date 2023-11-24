@@ -95,4 +95,10 @@ export class PostService {
       serverUrl + `feed/post/${postPk}/comments?offset=${offset}&amount=${amount}`
     );
   }
+
+  getRepliesAmount(commentPk: number): Observable<number> {
+    return this.http.get<number>(
+      serverUrl + `feed/comment_replies/${commentPk}/amount`
+    )
+  }
 }
