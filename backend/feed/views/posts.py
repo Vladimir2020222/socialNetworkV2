@@ -118,3 +118,9 @@ class PostDislikedByAPIView(GenericAPIView):
         post = Post.objects.get(pk=pk)
         disliked_by = post.dsiliked_by.values_list('pk', flat=True)
         return Response(disliked_by)
+
+
+class GetCommentsAmountAPIView(GenericAPIView):
+    def get(self, request, pk):
+        amount = Reply.objects.filter(to_id=pk).count()
+        return Response(amount)
