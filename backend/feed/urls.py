@@ -2,7 +2,6 @@ from django.urls import path
 
 from .views import *
 
-
 urlpatterns = [
     path('add_post_to_viewed/<int:pk>', AddPostToViewedAPIView.as_view(), name='add_post_to_viewed'),
     path('get_additional_posts', GetAdditionalPostsForFeedAPIView.as_view(), name='get_additional_posts_for_feed'),
@@ -14,7 +13,8 @@ urlpatterns = [
     path('posts/by/<int:pk>', PostsByUserScrollableAPIView.as_view(), name='posts_by_user'),
     path('comment_replies/<int:pk>', CommentRepliesScrollableAPIView.as_view(), name='comment_replies'),
     path('post/<int:pk>/comments', PostCommentsScrollableAPIView.as_view(), name='post_comments'),
-    path('comment_replies/<int:pk>/amount', GetCommentsAmountAPIView.as_view(), name='get_comments_amount'),
+    path('comment_replies/<int:pk>/amount', GetRepliesAmountAPIView.as_view(), name='get_comments_amount'),
+    path('post/<int:pk>/comments/amount', GetCommentsAmountAPIView.as_view(), name='get_comments_amount'),
 
     path('like/<int:pk>', LikePostAIPView.as_view(), name='like_post'),
     path('remove_like/<int:pk>', RemoveLikeAPIView.as_view(), name='remove_like_from_post'),
