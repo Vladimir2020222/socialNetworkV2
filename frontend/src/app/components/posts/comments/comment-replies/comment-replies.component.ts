@@ -12,8 +12,7 @@ export class CommentRepliesComponent implements OnInit {
   @Input() comment!: Comment;
   replies: CommentReply[] = [];
   totalRepliesAmount: number = 0;
-  repliesAmountToShow: number = 0;
-  repliesIncrement = 2;
+  repliesIncrement = 5;
   showReplies: boolean = false;
 
   constructor(private postService: PostService) {}
@@ -30,16 +29,13 @@ export class CommentRepliesComponent implements OnInit {
   }
 
   showMoreReplies(): void {
-    console.log("show more replies");
-    if (this.repliesAmountToShow + this.repliesIncrement >= this.totalRepliesAmount)
-      this.repliesAmountToShow = this.totalRepliesAmount;
-    else
-      this.repliesAmountToShow += this.repliesIncrement;
-    this.loadAdditionalReplies(this.repliesIncrement);
+    let amount: number = this.repliesIncrement;
+    if (this.totalRepliesAmount - this.replies.length - this.repliesIncrement <= 0)
+      amount = this.totalRepliesAmount - this.replies.length;
+    this.loadAdditionalReplies(amount);
   }
 
   loadAdditionalReplies(amount: number): void {
-    console.log("load additional replies");
     this.postService.getCommentsReplies(this.comment.pk, this.replies.length, amount)
       .subscribe((replies: CommentReply[]): void => {
         this.replies.push(...replies);
@@ -47,8 +43,7 @@ export class CommentRepliesComponent implements OnInit {
   };
 
   toggleReplies(): void {
-    console.log("toggle");
-    if (this.repliesAmountToShow === 0) {
+    if (this.replies.length === 0) {
       this.showMoreReplies();
     }
     this.showReplies = !this.showReplies;

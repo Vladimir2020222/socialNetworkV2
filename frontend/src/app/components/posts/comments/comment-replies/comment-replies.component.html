@@ -3,9 +3,9 @@
   <div
     class="show-more-replies"
     (click)="showMoreReplies()"
-    *ngIf="showReplies && this.totalRepliesAmount != this.repliesAmountToShow"
+    *ngIf="showReplies && this.totalRepliesAmount != this.replies.length"
   >
-    show more replies
+    show more replies ({{ totalRepliesAmount - this.replies.length }})
   </div>
   <div class="toggle-show-replies" (click)="toggleReplies()">
     <span *ngIf="showReplies">hide replies</span>
