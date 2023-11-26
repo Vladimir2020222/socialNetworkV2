@@ -4,27 +4,6 @@
   </p>
   <app-likeable-rate [object]="comment"></app-likeable-rate>
   <div class="replies-wrapper">
-      <app-comment-replies
-        style="margin-left: 50px"
-        [repliesAmount]="this.repliesAmountToShow"
-        [comment]="comment"
-        *ngIf="showReplies"
-      ></app-comment-replies>
-  </div>
-  <p class="replies-count">
-    {{ repliesAmount }}
-  </p>
-  <div class="replies-control-buttons" *ngIf="repliesAmount">
-    <div
-      class="show-more-replies"
-      (click)="showMoreReplies()"
-      *ngIf="showReplies && this.repliesAmount != this.repliesAmountToShow"
-    >
-      show more replies
-    </div>
-    <div class="toggle-show-replies" (click)="toggleReplies()">
-      <span *ngIf="showReplies">hide replies</span>
-      <span *ngIf="!showReplies">show replies ({{ repliesAmount }})</span>
-    </div>
+      <app-comment-replies [comment]="comment"></app-comment-replies>
   </div>
 </div>

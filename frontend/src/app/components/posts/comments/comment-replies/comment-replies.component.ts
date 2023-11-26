@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommentReply } from "../../../../models/comment-reply";
 import { PostService } from "../../../../services/post.service";
 import { Comment } from "../../../../models/comment"
@@ -8,24 +8,49 @@ import { Comment } from "../../../../models/comment"
   templateUrl: './comment-replies.component.html',
   styleUrls: ['./comment-replies.component.css']
 })
-export class CommentRepliesComponent implements OnChanges {
+export class CommentRepliesComponent implements OnInit {
   @Input() comment!: Comment;
-  @Input() repliesAmount: number = 0;
   replies: CommentReply[] = [];
+  totalRepliesAmount: number = 0;
+  repliesAmountToShow: number = 0;
+  repliesIncrement = 2;
+  showReplies: boolean = false;
 
   constructor(private postService: PostService) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if(changes['repliesAmount']) {
-      console.log(this.repliesAmount - this.replies.length, " LOADED");
-      this.loadAdditionalReplies(this.repliesAmount - this.replies.length);
-    }
+  ngOnInit(): void {
+    this.setTotalRepliesAmount();
+  }
+
+  setTotalRepliesAmount(): void {
+    this.postService.getRepliesAmount(this.comment.pk)
+      .subscribe((totalRepliesAmount: number): void => {
+        this.totalRepliesAmount = totalRepliesAmount;
+      })
+  }
+
+  showMoreReplies(): void {
+    console.log("show more replies");
+    if (this.repliesAmountToShow + this.repliesIncrement >= this.totalRepliesAmount)
+      this.repliesAmountToShow = this.totalRepliesAmount;
+    else
+      this.repliesAmountToShow += this.repliesIncrement;
+    this.loadAdditionalReplies(this.repliesIncrement);
   }
 
   loadAdditionalReplies(amount: number): void {
+    console.log("load additional replies");
     this.postService.getCommentsReplies(this.comment.pk, this.replies.length, amount)
       .subscribe((replies: CommentReply[]): void => {
         this.replies.push(...replies);
       });
   };
+
+  toggleReplies(): void {
+    console.log("toggle");
+    if (this.repliesAmountToShow === 0) {
+      this.showMoreReplies();
+    }
+    this.showReplies = !this.showReplies;
+  }
 }

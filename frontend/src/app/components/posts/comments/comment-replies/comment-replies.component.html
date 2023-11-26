@@ -1,1 +1,14 @@
-<app-comment-reply [reply]="reply" *ngFor="let reply of replies"></app-comment-reply>
+<app-comment-reply [reply]="reply" *ngFor="let reply of (showReplies? replies : [])"></app-comment-reply>
+<div class="replies-control-buttons" *ngIf="totalRepliesAmount">
+  <div
+    class="show-more-replies"
+    (click)="showMoreReplies()"
+    *ngIf="showReplies && this.totalRepliesAmount != this.repliesAmountToShow"
+  >
+    show more replies
+  </div>
+  <div class="toggle-show-replies" (click)="toggleReplies()">
+    <span *ngIf="showReplies">hide replies</span>
+    <span *ngIf="!showReplies">show replies ({{ totalRepliesAmount }})</span>
+  </div>
+</div>
