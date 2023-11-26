@@ -12,15 +12,36 @@ export class CommentsComponent implements OnInit {
   @Input() post!: Post;
   comments: Comment[] = [];
   commentsAmountPerRequest: number = 5;
+  totalCommentsAmount: number = 0;
+  showLoadMoreCommentsButton: boolean = false;
 
   constructor(private postService: PostService) {}
 
   ngOnInit(): void {
-    this.loadAdditionalComments();
+    this.setTotalCommentsAmount();
   }
 
-  loadAdditionalComments(): void {
-    this.postService.getPostComments(this.post.pk, this.comments.length, this.commentsAmountPerRequest)
+  setTotalCommentsAmount(): void {
+    this.postService.getCommentsAmount(this.post.pk)
+      .subscribe((totalCommentsAmount: number): void => {
+        this.totalCommentsAmount = totalCommentsAmount;
+        if (this.totalCommentsAmount != 0)
+          this.showLoadMoreCommentsButton = true;
+        this.loadAdditionalComments(this.commentsAmountPerRequest);
+      });
+  }
+
+  showMoreComments(): void {
+    let amount: number = this.commentsAmountPerRequest;
+    if (this.totalCommentsAmount - this.comments.length - this.commentsAmountPerRequest <= 0) {
+      amount = this.totalCommentsAmount - this.comments.length;
+      this.showLoadMoreCommentsButton = false;
+    }
+    this.loadAdditionalComments(amount);
+  }
+
+  loadAdditionalComments(amount: number): void {
+    this.postService.getPostComments(this.post.pk, this.comments.length, amount)
       .subscribe((comments: Comment[]): void => {
         this.comments.push(...comments);
       });

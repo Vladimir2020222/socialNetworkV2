@@ -101,4 +101,10 @@ export class PostService {
       serverUrl + `feed/comment_replies/${commentPk}/amount`
     )
   }
+
+  getCommentsAmount(postPk: number): Observable<number> {
+    return this.http.get<number>(
+      serverUrl + `feed/post/${postPk}/comments/amount`
+    );
+  }
 }
