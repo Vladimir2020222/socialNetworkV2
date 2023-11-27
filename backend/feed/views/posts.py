@@ -36,7 +36,7 @@ class AddPostToViewedAPIView(GetUserMixin, GenericAPIView):
         file = open((settings.MEDIA_URL + '1x1.png')[1:], mode='rb')
         response = HttpResponse(file.read(), content_type='image/jpeg')
         file.close()
-        if user:
+        if user.is_authenticated:
             post = Post.objects.get(pk=pk)
             post.viewed_by.add(user)
             return response
@@ -120,7 +120,13 @@ class PostDislikedByAPIView(GenericAPIView):
         return Response(disliked_by)
 
 
-class GetCommentsAmountAPIView(GenericAPIView):
+class GetRepliesAmountAPIView(GenericAPIView):
     def get(self, request, pk):
         amount = Reply.objects.filter(to_id=pk).count()
+        return Response(amount)
+
+
+class GetCommentsAmountAPIView(GenericAPIView):
+    def get(self, request, pk):
+        amount = Comment.objects.filter(post_id=pk).count()
         return Response(amount)
