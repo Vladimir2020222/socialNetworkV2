@@ -10,7 +10,7 @@
   <div class="post-rate">
     {{ object.dislikes }}
     <img *ngIf="object.current_user_rate === LikeableRateEnum.dislike; else notDisliked"
-         ngSrc="assets/activeDisikeButtion.svg" width="60" height="60">
+         ngSrc="assets/activeDislikeButton.svg" width="60" height="60">
     <ng-template #notDisliked>
       <img ngSrc="assets/inactiveDislikeButton.svg" height="60" width="60">
     </ng-template>
