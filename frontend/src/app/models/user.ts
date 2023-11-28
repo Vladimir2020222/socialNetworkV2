@@ -1,5 +1,6 @@
-export interface User {
-  pk: number,
+import { PkMixin } from "./pk-mixin";
+
+export interface User extends PkMixin {
   username: string,
   first_name: string | null,
   last_name: string | null,
