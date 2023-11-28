@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class PostRateEnum(Enum):
+class RateEnum(Enum):
     none = 0
     like = 1
     dislike = 2

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from feed.enums import PostRateEnum
+from feed.enums import RateEnum
 from feed.models import Post, Comment, Reply
 
 
@@ -21,12 +21,12 @@ class BaseLikeableSerializer(serializers.Serializer):
     def get_current_user_rate(self, obj):
         user = self.context['request'].user
         if user.is_anonymous:
-            return PostRateEnum.none.value
+            return RateEnum.none.value
         if obj.liked_by.contains(user):
-            return PostRateEnum.like.value
+            return RateEnum.like.value
         if obj.disliked_by.contains(user):
-            return PostRateEnum.dislike.value
-        return PostRateEnum.none.value
+            return RateEnum.dislike.value
+        return RateEnum.none.value
 
 
 class PostSerializer(serializers.ModelSerializer, BaseLikeableSerializer):
