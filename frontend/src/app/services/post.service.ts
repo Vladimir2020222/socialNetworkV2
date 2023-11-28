@@ -89,13 +89,19 @@ export class PostService {
 
   getCommentsReplies(commentPk: number, offset: number, amount: number): Observable<CommentReply[]> {
     return this.http.get<CommentReply[]>(
-      serverUrl + `feed/comment_replies/${commentPk}?offset=${offset}&amount=${amount}`
+      serverUrl + `feed/comment_replies/${commentPk}?offset=${offset}&amount=${amount}`,
+      {
+        withCredentials: true
+      }
     )
   }
 
   getPostComments(postPk: number, offset: number, amount: number): Observable<Comment[]> {
     return this.http.get<Comment[]>(
-      serverUrl + `feed/post/${postPk}/comments?offset=${offset}&amount=${amount}`
+      serverUrl + `feed/post/${postPk}/comments?offset=${offset}&amount=${amount}`,
+      {
+        withCredentials: true
+      }
     );
   }
 
