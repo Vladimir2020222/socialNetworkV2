@@ -16,8 +16,5 @@ urlpatterns = [
     path('comment_replies/<int:pk>/amount', GetRepliesAmountAPIView.as_view(), name='get_comments_amount'),
     path('post/<int:pk>/comments/amount', GetCommentsAmountAPIView.as_view(), name='get_comments_amount'),
 
-    path('like/<int:pk>', LikePostAIPView.as_view(), name='like_post'),
-    path('remove_like/<int:pk>', RemoveLikeAPIView.as_view(), name='remove_like_from_post'),
-    path('dislike/<int:pk>', DislikePostAPIView.as_view(), name='dislike_post'),
-    path('remove_dislike/<int:pk>', RemoveDislikeAPIView.as_view(), name='remove_dislike_from_post')
+    path('<str:action>/<str:model>/<int:pk>', RateAPIView.as_view(), name='rate')
 ]
