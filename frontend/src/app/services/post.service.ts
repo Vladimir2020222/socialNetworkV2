@@ -110,4 +110,30 @@ export class PostService {
       serverUrl + `feed/post/${postPk}/comments/amount`
     );
   }
+
+  like(pk: number, objectName: string): void {
+    this._rate(pk, objectName, 'like');
+  }
+
+  dislike(pk: number, objectName: string): void {
+    this._rate(pk, objectName, 'dislike');
+  }
+
+  removeLike(pk: number, objectName: string): void {
+    this._rate(pk, objectName, 'remove_like');
+  }
+
+  removeDislike(pk: number, objectName: string): void {
+    this._rate(pk, objectName, 'remove_dislike')
+  }
+
+  private _rate(pk: number, objectName: string, action: string): void {
+    this.http.post(
+      serverUrl + `feed/${action}/${objectName}/${pk}`,
+      null,
+      {
+        withCredentials: true
+      }
+    )
+  }
 }

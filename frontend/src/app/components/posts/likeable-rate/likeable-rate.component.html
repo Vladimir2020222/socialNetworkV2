@@ -1,13 +1,13 @@
 <div class="rates">
-  <div class="post-rate">
+  <div class="post-rate" (click)="likeClick()">
     {{ object.likes }}
     <img *ngIf="object.current_user_rate === LikeableRateEnum.like; else notLiked"
          ngSrc="assets/activeLikeButtion.svg" width="60" height="60">
     <ng-template #notLiked>
       <img ngSrc="assets/inactiveLikeButton.svg" height="60" width="60">
     </ng-template>
-  </div>
-  <div class="post-rate">
+  </div >
+  <div class="post-rate" (click)="dislikeClick()">
     {{ object.dislikes }}
     <img *ngIf="object.current_user_rate === LikeableRateEnum.dislike; else notDisliked"
          ngSrc="assets/activeDislikeButton.svg" width="60" height="60">
