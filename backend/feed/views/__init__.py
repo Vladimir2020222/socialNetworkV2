@@ -1,8 +1,7 @@
 from .posts import PostAPIView, AddPostToViewedAPIView, GetAdditionalPostsForFeedAPIView, AddImagesToPostAPIView, \
     PostLikedByAPIView, PostDislikedByAPIView, GetRepliesAmountAPIView, GetCommentsAmountAPIView
 from .scrollable import PostsByUserScrollableAPIView, CommentRepliesScrollableAPIView, PostCommentsScrollableAPIView
-from .likes import LikePostAIPView, RemoveLikeAPIView, RemoveDislikeAPIView, DislikePostAPIView
-
+from .likes import RateAPIView
 
 __all__ = [
     'PostAPIView',
@@ -11,10 +10,7 @@ __all__ = [
     'GetAdditionalPostsForFeedAPIView',
     'PostLikedByAPIView',
     'PostDislikedByAPIView',
-    'LikePostAIPView',
-    'RemoveLikeAPIView',
-    'DislikePostAPIView',
-    'RemoveDislikeAPIView',
+    'RateAPIView',
     'PostsByUserScrollableAPIView',
     'CommentRepliesScrollableAPIView',
     'PostCommentsScrollableAPIView',
