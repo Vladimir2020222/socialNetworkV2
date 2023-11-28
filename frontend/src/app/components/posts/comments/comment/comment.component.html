@@ -2,7 +2,7 @@
   <p class="comment-text">
     {{ comment.text }}
   </p>
-  <app-likeable-rate [object]="comment"></app-likeable-rate>
+  <app-likeable-rate [object]="comment" objectName="comment"></app-likeable-rate>
   <div class="replies-wrapper">
       <app-comment-replies [comment]="comment"></app-comment-replies>
   </div>

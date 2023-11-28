@@ -17,12 +17,30 @@ export class LikeableRateComponent {
   constructor(private postService: PostService) {}
 
   likeClick(): void {
-    (this.object.current_user_rate === LikeableRateEnum.like ?
-      this.postService.removeLike : this.postService.like)(this.object.pk, this.objectName);
+    if (this.object.current_user_rate === LikeableRateEnum.like) {
+      this.postService.removeLike(this.object.pk, this.objectName);
+      this.object.current_user_rate = LikeableRateEnum.none;
+      this.object.likes--;
+    } else {
+      this.postService.like(this.object.pk, this.objectName);
+      if (this.object.current_user_rate === LikeableRateEnum.dislike)
+        this.object.dislikes--;
+      this.object.current_user_rate = LikeableRateEnum.like;
+      this.object.likes++;
+    }
   }
 
   dislikeClick(): void {
-    (this.object.current_user_rate === LikeableRateEnum.like ?
-      this.postService.removeDislike : this.postService.dislike)(this.object.pk, this.objectName);
+    if (this.object.current_user_rate === LikeableRateEnum.dislike) {
+      this.postService.removeDislike(this.object.pk, this.objectName);
+      this.object.current_user_rate = LikeableRateEnum.none
+      this.object.dislikes--;
+    } else {
+      this.postService.dislike(this.object.pk, this.objectName);
+      if (this.object.current_user_rate === LikeableRateEnum.like)
+        this.object.likes--;
+      this.object.current_user_rate = LikeableRateEnum.dislike;
+      this.object.dislikes++;
+    }
   }
 }

@@ -1,7 +1,7 @@
 <div class="post content-block-border">
   <p class="post-text">{{ post.text }}</p>
   <app-post-images [images]="post.images" *ngIf="post.images.length"></app-post-images>
-  <app-likeable-rate [object]="post"></app-likeable-rate>
+  <app-likeable-rate [object]="post" objectName="post"></app-likeable-rate>
   <div class="comments-wrapper">
     <app-comments [post]="post" *ngIf="showComments"></app-comments>
   </div>

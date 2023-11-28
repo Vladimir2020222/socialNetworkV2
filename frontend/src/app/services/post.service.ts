@@ -134,6 +134,6 @@ export class PostService {
       {
         withCredentials: true
       }
-    )
+    ).subscribe();
   }
 }
