@@ -81,6 +81,9 @@ export class PostService {
   getPostsByUser(userPk: number, offset: number, amount: number): Observable<Post[]> {
     return this.http.get<Post[]>(
       serverUrl + `feed/posts/by/${userPk}?offset=${offset}&amount=${amount}`,
+      {
+        withCredentials: true
+      }
     );
   }
 
