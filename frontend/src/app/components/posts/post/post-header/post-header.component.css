@@ -1,0 +1,23 @@
+.author-ava {
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 90px;
+  height: 90px;
+}
+
+.user-data-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.user-name-wrapper {
+  display: inline-block;
+  position: relative;
+  height: 90px;
+  width: 500px;
+}
+
+.user-name {
+  position: absolute;
+  font-size: 24px;
+}

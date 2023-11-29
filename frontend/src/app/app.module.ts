@@ -39,6 +39,7 @@ import { CommentRepliesComponent } from './components/posts/comments/comment-rep
 import { LikeableRateComponent } from './components/posts/likeable-rate/likeable-rate.component';
 import { CommentsComponent } from './components/posts/comments/comments/comments.component';
 import { CommentReplyComponent } from './components/posts/comments/comment-reply/comment-reply.component';
+import { PostHeaderComponent } from './components/posts/post/post-header/post-header.component';
 
 
 @NgModule({
@@ -71,6 +72,7 @@ import { CommentReplyComponent } from './components/posts/comments/comment-reply
     LikeableRateComponent,
     CommentsComponent,
     CommentReplyComponent,
+    PostHeaderComponent,
   ],
     imports: [
         BrowserModule,

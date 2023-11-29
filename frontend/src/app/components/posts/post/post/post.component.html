@@ -1,4 +1,5 @@
 <div class="post content-block-border">
+  <app-post-header [post]="post"></app-post-header>
   <p class="post-text">{{ post.text }}</p>
   <app-post-images [images]="post.images" *ngIf="post.images.length"></app-post-images>
   <app-likeable-rate [object]="post" objectName="post"></app-likeable-rate>
