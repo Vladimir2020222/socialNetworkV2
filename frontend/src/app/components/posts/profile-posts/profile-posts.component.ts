@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { User } from "../../../../models/user";
-import { PostService } from "../../../../services/post.service";
-import { Post } from "../../../../models/post";
+import { User } from "../../../models/user";
+import { Post } from "../../../models/post";
+import { PostService } from "../../../services/post.service";
 
 @Component({
   selector: 'app-profile-posts',
