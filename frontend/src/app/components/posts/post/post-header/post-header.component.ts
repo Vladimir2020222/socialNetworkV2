@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Post } from "../../../../models/post";
-import { PostService } from "../../../../services/post.service";
 import { User } from "../../../../models/user";
 import { AccountService } from "../../../../services/account.service";
 
@@ -11,13 +10,12 @@ import { AccountService } from "../../../../services/account.service";
 })
 export class PostHeaderComponent implements OnInit {
   @Input() post!: Post;
-  @Input() author: User | undefined;
+  author: User | undefined;
 
   constructor(private accountService: AccountService) {}
 
   ngOnInit(): void {
-    if (!this.author)
-      this.setAuthor();
+    this.setAuthor();
   }
 
   setAuthor(): void {
