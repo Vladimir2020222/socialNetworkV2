@@ -1,1 +1,3 @@
-<app-profile [user]="user" *ngIf="user"></app-profile>
+<app-profile [user]="user_" *ngFor="let user_ of (user ? [user] : [])"></app-profile>
+<!--this is necessary to avoid making ProfileComponent too complex;
+it makes angular not just to change value of input (user), but to destroy old component and create new-->
