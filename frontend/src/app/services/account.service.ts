@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, of, tap } from "rxjs";
 import { User } from "../models/user";
 import { serverUrl } from "../constants";
+import { usersCache } from "../cache/users-cache";
 
 
 
@@ -222,8 +223,14 @@ export class AccountService {
   }
 
   getUserById(id: number): Observable<User | null> {
+    const cache = usersCache.find(u => u.pk === id);
+    if (cache)
+      return of(cache);
     return this.http.get<User | null>(
       serverUrl + 'accounts/user/' + id
     )
+      .pipe(
+        tap((user: User | null): void => {if (user) usersCache.push(user)})
+      );
   }
 }
