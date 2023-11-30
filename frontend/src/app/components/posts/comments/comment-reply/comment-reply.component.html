@@ -1,6 +1,9 @@
 <div class="comment content-block-border">
   <app-author-mixin-header [object]="reply"></app-author-mixin-header>
   <p class="comment-text">
+    <span class="reply-answer-to-username" *ngFor="let to of replyToNames">
+      @{{ to }}
+    </span>
     {{ reply.text }}
   </p>
   <app-likeable-rate [object]="reply" objectName="reply"></app-likeable-rate>
