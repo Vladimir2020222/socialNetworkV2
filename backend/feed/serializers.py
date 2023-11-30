@@ -8,9 +8,17 @@ class BaseLikeableSerializer(serializers.Serializer):
     dislikes = serializers.SerializerMethodField()
     likes = serializers.SerializerMethodField()
     current_user_rate = serializers.SerializerMethodField()
+    pub_date = serializers.SerializerMethodField()
+    upd_date = serializers.SerializerMethodField()
 
     class Meta:
-        fields = ['likes', 'dislikes', 'current_user_rate']
+        fields = ['likes', 'dislikes', 'current_user_rate', 'pub_date', 'upd_date']
+
+    def get_pub_date(self, obj):
+        return obj.pub_date.strftime("%Y-%m-%d %H:%M:%S")
+
+    def get_upd_date(self, obj):
+        return obj.pub_date.strftime("%Y-%m-%d %H:%M:%S")
 
     def get_dislikes(self, obj):
         return obj.disliked_by.count()

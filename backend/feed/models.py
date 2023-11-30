@@ -5,6 +5,14 @@ from django.db import models
 User = get_user_model()
 
 
+class PublishedUpdatedDateMixin(models.Model):
+    pub_date = models.DateTimeField(auto_now_add=True)
+    upd_date = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
 class LikeableMixin(models.Model):
     liked_by = models.ManyToManyField(
         User,
@@ -26,7 +34,7 @@ class PostQuerySet(models.QuerySet):
     pass
 
 
-class Post(LikeableMixin):
+class Post(LikeableMixin, PublishedUpdatedDateMixin):
     objects = PostQuerySet.as_manager()
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -38,7 +46,7 @@ class CommentBaseQuerySet(models.QuerySet):
     pass
 
 
-class CommentBase(LikeableMixin):
+class CommentBase(LikeableMixin, PublishedUpdatedDateMixin):
     objects = CommentBaseQuerySet.as_manager()
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
