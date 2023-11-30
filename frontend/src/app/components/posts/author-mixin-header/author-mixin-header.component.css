@@ -10,11 +10,16 @@
   text-decoration: none;
 }
 
-.user-name-wrapper {
+.user-name-outer-wrapper {
   display: inline-block;
+  width: calc(100% - 100px);
+}
+
+.user-name-inner-wrapper {
   position: relative;
   height: 90px;
-  width: 500px;
+  width: 90%;
+  margin: 5px 0 0 10px;
 }
 
 .user-name {

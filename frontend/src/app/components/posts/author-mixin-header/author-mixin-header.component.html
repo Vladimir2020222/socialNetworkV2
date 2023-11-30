@@ -2,9 +2,11 @@
   <div class="user-data">
     <a class="user-data-link" [routerLink]="['/user', author.pk]">
       <img class="author-ava" src="{{ author.ava }}" alt="{{ author.pk }}">
-      <div class="user-name-wrapper">
-        <div class="user-name">
-          {{ author.first_name }} {{ author.last_name }}
+      <div class="user-name-outer-wrapper">
+        <div class="user-name-inner-wrapper">
+          <div class="user-name">
+            {{ author.first_name }} {{ author.last_name }}
+          </div>
         </div>
       </div>
     </a>
