@@ -161,7 +161,7 @@ export class PostService {
 
   createReply(commentPk: number, text: string): Observable<CommentReply> {
     return this.http.post<CommentReply>(
-      serverUrl + 'feed/comment/',
+      serverUrl + 'feed/reply',
       JSON.stringify({
         text: text,
         to: commentPk
