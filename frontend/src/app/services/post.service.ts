@@ -145,8 +145,11 @@ export class PostService {
 
   createComment(postPk: number, text: string): Observable<Comment> {
     return this.http.post<Comment>(
-      serverUrl + `feed/post/${postPk}/create_comment/`,
-      JSON.stringify({text: text}),
+      serverUrl + 'feed/comment',
+      JSON.stringify({
+        text: text,
+        post: postPk
+      }),
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json'
@@ -158,8 +161,11 @@ export class PostService {
 
   createReply(commentPk: number, text: string): Observable<CommentReply> {
     return this.http.post<CommentReply>(
-      serverUrl + `feed/comment/${commentPk}/create_reply`,
-      JSON.stringify({text: text}),
+      serverUrl + 'feed/comment/',
+      JSON.stringify({
+        text: text,
+        to: commentPk
+      }),
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json'
