@@ -1,4 +1,6 @@
 import { backendDatetimeType } from "./types/backend-datetime";
+import { usersCache } from "./cache/users-cache";
+import { User } from "./models/user";
 
 export function backendDatetimeToDateObject(date: backendDatetimeType): Date {
   return new Date(Date.parse(date));
@@ -25,5 +27,9 @@ export function getBackendDatetimeAge(date_: backendDatetimeType): string {
     return `${minutes} minutes ago`
   else
     return `${seconds} seconds ago`;
+}
+
+export function getUserFromCache(pk: number): User | undefined {
+  return usersCache.find((user: User): boolean => user.pk === pk);
 }
 

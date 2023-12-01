@@ -40,6 +40,7 @@ import { LikeableRateComponent } from './components/posts/likeable-rate/likeable
 import { CommentsComponent } from './components/posts/comments/comments/comments.component';
 import { CommentReplyComponent } from './components/posts/comments/comment-reply/comment-reply.component';
 import { AuthorMixinHeaderComponent } from "./components/posts/author-mixin-header/author-mixin-header.component";
+import { ReplyFormComponent } from './components/posts/comments/reply-form/reply-form.component';
 
 
 @NgModule({
@@ -73,6 +74,7 @@ import { AuthorMixinHeaderComponent } from "./components/posts/author-mixin-head
     CommentsComponent,
     CommentReplyComponent,
     AuthorMixinHeaderComponent,
+    ReplyFormComponent,
   ],
     imports: [
         BrowserModule,

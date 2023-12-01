@@ -7,9 +7,11 @@ import { PostService } from "../../../../services/post.service";
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.css']
 })
-export class CommentComponent implements OnInit {
+export class CommentComponent {
   @Input() comment!: Comment;
+  showReplyForm: boolean = false;
 
-  ngOnInit(): void {
+  showedRepliesAmountChanged(value: number): void {
+    this.showReplyForm = value != 0;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommentReply } from "../../../../models/comment-reply";
 import { PostService } from "../../../../services/post.service";
 import { Comment } from "../../../../models/comment"
@@ -11,6 +11,7 @@ import { Comment } from "../../../../models/comment"
 export class CommentRepliesComponent implements OnInit {
   @Input() comment!: Comment;
   replies: CommentReply[] = [];
+  @Output() showedRepliesAmount: EventEmitter<number> = new EventEmitter<number>();
   totalRepliesAmount: number = 0;
   repliesIncrement = 5;
   showReplies: boolean = false;
@@ -39,6 +40,8 @@ export class CommentRepliesComponent implements OnInit {
     this.postService.getCommentsReplies(this.comment.pk, this.replies.length, amount)
       .subscribe((replies: CommentReply[]): void => {
         this.replies.push(...replies);
+        if (this.showReplies)
+          this.showedRepliesAmount.emit(this.replies.length)
       });
   };
 
@@ -47,5 +50,9 @@ export class CommentRepliesComponent implements OnInit {
       this.showMoreReplies();
     }
     this.showReplies = !this.showReplies;
+    if (this.showReplies)
+      this.showedRepliesAmount.emit(this.replies.length);
+    else
+      this.showedRepliesAmount.emit(0);
   }
 }
