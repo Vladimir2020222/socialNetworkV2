@@ -13,5 +13,3 @@ export const themes: {[key: string]: Theme} = {
     'secondary-color': '#000000'
   }
 }
-
-export type likeableObjectsNames = "post" | "comment" | "reply";

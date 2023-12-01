@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { LikeableRateEnum } from "../../../enums/likeable-rate";
 import { Likeable } from "../../../models/likeable";
-import { likeableObjectsNames } from "../../../constants";
 import { PostService } from "../../../services/post.service";
+import { likeableObjectsNames } from "../../../types/likeable-objects-names";
 
 @Component({
   selector: 'app-likeable-rate',
