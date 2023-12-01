@@ -15,6 +15,7 @@ export class PostsComponent implements OnInit {
   constructor(private postService: PostService) {}
 
   ngOnInit(): void {
+    setTimeout(() => console.log(this.posts), 1000)
     if (!this.posts) {
       this.loadAdditionalPosts();
     } else {

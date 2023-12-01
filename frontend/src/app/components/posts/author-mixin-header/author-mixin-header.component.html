@@ -11,4 +11,8 @@
       </div>
     </a>
   </div>
+  <div class="time-data">
+    <div class="pub-age">{{ pubAge }}</div>
+    <div class="upd-age" *ngIf="updAge != pubAge">{{ updAge }}</div>
+  </div>
 </div>

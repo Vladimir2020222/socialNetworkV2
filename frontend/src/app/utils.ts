@@ -1,10 +1,10 @@
 import { backendDatetimeType } from "./types/backend-datetime";
 
-function backendDatetimeToDateObject(date: backendDatetimeType): Date {
+export function backendDatetimeToDateObject(date: backendDatetimeType): Date {
   return new Date(Date.parse(date));
 }
 
-function getBackendDatetimeAge(date_: backendDatetimeType): string {
+export function getBackendDatetimeAge(date_: backendDatetimeType): string {
   const date: Date = backendDatetimeToDateObject(date_);
   const now: Date = new Date();
   const seconds: number = now.getUTCSeconds() - date.getUTCSeconds();
