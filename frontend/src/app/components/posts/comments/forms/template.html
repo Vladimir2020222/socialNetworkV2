@@ -1,0 +1,10 @@
+<div class="main-input-wrapper">
+  <label [for]="getIdForMainInputElement()">
+    <div class="main-div-input">
+      {{ text }}
+      <span *ngIf="text === '' && document.activeElement != mainInput">{{ placeholder }}</span>
+    </div>
+  </label>
+  <input class="main-input" [id]="getIdForMainInputElement()" [(ngModel)]="text" #mainInput>
+  <button type="button" (click)="submit()">send</button>
+</div>
