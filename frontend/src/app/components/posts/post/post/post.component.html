@@ -4,7 +4,7 @@
   <app-post-images [images]="post.images" *ngIf="post.images.length"></app-post-images>
   <app-likeable-rate [object]="post" objectName="post"></app-likeable-rate>
   <div class="comments-wrapper">
-    <app-reply-form [object]="post" objectName="post" *ngIf="showComments"></app-reply-form>
+    <app-comment-form [post]="post" *ngIf="showComments"></app-comment-form>
     <app-comments [post]="post" *ngIf="showComments"></app-comments>
   </div>
   <div style="background-color: red; height: 20px; width: 20px" (click)="showComments=!showComments"></div>

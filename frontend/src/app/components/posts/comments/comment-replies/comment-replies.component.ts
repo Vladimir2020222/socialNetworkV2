@@ -12,6 +12,7 @@ export class CommentRepliesComponent implements OnInit {
   @Input() comment!: Comment;
   replies: CommentReply[] = [];
   @Output() showedRepliesAmount: EventEmitter<number> = new EventEmitter<number>();
+  @Output() clickedReplyPk: EventEmitter<number> = new EventEmitter<number>();
   totalRepliesAmount: number = 0;
   repliesIncrement = 5;
   showReplies: boolean = false;
@@ -20,6 +21,10 @@ export class CommentRepliesComponent implements OnInit {
 
   ngOnInit(): void {
     this.setTotalRepliesAmount();
+  }
+
+  clickedReply(pk: number): void {
+    this.clickedReplyPk.emit(pk);
   }
 
   setTotalRepliesAmount(): void {

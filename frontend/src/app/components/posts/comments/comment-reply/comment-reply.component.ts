@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommentReply } from "../../../../models/comment-reply";
 import { User } from "../../../../models/user";
 import { AccountService } from "../../../../services/account.service";
@@ -11,12 +11,17 @@ import { AccountService } from "../../../../services/account.service";
 export class CommentReplyComponent implements OnInit {
   @Input() reply!: CommentReply;
   @Input() allReplies!: CommentReply[];
+  @Output() clickedReplyPk: EventEmitter<number> = new EventEmitter<number>();
   replyToNames: string[] = [];
 
   constructor(private accountService: AccountService) {}
 
   ngOnInit(): void {
     this.setReplyToNames();
+  }
+
+  onclick(): void {
+    this.clickedReplyPk.emit(this.reply.pk);
   }
 
   setReplyToNames(): void {

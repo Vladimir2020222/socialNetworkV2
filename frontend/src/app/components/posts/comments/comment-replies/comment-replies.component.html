@@ -1,6 +1,7 @@
 <app-comment-reply
   [reply]="reply"
   [allReplies]="replies"
+  (clickedReplyPk)="clickedReply($event)"
   *ngFor="let reply of (showReplies? replies : [])"
 ></app-comment-reply>
 <div class="replies-control-buttons" *ngIf="totalRepliesAmount">

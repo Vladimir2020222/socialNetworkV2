@@ -10,6 +10,7 @@ import { PostService } from "../../../../services/post.service";
 export class CommentComponent {
   @Input() comment!: Comment;
   showReplyForm: boolean = false;
+  clickedReplyPk: number | null = null;
 
   showedRepliesAmountChanged(value: number): void {
     this.showReplyForm = value != 0;

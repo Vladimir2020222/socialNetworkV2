@@ -1,4 +1,4 @@
-<div class="comment content-block-border">
+<div class="comment content-block-border" (click)="onclick()">
   <app-author-mixin-header [object]="reply"></app-author-mixin-header>
   <p class="comment-text">
     <span class="reply-answer-to-username" *ngFor="let to of replyToNames">
