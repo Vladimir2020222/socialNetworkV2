@@ -1,5 +1,6 @@
 from .posts import PostAPIView, AddPostToViewedAPIView, GetAdditionalPostsForFeedAPIView, AddImagesToPostAPIView, \
-    PostLikedByAPIView, PostDislikedByAPIView, GetRepliesAmountAPIView, GetCommentsAmountAPIView
+    PostLikedByAPIView, PostDislikedByAPIView
+from .comments import GetCommentsAmountAPIView, GetRepliesAmountAPIView
 from .scrollable import PostsByUserScrollableAPIView, CommentRepliesScrollableAPIView, PostCommentsScrollableAPIView
 from .likes import RateAPIView
 

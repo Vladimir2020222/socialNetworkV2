@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
 from accounts.views.mixins import GetUserMixin
-from feed.models import Post, Image, Reply, Comment
+from feed.models import Post, Image
 from feed.serializers import PostSerializer
 
 
@@ -118,15 +118,3 @@ class PostDislikedByAPIView(GenericAPIView):
         post = Post.objects.get(pk=pk)
         disliked_by = post.dsiliked_by.values_list('pk', flat=True)
         return Response(disliked_by)
-
-
-class GetRepliesAmountAPIView(GenericAPIView):
-    def get(self, request, pk):
-        amount = Reply.objects.filter(to_id=pk).count()
-        return Response(amount)
-
-
-class GetCommentsAmountAPIView(GenericAPIView):
-    def get(self, request, pk):
-        amount = Comment.objects.filter(post_id=pk).count()
-        return Response(amount)
