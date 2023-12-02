@@ -4,7 +4,9 @@
     <span class="reply-answer-to-username" *ngFor="let to of replyToNames">
       @{{ to }}
     </span>
-    {{ reply.text }}
+    <span class="whitespace-pre">
+      {{ reply.text }}
+    </span>
   </p>
   <app-likeable-rate [object]="reply" objectName="reply"></app-likeable-rate>
 </div>

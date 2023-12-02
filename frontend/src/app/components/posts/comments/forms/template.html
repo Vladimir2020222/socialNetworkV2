@@ -1,14 +1,14 @@
 <div class="main-input-wrapper">
   <label [for]="getIdForMainInputElement()">
     <div class="main-div-input">
-      <span class="main-div-input-text text-before-caret">
+      <span class="whitespace-pre main-div-input-text text-before-caret">
         {{ text.slice(0, text.length - caretOffset) }}
       </span>
       <span *ngIf="text === '' && document.activeElement != mainInputElement; else caret">{{ placeholder }}</span>
       <ng-template #caret>
         <div class="caret" [style.opacity]="showCaret ? '1' : '0'">|</div>
       </ng-template>
-      <span class="main-div-input-text text-after-caret">
+      <span class="whitespace-pre main-div-input-text text-after-caret">
         {{ text.slice(text.length - caretOffset, text.length) }}
       </span>
     </div>
