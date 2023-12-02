@@ -1,24 +1,36 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
+import {
+  Component, ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChange,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import { Comment } from "../../../../../models/comment";
 import { PostService } from "../../../../../services/post.service";
 import { CommentReply } from "../../../../../models/comment-reply";
 import { User } from "../../../../../models/user";
 import { getUserFromCache } from "../../../../../utils";
+import { Common } from "../common";
 
 @Component({
   selector: 'app-reply-form',
   templateUrl: '../template.html',
   styleUrls: ['../styles.css']
 })
-export class ReplyFormComponent implements OnChanges {
+export class ReplyFormComponent extends Common implements OnChanges {
   readonly document = document;
   @Input() comment!: Comment;
   @Output() newReply: EventEmitter<CommentReply> = new EventEmitter<CommentReply>();
   @Input() replyTo: number[] = [];
   @Input() clickedReplyPk!: number | null;
-  text: string = '';
 
-  constructor(private postService: PostService) {}
+  constructor(private postService: PostService) {
+    super();
+  }
 
   getIdForMainInputElement(): string {
     return `main-input-comment-${this.comment.pk}`;
