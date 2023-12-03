@@ -11,7 +11,6 @@ export class Common {  // it is base class, so it should not be defined in any a
   @ViewChild('mainInputElement') mainInput!: ElementRef<HTMLInputElement>; // child classes must override this
 
   setCaretPosition(): void {
-    console.log(this.mainInput);
     const position: number = this.mainInput.nativeElement.selectionStart as number;
     this.caretOffset = this.text.length - position;
   }
