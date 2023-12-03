@@ -12,7 +12,7 @@ export function getBackendDatetimeAge(date_: backendDatetimeType): string {
   const seconds: number = now.getUTCSeconds() - date.getUTCSeconds();
   const minutes: number = now.getUTCMinutes() - date.getUTCMinutes();
   const hours: number = now.getUTCHours() - date.getUTCHours();
-  const days: number = now.getUTCDay() - date.getSeconds();
+  const days: number = now.getUTCDate() - date.getUTCDate();
   const months: number = now.getUTCMonth() - date.getUTCMonth();
   const years: number = now.getUTCFullYear() - date.getUTCFullYear();
   if (years !== 0)
