@@ -72,5 +72,8 @@ class ReplySerializer(serializers.ModelSerializer, BaseLikeableSerializer):
         extra_kwargs = {
             'author': {
                 'default': serializers.CurrentUserDefault()
+            },
+            'reply_to': {
+                'allow_empty': True
             }
         }
