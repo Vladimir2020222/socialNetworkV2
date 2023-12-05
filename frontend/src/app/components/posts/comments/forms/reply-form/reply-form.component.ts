@@ -1,13 +1,11 @@
 import {
-  Component, ElementRef,
+  Component,
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChange,
   SimpleChanges,
-  ViewChild
 } from '@angular/core';
 import { Comment } from "../../../../../models/comment";
 import { PostService } from "../../../../../services/post.service";
@@ -63,6 +61,6 @@ export class ReplyFormComponent extends Common implements OnChanges {
   }
 
   submit(): void {
-      this.postService.createReply(this.comment.pk, this.text, this.replyTo).subscribe(this.submitCallback);
+      this.postService.createReply(this.comment.pk, this.text, this.replyTo).subscribe(this.submitCallback.bind(this));
   }
 }

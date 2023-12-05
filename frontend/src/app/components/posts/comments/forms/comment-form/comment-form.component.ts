@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Comment } from "../../../../../models/comment";
 import { PostService } from "../../../../../services/post.service";
 import { Post } from "../../../../../models/post";
@@ -28,6 +28,6 @@ export class CommentFormComponent extends Common {
   }
 
   submit(): void {
-    this.postService.createComment(this.post.pk, this.text).subscribe(this.submitCallback);
+    this.postService.createComment(this.post.pk, this.text).subscribe(this.submitCallback.bind(this));
   }
 }
