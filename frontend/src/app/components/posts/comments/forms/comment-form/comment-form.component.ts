@@ -25,6 +25,7 @@ export class CommentFormComponent extends Common {
 
   submitCallback(obj: Comment): void {
     this.newPost.emit(obj);
+    this.clear();
   }
 
   submit(): void {

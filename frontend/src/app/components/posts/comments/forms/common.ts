@@ -28,4 +28,8 @@ export class Common {  // it is base class, so it should not be defined in any a
   constructor() {
     setInterval(() => this.showCaret = !this.showCaret, 700);
   }
+
+  clear(): void {
+    this.text = '';
+  }
 }

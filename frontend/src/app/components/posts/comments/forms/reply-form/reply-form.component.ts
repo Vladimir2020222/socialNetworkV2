@@ -58,6 +58,7 @@ export class ReplyFormComponent extends Common implements OnChanges {
 
   submitCallback(obj: CommentReply): void {
     this.newReply.emit(obj);
+    this.clear();
   }
 
   submit(): void {
