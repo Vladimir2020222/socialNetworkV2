@@ -9,6 +9,7 @@ import {CommentReply} from "../../../../models/comment-reply";
 })
 export class CommentComponent {
   @Input() comment!: Comment;
+  console = console;
   newReplies: CommentReply[] = [];
   showReplyForm: boolean = false;
   clickedReplyPk: number | null = null;

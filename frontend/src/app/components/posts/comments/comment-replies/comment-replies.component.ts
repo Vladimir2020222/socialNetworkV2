@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import { CommentReply } from "../../../../models/comment-reply";
 import { PostService } from "../../../../services/post.service";
 import { Comment } from "../../../../models/comment"
@@ -8,7 +8,7 @@ import { Comment } from "../../../../models/comment"
   templateUrl: './comment-replies.component.html',
   styleUrls: ['./comment-replies.component.css']
 })
-export class CommentRepliesComponent implements OnInit {
+export class CommentRepliesComponent implements OnInit, OnChanges {
   @Input() comment!: Comment;
   replies: CommentReply[] = [];
   @Input() newReplies: CommentReply[] = [];
@@ -19,6 +19,12 @@ export class CommentRepliesComponent implements OnInit {
   showReplies: boolean = false;
 
   constructor(private postService: PostService) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['newReplies']) {
+      this.showReplies = true;
+    }
+  }
 
   ngOnInit(): void {
     this.setTotalRepliesAmount();
