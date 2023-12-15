@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Post } from "../../../../models/post";
+import { Comment } from "../../../../models/comment";
 import { PostService } from "../../../../services/post.service";
 import { serverUrl } from "../../../../constants";
 
@@ -11,6 +12,7 @@ import { serverUrl } from "../../../../constants";
 })
 export class PostComponent {
   @Input() post!: Post;
+  newComments: Comment[] = [];
   showComments: boolean = false;
   @Output() outPostIdViewed: EventEmitter<number> = new EventEmitter<number>;
 

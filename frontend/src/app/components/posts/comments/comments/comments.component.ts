@@ -10,6 +10,7 @@ import { Comment } from "../../../../models/comment";
 })
 export class CommentsComponent implements OnInit {
   @Input() post!: Post;
+  @Input() newComments: Comment[] = [];
   comments: Comment[] = [];
   commentsAmountPerRequest: number = 5;
   totalCommentsAmount: number = 0;

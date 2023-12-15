@@ -1,4 +1,4 @@
-<app-comment [comment]="comment" *ngFor="let comment of comments"></app-comment>
+<app-comment [comment]="comment" *ngFor="let comment of newComments.concat(comments)"></app-comment>
 <div class="load-more-comments" (click)="showMoreComments()" *ngIf="showLoadMoreCommentsButton">
   load more comments ({{ totalCommentsAmount - comments.length }})
 </div>

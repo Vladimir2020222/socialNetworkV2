@@ -13,7 +13,7 @@ export class CommentFormComponent extends Common {
   readonly document = document;
   readonly placeholder: string = "leave a comment";
   @Input() post!: Post;
-  @Output() newPost: EventEmitter<Comment> = new EventEmitter<Comment>();
+  @Output() newComment: EventEmitter<Comment> = new EventEmitter<Comment>();
 
   constructor(private postService: PostService) {
     super();
@@ -24,7 +24,7 @@ export class CommentFormComponent extends Common {
   }
 
   submitCallback(obj: Comment): void {
-    this.newPost.emit(obj);
+    this.newComment.emit(obj);
     this.clear();
   }
 

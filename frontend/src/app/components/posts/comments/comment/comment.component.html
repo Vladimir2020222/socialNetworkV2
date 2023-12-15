@@ -5,9 +5,15 @@
   </p>
   <app-likeable-rate [object]="comment" objectName="comment"></app-likeable-rate>
   <div class="replies-wrapper">
-    <app-reply-form [comment]="comment" [clickedReplyPk]="clickedReplyPk" *ngIf="showReplyForm"></app-reply-form>
+    <app-reply-form
+      [comment]="comment"
+      [clickedReplyPk]="clickedReplyPk"
+      *ngIf="showReplyForm"
+      (newReply)="newReplies.unshift($event)"
+    ></app-reply-form>
     <app-comment-replies
             [comment]="comment"
+            [newReplies]="newReplies"
             (clickedReplyPk)="clickedReplyPk = $event"
             (showedRepliesAmount)="showedRepliesAmountChanged($event)"
     ></app-comment-replies>

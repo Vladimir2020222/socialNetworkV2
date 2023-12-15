@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Comment} from "../../../../models/comment";
-import { PostService } from "../../../../services/post.service";
+import {CommentReply} from "../../../../models/comment-reply";
 
 @Component({
   selector: 'app-comment',
@@ -9,6 +9,7 @@ import { PostService } from "../../../../services/post.service";
 })
 export class CommentComponent {
   @Input() comment!: Comment;
+  newReplies: CommentReply[] = [];
   showReplyForm: boolean = false;
   clickedReplyPk: number | null = null;
 

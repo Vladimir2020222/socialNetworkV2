@@ -11,6 +11,7 @@ import { Comment } from "../../../../models/comment"
 export class CommentRepliesComponent implements OnInit {
   @Input() comment!: Comment;
   replies: CommentReply[] = [];
+  @Input() newReplies: CommentReply[] = [];
   @Output() showedRepliesAmount: EventEmitter<number> = new EventEmitter<number>();
   @Output() clickedReplyPk: EventEmitter<number> = new EventEmitter<number>();
   totalRepliesAmount: number = 0;
