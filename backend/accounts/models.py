@@ -15,8 +15,6 @@ class User(AbstractUser):
 
     def subscribe(self, to):
         assert self != to, 'it is impossible to subscribe to yourself'
-        if self.is_subscribed_to(to):
-            return
         to.subscribers.add(self)
 
     def unsubscribe(self, from_):
