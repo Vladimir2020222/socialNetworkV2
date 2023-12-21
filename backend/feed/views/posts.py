@@ -11,7 +11,7 @@ from rest_framework.response import Response
 
 from accounts.utils import api_login_required
 from accounts.views.mixins import GetUserMixin
-from common.mixins import CachedGetObjectMixin
+from feed.mixins import BaseAuthorMixin
 from feed.models import Post, Image
 from feed.serializers import PostSerializer
 
@@ -73,36 +73,10 @@ class GetAdditionalPostsForFeedAPIView(GetUserMixin, GenericAPIView):
 
 
 class PostAPIView(
-    CachedGetObjectMixin,
-    CreateModelMixin,
-    DestroyModelMixin,
-    UpdateModelMixin,
-    RetrieveModelMixin,
+    BaseAuthorMixin,
     GenericAPIView
 ):
     serializer_class = PostSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly, )
-
-    def get(self, request, pk):
-        return self.retrieve(request)
-
-    @method_decorator(api_login_required)
-    def post(self, request):
-        return self.create(request)
-
-    @method_decorator(api_login_required)
-    def delete(self, request, pk):
-        if self.get_object().author == request.user:
-            self.destroy(request)
-        else:
-            return Response('You can not delete this post because you are not its author')
-
-    @method_decorator(api_login_required)
-    def patch(self, request, pk):
-        if self.get_object().authour == request.user:
-            self.partial_update(request)
-        else:
-            return Response('You can not edit this post because you are not its author')
 
 
 class PostLikedByAPIView(GenericAPIView):
