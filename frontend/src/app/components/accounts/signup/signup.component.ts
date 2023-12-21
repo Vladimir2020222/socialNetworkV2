@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
 import { AccountService } from "../../../services/account.service";
 import { Router } from "@angular/router";
+import {User} from "../../../models/user";
 
 @Component({
   selector: 'app-signup',
@@ -29,7 +30,9 @@ export class SignupComponent implements OnInit {
       this.passwordMatches = false;
       return;
     }
-    this.accountService.signup(data);
-    this.router.navigate(['accounts/profile']);
+    this.accountService.signup(data).subscribe(
+      (user: User): void => {
+        this.router.navigate(['accounts/profile']);}
+    );
   }
 }

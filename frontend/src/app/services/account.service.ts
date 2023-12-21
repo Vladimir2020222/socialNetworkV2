@@ -58,8 +58,8 @@ export class AccountService {
       .subscribe(value => {});
   }
 
-  login({username, password}: {username: string, password: string}): void {
-    this.http.post<User>(
+  login({username, password}: {username: string, password: string}): Observable<User> {
+    return this.http.post<User>(
       serverUrl + 'accounts/login',
       JSON.stringify({username: username, password: password}),
       {
@@ -67,14 +67,19 @@ export class AccountService {
         headers: new HttpHeaders({
           'Content-Type': 'application/json'
         })
-      }).subscribe(user => {this.userProfile.next(user)})
+      })
+      .pipe(
+        tap(
+          user => {this.userProfile.next(user)}
+        )
+      );
   }
 
   signup(
     {username, password, firstName, lastName}:
       {username: string, password: string, firstName: string, lastName: string}
-  ): void {
-    this.http.post<User>(
+  ): Observable<User> {
+    return this.http.post<User>(
       serverUrl + 'accounts/signup',
       JSON.stringify({username: username, password: password, first_name: firstName, last_name: lastName}),
       {
@@ -83,7 +88,11 @@ export class AccountService {
           'Content-Type': 'application/json'
         })
       }
-    ).subscribe(user => {this.userProfile.next(user)})
+    ).pipe(
+      tap(
+        user => {this.userProfile.next(user)}
+      )
+    );
   }
 
   changeUserProfile(data: Partial<User>): void {
