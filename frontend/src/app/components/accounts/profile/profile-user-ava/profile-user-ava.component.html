@@ -3,10 +3,17 @@
     class="user-ava"
     [src]="user.ava"
     alt="ava"
-    (mouseenter)="showChangeButton = true"
-    (mouseleave)="showChangeButton = false;"
+    (mouseenter)="mouseenter($event)"
+    (mouseleave)="mouseleave($event)"
+    #ava
   >
-  <div class=profile-change-ava-wrapper [hidden]="!showChangeButton">
+  <div
+    class=profile-change-ava-wrapper
+    [hidden]="!showChangeButton"
+    (mouseenter)="mouseenter($event)"
+    (mouseleave)="mouseleave($event)"
+    #button
+  >
     <app-profile-change-ava></app-profile-change-ava>
   </div>
 </div>

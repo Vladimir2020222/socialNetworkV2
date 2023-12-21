@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import { User } from "../../../../models/user";
 import { serverUrl } from "../../../../constants";
 
@@ -11,4 +11,17 @@ export class ProfileUserAvaComponent {
   protected readonly serverUrl = serverUrl;
   @Input() user!: User;
   showChangeButton: boolean = false;
+  @ViewChild('ava') ava!: ElementRef<HTMLImageElement>;
+  @ViewChild('button') button!: ElementRef<HTMLDivElement>;
+
+  mouseenter(event: MouseEvent): void {
+    this.showChangeButton = true;
+  }
+
+  mouseleave(event: MouseEvent): void {
+    // @ts-ignore
+    const element = event.toElement;
+    if (element !== this.ava.nativeElement)
+      this.showChangeButton = false;
+  }
 }
