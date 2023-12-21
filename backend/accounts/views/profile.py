@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.template import loader
+from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import UpdateModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
@@ -18,12 +19,16 @@ class ProfileAPIView(RetrieveModelMixin, UpdateModelMixin, GenericAPIView):
     serializer_class = UserSerializer
 
     def get(self, request):
+        if request.user.is_anonymous:
+            return Response(None, status=status.HTTP_204_NO_CONTENT)
         return self.retrieve(request)
 
     def patch(self, request):
+        if request.user.is_anonymous:
+            return Response(None, status=status.HTTP_204_NO_CONTENT)
         return self.update(request, partial=True)
 
-    def get_user(self):
+    def get_object(self):
         return self.request.user
 
 
