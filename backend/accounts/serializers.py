@@ -38,7 +38,7 @@ class UserSerializer(serializers.ModelSerializer):
         return True
 
     def get_subscribers_count(self, user):
-        return user.subscribers.count()
+        return user.subscribers.count() if user.is_authenticated else 0
 
     def get_posts_count(self, user):
-        return user.post_set.count()
+        return user.post_set.count() if user.is_authenticated else 0

@@ -3,11 +3,13 @@ from django.contrib.auth import get_user_model
 from django.core.files.images import ImageFile
 from django.db.models import Subquery
 from django.http import HttpResponse
+from django.utils.decorators import method_decorator
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, UpdateModelMixin, RetrieveModelMixin
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
+from accounts.utils import api_login_required
 from accounts.views.mixins import GetUserMixin
 from feed.models import Post, Image
 from feed.serializers import PostSerializer
@@ -19,6 +21,7 @@ User = get_user_model()
 class AddImagesToPostAPIView(GenericAPIView):
     queryset = Post.objects.all()
 
+    @method_decorator(api_login_required)
     def post(self, request, pk):
         post = Post.objects.get(pk=pk)
         if not request.user == post.author:
@@ -79,9 +82,11 @@ class PostAPIView(CreateModelMixin,
     def get(self, request, pk):
         return self.retrieve(request)
 
+    @method_decorator(api_login_required)
     def post(self, request):
         return self.create(request)
 
+    @method_decorator(api_login_required)
     def delete(self, request, pk):
         user = request.user
         self.post_ = self.get_object()
@@ -90,6 +95,7 @@ class PostAPIView(CreateModelMixin,
         else:
             return Response('You can not delete this post because you are not its author')
 
+    @method_decorator(api_login_required)
     def patch(self, request, pk):
         user = request.user
         self.post_ = self.get_object()
