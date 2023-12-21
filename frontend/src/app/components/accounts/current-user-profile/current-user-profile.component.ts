@@ -14,14 +14,19 @@ export class CurrentUserProfileComponent implements OnInit {
   constructor(private accountService: AccountService, private router: Router) {}
 
   ngOnInit(): void {
-    this.accountService.userProfile
-      .subscribe(
-	      (user: User | null): void => {
-          this.user = user;
-          if (user === null) {
-            this.router.navigate(['accounts/login']);
-          }
+    this.accountService.userIsInitialized
+      .subscribe((value: boolean): void => {
+        if (value) {
+          this.accountService.userProfile
+            .subscribe(
+              (user: User | null): void => {
+                this.user = user;
+                if (user === null) {
+                  this.router.navigate(['accounts/login']);
+                }
+              }
+            )
         }
-      )
+      })
   }
 }
