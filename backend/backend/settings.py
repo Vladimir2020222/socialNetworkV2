@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'request',
     'rest_framework',
     'accounts',
-    'feed'
+    'feed',
+    'common',
 ]
 
 MIDDLEWARE = [

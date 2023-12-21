@@ -5,6 +5,7 @@ from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin, DestroyM
 from rest_framework.response import Response
 
 from accounts.utils import api_login_required
+from common.mixins import CachedGetObjectMixin
 from feed.models import Reply, Comment
 from feed.serializers import CommentSerializer, ReplySerializer
 
@@ -22,6 +23,7 @@ class GetCommentsAmountAPIView(GenericAPIView):
 
 
 class BaseCommentAPIMixin(
+    CachedGetObjectMixin,
     RetrieveModelMixin,
     CreateModelMixin,
     UpdateModelMixin,

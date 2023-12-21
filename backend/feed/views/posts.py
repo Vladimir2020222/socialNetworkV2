@@ -11,6 +11,7 @@ from rest_framework.response import Response
 
 from accounts.utils import api_login_required
 from accounts.views.mixins import GetUserMixin
+from common.mixins import CachedGetObjectMixin
 from feed.models import Post, Image
 from feed.serializers import PostSerializer
 
@@ -71,11 +72,14 @@ class GetAdditionalPostsForFeedAPIView(GetUserMixin, GenericAPIView):
         return Response(serializer.data)
 
 
-class PostAPIView(CreateModelMixin,
-                  DestroyModelMixin,
-                  UpdateModelMixin,
-                  RetrieveModelMixin,
-                  GenericAPIView):
+class PostAPIView(
+    CachedGetObjectMixin,
+    CreateModelMixin,
+    DestroyModelMixin,
+    UpdateModelMixin,
+    RetrieveModelMixin,
+    GenericAPIView
+):
     serializer_class = PostSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, )
 
@@ -88,26 +92,17 @@ class PostAPIView(CreateModelMixin,
 
     @method_decorator(api_login_required)
     def delete(self, request, pk):
-        user = request.user
-        self.post_ = self.get_object()
-        if self.post_.author == user:
+        if self.get_object().author == request.user:
             self.destroy(request)
         else:
             return Response('You can not delete this post because you are not its author')
 
     @method_decorator(api_login_required)
     def patch(self, request, pk):
-        user = request.user
-        self.post_ = self.get_object()
-        if self.post_.authour == user:
+        if self.get_object().authour == request.user:
             self.partial_update(request)
         else:
             return Response('You can not edit this post because you are not its author')
-
-    def get_object(self):
-        if hasattr(self, 'post_'):
-            return self.post_
-        return Post.objects.get(pk=self.kwargs.get('pk'))
 
 
 class PostLikedByAPIView(GenericAPIView):
