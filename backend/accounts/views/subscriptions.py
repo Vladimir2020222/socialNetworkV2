@@ -3,12 +3,11 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
 from accounts.services import subscribe, unsubscribe, is_subscribed_to
-from accounts.views.mixins import GetUserMixin
 
 
-class SubscribeAPIView(GetUserMixin, GenericAPIView):
+class SubscribeAPIView(GenericAPIView):
     def post(self, request):
-        user = self.get_object()
+        user = request.user
         if user.is_anonymous:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         subscribe_to = int(request.data.get('to'))
@@ -16,9 +15,9 @@ class SubscribeAPIView(GetUserMixin, GenericAPIView):
         return Response({'success': True})
 
 
-class UnsubscribeAPIView(GetUserMixin, GenericAPIView):
+class UnsubscribeAPIView(GenericAPIView):
     def post(self, request):
-        user = self.get_object()
+        user = request.user
         if user.is_anonymous:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         unsubscribe_from = int(request.data['from'])
@@ -26,9 +25,9 @@ class UnsubscribeAPIView(GetUserMixin, GenericAPIView):
         return Response({'success': True})
 
 
-class IsSubscribedAPIView(GetUserMixin, GenericAPIView):
+class IsSubscribedAPIView(GenericAPIView):
     def post(self, request):
-        user = self.get_object()
+        user = request.user
         if user.is_anonymous:
             return Response(False)
         to = int(request.data.get('to'))

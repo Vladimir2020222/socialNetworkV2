@@ -5,12 +5,9 @@ from django.db.models import Subquery
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, UpdateModelMixin, RetrieveModelMixin
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
 from accounts.utils import api_login_required
-from accounts.views.mixins import GetUserMixin
 from feed.mixins import BaseAuthorMixin
 from feed.models import Post, Image
 from feed.serializers import PostSerializer
@@ -34,9 +31,9 @@ class AddImagesToPostAPIView(GenericAPIView):
         return Response({'images': [image.content.url for image in images]})
 
 
-class AddPostToViewedAPIView(GetUserMixin, GenericAPIView):
+class AddPostToViewedAPIView(GenericAPIView):
     def get(self, request, pk):
-        user = self.get_object()
+        user = request.user
         file = open((settings.MEDIA_URL + '1x1.png')[1:], mode='rb')
         response = HttpResponse(file.read(), content_type='image/jpeg')
         file.close()
@@ -54,13 +51,13 @@ class AddPostToViewedAPIView(GetUserMixin, GenericAPIView):
             return response
 
 
-class GetAdditionalPostsForFeedAPIView(GetUserMixin, GenericAPIView):
+class GetAdditionalPostsForFeedAPIView(GenericAPIView):
     serializer_class = PostSerializer
     default_amount = 5
 
     def get(self, request):
         amount = int(request.GET.get('amount') or self.default_amount)
-        user = self.get_object()
+        user = request.user
         if user.is_authenticated:
             viewed = Subquery(user.viewed_posts.values_list('pk', flat=True))
         else:

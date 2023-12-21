@@ -9,13 +9,12 @@ from rest_framework.response import Response
 
 from accounts.serializers import UserSerializer
 from accounts.services import generate_new_jwt_for_email_changing, get_user_and_email_by_jwt
-from accounts.views.mixins import GetUserMixin
 
 
 User = get_user_model()
 
 
-class ProfileAPIView(GetUserMixin, RetrieveModelMixin, UpdateModelMixin, GenericAPIView):
+class ProfileAPIView(RetrieveModelMixin, UpdateModelMixin, GenericAPIView):
     serializer_class = UserSerializer
 
     def get(self, request):
@@ -24,8 +23,11 @@ class ProfileAPIView(GetUserMixin, RetrieveModelMixin, UpdateModelMixin, Generic
     def patch(self, request):
         return self.update(request, partial=True)
 
+    def get_user(self):
+        return self.request.user
 
-class ChangeEmailAPIView(GetUserMixin, GenericAPIView):
+
+class ChangeEmailAPIView(GenericAPIView):
     from_email = settings.DEFAULT_FROM_EMAIL
     email_template_name = 'accounts/change_email.html'
     subject_template_name = 'accounts/change_email_subject.txt'
@@ -34,7 +36,7 @@ class ChangeEmailAPIView(GetUserMixin, GenericAPIView):
         email = request.data.get('email')
         confirm_email_url = request.data.get('confirm_email_url')
         site_name = request.data.get('site_name')
-        user = self.get_object()
+        user = request.user
 
         jwt = generate_new_jwt_for_email_changing(email, user)
 

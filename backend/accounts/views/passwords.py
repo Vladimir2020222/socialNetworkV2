@@ -7,12 +7,10 @@ from django.utils.http import urlsafe_base64_decode
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
-from accounts.views.mixins import GetUserMixin
-
 User = get_user_model()
 
 
-class PasswordChangeAPIView(GetUserMixin, GenericAPIView):
+class PasswordChangeAPIView(GenericAPIView):
     def post(self, request):
         user = request.user
         old_password = request.data.get('old_password')

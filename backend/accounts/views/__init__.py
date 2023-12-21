@@ -2,7 +2,6 @@ from django.contrib.auth import get_user_model
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import RetrieveModelMixin
 
-from .mixins import GetUserMixin
 from .registration import SignInAPIView, SignOutAPIView, SignUpAPIView, IsLoggedInAPIView
 from .profile import ProfileAPIView, ConfirmChangeEmailAPIView, ChangeEmailAPIView
 from .subscriptions import SubscribeAPIView, UnsubscribeAPIView, IsSubscribedAPIView

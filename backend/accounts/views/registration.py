@@ -6,7 +6,6 @@ from rest_framework.views import APIView
 
 from accounts.serializers import UserSerializer
 from accounts.services import generate_new_jwt
-from accounts.views.mixins import GetUserMixin
 
 
 class SignUpAPIView(RetrieveModelMixin, GenericAPIView):
@@ -50,6 +49,6 @@ class SignOutAPIView(APIView):
         return response
 
 
-class IsLoggedInAPIView(GetUserMixin, GenericAPIView):
+class IsLoggedInAPIView(GenericAPIView):
     def get(self, request):
-        return Response(bool(self.get_object()))
+        return Response(bool(request.user))
