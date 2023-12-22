@@ -1,4 +1,6 @@
 from django.contrib.auth import get_user_model
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import RetrieveModelMixin
 
@@ -32,5 +34,6 @@ class UserAPIView(GenericAPIView, RetrieveModelMixin):
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
+    @method_decorator(cache_page(60))
     def get(self, request, pk):
         return self.retrieve(request)

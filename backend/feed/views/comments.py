@@ -1,3 +1,5 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
@@ -18,6 +20,7 @@ class GetCommentsAmountAPIView(GenericAPIView):
         return Response(amount)
 
 
+@method_decorator(cache_page(120), name='dispatch')  # cache_page caches response only if request.method in (GET, HEAD)
 class CommentAPIView(
     BaseAuthorMixin,
     GenericAPIView
@@ -26,6 +29,7 @@ class CommentAPIView(
     queryset = Comment.objects.all()
 
 
+@method_decorator(cache_page(120), name='dispatch')  # cache_page caches response only if request.method in (GET, HEAD)
 class ReplyAPIView(
     BaseAuthorMixin,
     GenericAPIView

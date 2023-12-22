@@ -4,6 +4,7 @@ from django.core.files.images import ImageFile
 from django.db.models import Subquery
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
@@ -69,6 +70,7 @@ class GetAdditionalPostsForFeedAPIView(GenericAPIView):
         return Response(serializer.data)
 
 
+@method_decorator(cache_page(120), name='dispatch')  # cache_page caches response only if request.method in (GET, HEAD)
 class PostAPIView(
     BaseAuthorMixin,
     GenericAPIView
