@@ -14,8 +14,8 @@ class BaseAuthorMixin(
     UpdateModelMixin,
     DestroyModelMixin
 ):
-    def user_is_author(self):
-        return self.get_object().author == self.request.user
+    def user_allowed_to_change_object(self):
+        return self.get_object().author == self.request.user or self.request.user.is_superuser
 
     def get(self, request, pk):
         return self.retrieve(request)
@@ -26,18 +26,18 @@ class BaseAuthorMixin(
 
     @method_decorator(api_login_required)
     def delete(self, request, pk):
-        if self.user_is_author():
+        if self.user_allowed_to_change_object():
             return self.destroy(request)
         return Response(status=status.HTTP_403_FORBIDDEN)
 
     @method_decorator(api_login_required)
     def put(self, request, pk):
-        if self.user_is_author():
+        if self.user_allowed_to_change_object():
             return self.update(request)
         return Response(status=status.HTTP_403_FORBIDDEN)
 
     @method_decorator(api_login_required)
     def patch(self, request, pk):
-        if self.user_is_author():
+        if self.user_allowed_to_change_object():
             return self.partial_update(request)
         return Response(status=status.HTTP_403_FORBIDDEN)
