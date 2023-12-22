@@ -3,14 +3,12 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.template import loader
-from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import UpdateModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
 
 from accounts.serializers import UserSerializer
 from accounts.services import generate_new_jwt_for_email_changing, get_user_and_email_by_jwt
-
 
 User = get_user_model()
 
@@ -20,12 +18,12 @@ class ProfileAPIView(RetrieveModelMixin, UpdateModelMixin, GenericAPIView):
 
     def get(self, request):
         if request.user.is_anonymous:
-            return Response(None, status=status.HTTP_204_NO_CONTENT)
+            return Response(None)
         return self.retrieve(request)
 
     def patch(self, request):
         if request.user.is_anonymous:
-            return Response(None, status=status.HTTP_204_NO_CONTENT)
+            return Response(None)
         return self.update(request, partial=True)
 
     def get_object(self):
