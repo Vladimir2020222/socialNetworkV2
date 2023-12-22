@@ -15,7 +15,7 @@ class BaseAuthorMixin(
     DestroyModelMixin
 ):
     def user_is_author(self):
-        return self.get_object().author == self.request.author
+        return self.get_object().author == self.request.user
 
     def get(self, request, pk):
         return self.retrieve(request)

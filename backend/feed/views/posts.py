@@ -73,4 +73,5 @@ class PostAPIView(
     BaseAuthorMixin,
     GenericAPIView
 ):
+    queryset = Post.objects.all()
     serializer_class = PostSerializer
