@@ -74,19 +74,3 @@ class PostAPIView(
     GenericAPIView
 ):
     serializer_class = PostSerializer
-
-
-class PostLikedByAPIView(GenericAPIView):
-    def get(self, request):
-        pk = request.GET.get('pk')
-        post = Post.objects.get(pk=pk)
-        liked_by = post.liked_by.values_list('pk', flat=True)
-        return Response(liked_by)
-
-
-class PostDislikedByAPIView(GenericAPIView):
-    def get(self, request):
-        pk = request.GET.get('pk')
-        post = Post.objects.get(pk=pk)
-        disliked_by = post.dsiliked_by.values_list('pk', flat=True)
-        return Response(disliked_by)
