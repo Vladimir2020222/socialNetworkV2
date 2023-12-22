@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from accounts.serializers import UserSerializer
-from accounts.services import generate_new_jwt
+from accounts.services import generate_new_jwt, remove_profile_cache
 
 
 class SignUpAPIView(RetrieveModelMixin, GenericAPIView):
@@ -44,6 +44,7 @@ class SignInAPIView(RetrieveModelMixin, GenericAPIView):
 
 class SignOutAPIView(APIView):
     def post(self, request):
+        remove_profile_cache(request)
         response = Response({'success': True})
         response.delete_cookie(key='jwt', samesite='none')
         return response

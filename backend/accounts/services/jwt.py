@@ -8,6 +8,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from rest_framework.exceptions import AuthenticationFailed
 
+
 User = get_user_model()
 
 
@@ -58,18 +59,3 @@ def get_user_and_email_by_jwt(token):
     user_id = urlsafe_base64_decode(uid).decode()
     user = User.objects.get(pk=user_id)
     return user, email
-
-
-def subscribe(user, to: int):
-    to = User.objects.get(pk=to)
-    user.subscribe(to)
-
-
-def unsubscribe(user, from_: int):
-    from_ = User.objects.get(pk=from_)
-    user.unsubscribe(from_)
-
-
-def is_subscribed_to(user, to: int):
-    to = User.objects.get(pk=to)
-    return user.is_subscribed_to(to)

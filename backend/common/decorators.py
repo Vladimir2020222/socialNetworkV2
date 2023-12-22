@@ -3,6 +3,14 @@ from functools import wraps
 from django.core.cache import caches, cache as default_cache
 
 
+def get_key_for_per_user_cache(request, view, key_prefix=''):
+    user_prefix = request.user.id if request.user.is_authenticated else 'anonymous'
+    prefix = f'{key_prefix}__{user_prefix}__'
+    path_to_view = view.__module__ + '.' + view.__qualname__
+    key = f'{path_to_view}.{prefix}'
+    return key
+
+
 def per_user_cache_page(timeout, *, cache=None, key_prefix=''):
     def decorator(view):
         @wraps(view)
@@ -11,11 +19,7 @@ def per_user_cache_page(timeout, *, cache=None, key_prefix=''):
                 cache_ = caches[cache]
             else:
                 cache_ = default_cache
-            user_prefix = request.user.id if request.user.is_authenticated else 'anonymous'
-            prefix = f'{key_prefix}__{user_prefix}__'
-            path_to_view = view.__module__ + '.' + view.__qualname__
-            key = f'{path_to_view}.{prefix}'
-
+            key = get_key_for_per_user_cache(request, view, key_prefix)
             cached_response = cache_.get(key, None)
             if cached_response:
                 return cached_response

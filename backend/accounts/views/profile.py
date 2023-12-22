@@ -9,7 +9,7 @@ from rest_framework.mixins import UpdateModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
 
 from accounts.serializers import UserSerializer
-from accounts.services import generate_new_jwt_for_email_changing, get_user_and_email_by_jwt
+from accounts.services import generate_new_jwt_for_email_changing, get_user_and_email_by_jwt, remove_profile_cache
 from common.decorators import per_user_cache_page
 
 User = get_user_model()
@@ -27,6 +27,7 @@ class ProfileAPIView(RetrieveModelMixin, UpdateModelMixin, GenericAPIView):
     def patch(self, request):
         if request.user.is_anonymous:
             return Response(None)
+        remove_profile_cache(request)
         return self.update(request, partial=True)
 
     def get_object(self):
