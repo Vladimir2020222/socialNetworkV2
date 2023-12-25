@@ -4,7 +4,7 @@ from feed.enums import RateEnum
 from feed.models import Post, Comment, Reply
 
 
-class BaseLikeableSerializer(serializers.Serializer):
+class BaseLikeablePubUpdDateSerializer(serializers.Serializer):
     dislikes = serializers.SerializerMethodField()
     likes = serializers.SerializerMethodField()
     current_user_rate = serializers.SerializerMethodField()
@@ -37,12 +37,12 @@ class BaseLikeableSerializer(serializers.Serializer):
         return RateEnum.none.value
 
 
-class PostSerializer(serializers.ModelSerializer, BaseLikeableSerializer):
+class PostSerializer(serializers.ModelSerializer, BaseLikeablePubUpdDateSerializer):
     images = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Post
-        fields = BaseLikeableSerializer.Meta.fields + ['pk', 'images', 'author', 'text']
+        fields = BaseLikeablePubUpdDateSerializer.Meta.fields + ['pk', 'images', 'author', 'text']
         extra_kwargs = {
             'author': {
                 'default': serializers.CurrentUserDefault()
@@ -54,10 +54,10 @@ class PostSerializer(serializers.ModelSerializer, BaseLikeableSerializer):
         return [image.content.url for image in images]
 
 
-class CommentSerializer(serializers.ModelSerializer, BaseLikeableSerializer):
+class CommentSerializer(serializers.ModelSerializer, BaseLikeablePubUpdDateSerializer):
     class Meta:
         model = Comment
-        fields = BaseLikeableSerializer.Meta.fields + ['pk', 'author', 'text', 'post']
+        fields = BaseLikeablePubUpdDateSerializer.Meta.fields + ['pk', 'author', 'text', 'post']
         extra_kwargs = {
             'author': {
                 'default': serializers.CurrentUserDefault()
@@ -65,10 +65,10 @@ class CommentSerializer(serializers.ModelSerializer, BaseLikeableSerializer):
         }
 
 
-class ReplySerializer(serializers.ModelSerializer, BaseLikeableSerializer):
+class ReplySerializer(serializers.ModelSerializer, BaseLikeablePubUpdDateSerializer):
     class Meta:
         model = Reply
-        fields = BaseLikeableSerializer.Meta.fields + ['pk', 'author', 'text', 'to', 'reply_to']
+        fields = BaseLikeablePubUpdDateSerializer.Meta.fields + ['pk', 'author', 'text', 'to', 'reply_to']
         extra_kwargs = {
             'author': {
                 'default': serializers.CurrentUserDefault()
