@@ -160,3 +160,5 @@ CACHES = {
         'LOCATION': 'redis://127.0.0.1:6379'
     }
 }
+
+JWT_AUTH_COOKIES_NAME = 'jwt_auth'

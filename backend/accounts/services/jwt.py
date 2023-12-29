@@ -14,10 +14,10 @@ User = get_user_model()
 
 def get_user_by_jwt(request: HttpRequest, *, raise_exception=False):
     try:
-        token = request.COOKIES.get('jwt')
+        token = request.COOKIES.get(settings.JWT_AUTH_COOKIES_NAME)
         try:
             if token is None:
-                raise AuthenticationFailed('jwl token is not on COOKIES')
+                raise AuthenticationFailed('jwt_auth_token is not on COOKIES')
             try:
                 payload = jwt.decode(token, settings.SECRET_KEY, ['HS256'])
             except jwt.ExpiredSignatureError:
@@ -34,7 +34,7 @@ def get_user_by_jwt(request: HttpRequest, *, raise_exception=False):
         return None
 
 
-def generate_new_jwt(user_id):
+def generate_new_jwt_auth(user_id):
     payload = {
         'id': user_id,
         'exp': datetime.datetime.now() + datetime.timedelta(weeks=52),

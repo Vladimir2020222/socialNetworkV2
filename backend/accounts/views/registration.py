@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import authenticate
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import RetrieveModelMixin
@@ -5,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from accounts.serializers import UserSerializer
-from accounts.services import generate_new_jwt, remove_profile_cache
+from accounts.services import generate_new_jwt_auth, remove_profile_cache
 
 
 class SignUpAPIView(RetrieveModelMixin, GenericAPIView):
@@ -16,9 +17,9 @@ class SignUpAPIView(RetrieveModelMixin, GenericAPIView):
         if not serializer.is_valid():
             return Response({'success': False})
         self.user = serializer.save()
-        jwt = generate_new_jwt(self.user.pk)
+        jwt = generate_new_jwt_auth(self.user.pk)
         response = self.retrieve(request)
-        response.set_cookie(key='jwt', value=jwt, httponly=True, samesite='none', secure=True)
+        response.set_cookie(key=settings.JWT_AUTH_COOKIES_NAME, value=jwt, httponly=True, samesite='none', secure=True)
         return response
 
     def get_object(self):
@@ -33,9 +34,9 @@ class SignInAPIView(RetrieveModelMixin, GenericAPIView):
         user = self.user = authenticate(username=username, password=password)
         if user is None:
             return Response({'success': False})
-        jwt = generate_new_jwt(user.pk)
+        jwt = generate_new_jwt_auth(user.pk)
         response = self.retrieve(request)
-        response.set_cookie(key='jwt', value=jwt, httponly=True, samesite='none', secure=True)
+        response.set_cookie(key=settings.JWT_AUTH_COOKIES_NAME, value=jwt, httponly=True, samesite='none', secure=True)
         return response
 
     def get_object(self):
