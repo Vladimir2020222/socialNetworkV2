@@ -86,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': "socialnetwork",
         'HOST': "localhost",
-        'PORT': '5432',
+        'PORT': '6432',
         'USER': 'postgres',
         'PASSWORD': '12345'
     }
