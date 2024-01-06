@@ -20,8 +20,8 @@ export class ChangeProfileComponent implements OnInit {
     this.changeProfileForm = new FormGroup(
       {
         username: new FormControl(this.user?.username || ''),
-        first_name: new FormControl(this.user?.first_name || ''),
-        last_name: new FormControl(this.user?.last_name || ''),
+        firstName: new FormControl(this.user?.firstName || ''),
+        lastName: new FormControl(this.user?.lastName || ''),
         email: new FormControl(this.user?.email || ''),
       }
     )
@@ -33,8 +33,8 @@ export class ChangeProfileComponent implements OnInit {
       this.user = user;
       this.changeProfileForm.setValue({
         username: user?.username || '',
-        first_name: user?.first_name || '',
-        last_name: user?.last_name || '',
+        firstName: user?.firstName || '',
+        lastName: user?.lastName || '',
         email: user?.email || ''
       })
     })

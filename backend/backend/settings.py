@@ -162,11 +162,33 @@ EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
+class ListInAlwaysTrue(list):
+    def __contains__(self, item):
+        return True
+
+    def __bool__(self):
+        return True
+
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'accounts.authentication.JWTCOOKIESAuthentication',
-    ]
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
+        'djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'djangorestframework_camel_case.parser.CamelCaseFormParser',
+        'djangorestframework_camel_case.parser.CamelCaseMultiPartParser',
+        'djangorestframework_camel_case.parser.CamelCaseJSONParser',
+    ],
+    'JSON_UNDERSCOREIZE': {
+        'no_underscore_before_number': True,
+        'ignore_fields': ListInAlwaysTrue()
+    },
 }
+
 
 CACHES = {
     'default': {

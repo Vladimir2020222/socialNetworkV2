@@ -26,14 +26,14 @@ export class CommentReplyComponent implements OnInit {
 
   setReplyToNames(): void {
     const filtered: CommentReply[] = this.allReplies.filter(
-      (reply: CommentReply): boolean => this.reply.reply_to.includes(reply.pk)
+      (reply: CommentReply): boolean => this.reply.replyTo.includes(reply.pk)
     );
     const names: string[] = [];
     filtered.forEach((reply: CommentReply): void => {
       this.accountService.getUserById(reply.author)
         .subscribe((author: User | null): void => {
           if (!author) return;
-          names.push(`${author.first_name} ${author.last_name}`);
+          names.push(`${author.firstName} ${author.lastName}`);
         });
     });
     this.replyToNames = names;

@@ -53,7 +53,7 @@ export class ReplyFormComponent extends Common implements OnChanges {
     const author: User | undefined = getUserFromCache(this.comment.author);
     if (!author)
       return '';
-    return `reply to ${author.first_name} ${author.last_name}`
+    return `reply to ${author.firstName} ${author.lastName}`
   }
 
   submitCallback(obj: CommentReply): void {

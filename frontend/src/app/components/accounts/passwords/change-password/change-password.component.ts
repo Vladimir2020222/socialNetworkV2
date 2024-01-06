@@ -16,14 +16,14 @@ export class ChangePasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.changePasswordForm = new FormGroup({
-      old_password: new FormControl(''),
-      new_password: new FormControl('')
+      oldPassword: new FormControl(''),
+      newPassword: new FormControl('')
     })
   }
 
   submit(passwordVerification: string): void {
-    const data: {old_password: string, new_password: string} = this.changePasswordForm.value;
-    if (passwordVerification !== data.new_password) {
+    const data: {oldPassword: string, newPassword: string} = this.changePasswordForm.value;
+    if (passwordVerification !== data.newPassword) {
       this.passwordMatches = false;
       return;
     }

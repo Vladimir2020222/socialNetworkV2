@@ -81,7 +81,7 @@ export class AccountService {
   ): Observable<User> {
     return this.http.post<User>(
       serverUrl + 'accounts/signup',
-      JSON.stringify({username: username, password: password, first_name: firstName, last_name: lastName}),
+      JSON.stringify({username: username, password: password, firstName: firstName, lastName: lastName}),
       {
         withCredentials: true,
         headers: new HttpHeaders({
@@ -113,8 +113,8 @@ export class AccountService {
       serverUrl + 'accounts/change_email',
       JSON.stringify({
         email: email,
-        site_name: 'socialNetwork',
-        confirm_email_url: 'http://localhost:4200/accounts/confirm_change_email'
+        siteName: 'socialNetwork',
+        confirmEmailUrl: 'http://localhost:4200/accounts/confirm_change_email'
       }),
       {
         withCredentials: true,
@@ -151,7 +151,7 @@ export class AccountService {
       }).subscribe(user => {this.userProfile.next(user)})
   }
 
-  changePassword(data: {old_password: string, new_password: string}): void {
+  changePassword(data: {oldPassword: string, newPassword: string}): void {
     this.http.post<User>(
       serverUrl + 'accounts/change_password',
       JSON.stringify(data),
@@ -169,7 +169,7 @@ export class AccountService {
       serverUrl + 'accounts/password_reset',
       JSON.stringify({
         email: email,
-        confirm_reset_password_url: 'http://localhost:4200/accounts/reset_password_confirm'
+        confirmResetPasswordUrl: 'http://localhost:4200/accounts/reset_password_confirm'
       }),
       {
         headers: new HttpHeaders({

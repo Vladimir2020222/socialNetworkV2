@@ -165,7 +165,7 @@ export class PostService {
       JSON.stringify({
         text: text,
         to: commentPk,
-        reply_to: replyTo
+        replyTo: replyTo
       }),
       {
         headers: new HttpHeaders({
