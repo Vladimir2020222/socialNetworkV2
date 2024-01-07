@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'request.middleware.RequestMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'backend.middleware.HeadersMiddleware'
+    'backend.middleware.AccessControlHeadersMiddleware'
 ]
 
 ROOT_URLCONF = 'backend.urls'
