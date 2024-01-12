@@ -11,9 +11,11 @@ def remove_profile_cache(request):
     cache.delete(key)
 
 
-def set_profile_cache(request, response):
+def set_profile_cache(request, response, view):
     if response.streaming or response.status_code not in (200, 304):
         return
     from ..views import ProfileAPIView
+    view.finalize_response(request, response)
+    response.render()
     key = get_key_for_per_user_cache(request, ProfileAPIView.get)
     cache.set(key, response)

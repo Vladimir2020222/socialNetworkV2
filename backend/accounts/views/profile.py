@@ -30,7 +30,7 @@ class ProfileAPIView(RetrieveModelMixin, UpdateModelMixin, GenericAPIView):
             return Response(None)
         remove_profile_cache(request)
         response = self.update(request, partial=True)
-        set_profile_cache(request, response)
+        set_profile_cache(request, response, self)
         return response
 
     def get_object(self):
