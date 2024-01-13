@@ -1,6 +1,9 @@
 from functools import wraps
 
 from django.core.cache import caches, cache as default_cache
+from django.utils.decorators import decorator_from_middleware_with_args
+
+from common.middleware import ConditionalCacheMiddleware
 
 
 def get_key_for_per_user_cache(request, view, key_prefix=''):
@@ -35,3 +38,12 @@ def per_user_cache_page(timeout, *, cache=None, key_prefix=''):
             return response
         return wrapper
     return decorator
+
+
+def conditional_cache_page(timeout, should_cache, *, cache=None, key_prefix=''):
+    return decorator_from_middleware_with_args(ConditionalCacheMiddleware)(
+        should_update_func=should_cache,
+        page_timeout=timeout,
+        cache_alias=cache,
+        key_prefix=key_prefix,
+    )

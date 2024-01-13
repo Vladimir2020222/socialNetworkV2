@@ -1,7 +1,9 @@
 from django.db.models import ForeignKey
+from django.utils.decorators import method_decorator
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
+from common.decorators import conditional_cache_page
 from feed.serializers import PostSerializer, CommentSerializer, ReplySerializer
 
 
@@ -11,10 +13,14 @@ class BaseScrollableAPIView(GenericAPIView):
     fk_field_name = None
     pk_url_kwarg = 'pk'
 
+    def __init__(self, **kwargs):
+        assert 'offset_get_param_name' not in kwargs, 'offset_get_param_name cannot be passed to as_view()'
+        assert 'amount_get_param_name' not in kwargs, 'amount_get_param_name cannot be passed to as_view()'
+        super().__init__(**kwargs)
+
     def get(self, request, pk):
         self._validate_attributes()
-        offset = int(request.GET.get(self.offset_get_param_name))
-        amount = int(request.GET.get(self.amount_get_param_name))
+        offset, amount = self.get_offset_and_amount(request)
         queryset = self.get_queryset()[offset:amount+offset]
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
@@ -42,16 +48,38 @@ class BaseScrollableAPIView(GenericAPIView):
     def model(self):
         return self.serializer_class.Meta.model
 
+    @classmethod
+    def get_offset_and_amount(cls, request):
+        offset = int(request.GET.get(cls.offset_get_param_name))
+        amount = int(request.GET.get(cls.amount_get_param_name))
+        return offset, amount
+
+    @classmethod
+    def should_cache(cls, request, response):
+        offset, amount = cls.get_offset_and_amount(request)
+        return len(response.data) == amount
+
 
 class PostsByUserScrollableAPIView(BaseScrollableAPIView):
     serializer_class = PostSerializer
 
 
+conditional_cache_decorator = method_decorator(
+    conditional_cache_page(
+        60,
+        lambda _, request, response, *args, **kwargs: BaseScrollableAPIView.should_cache(request, response)
+    ),
+    name='dispatch'
+)
+
+
+@conditional_cache_decorator
 class PostCommentsScrollableAPIView(BaseScrollableAPIView):
     serializer_class = CommentSerializer
     fk_field_name = 'post'
 
 
+@conditional_cache_decorator
 class CommentRepliesScrollableAPIView(BaseScrollableAPIView):
     serializer_class = ReplySerializer
     fk_field_name = 'to'
