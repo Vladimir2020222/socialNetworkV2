@@ -2,19 +2,20 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from feed.mixins import BaseAuthorMixin
 from feed.models import Reply, Comment
 from feed.serializers import CommentSerializer, ReplySerializer
 
 
-class GetRepliesAmountAPIView(GenericAPIView):
+class GetRepliesAmountAPIView(APIView):
     def get(self, request, pk):
         amount = Reply.objects.filter(to_id=pk).count()
         return Response(amount)
 
 
-class GetCommentsAmountAPIView(GenericAPIView):
+class GetCommentsAmountAPIView(APIView):
     def get(self, request, pk):
         amount = Comment.objects.filter(post_id=pk).count()
         return Response(amount)

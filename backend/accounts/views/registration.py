@@ -13,7 +13,6 @@ class SignUpAPIView(RetrieveModelMixin, GenericAPIView):
     serializer_class = UserSerializer
 
     def post(self, request):
-        print(request.data)
         serializer = UserSerializer(data=request.data)
         if not serializer.is_valid():
             return Response({'success': False})
@@ -31,7 +30,6 @@ class SignInAPIView(RetrieveModelMixin, GenericAPIView):
     serializer_class = UserSerializer
 
     def post(self, request):
-        print(request.data)
         username, password = request.data.get('username'), request.data.get('password')
         user = self.user = authenticate(username=username, password=password)
         if user is None:
@@ -53,6 +51,6 @@ class SignOutAPIView(APIView):
         return response
 
 
-class IsLoggedInAPIView(GenericAPIView):
+class IsLoggedInAPIView(APIView):
     def get(self, request):
         return Response(bool(request.user))

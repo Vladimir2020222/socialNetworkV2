@@ -7,6 +7,7 @@ from django.utils.decorators import method_decorator
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import UpdateModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from accounts.serializers import UserSerializer
 from accounts.services import generate_new_jwt_for_email_changing, get_user_and_email_by_jwt, remove_profile_cache, \
@@ -37,7 +38,7 @@ class ProfileAPIView(RetrieveModelMixin, UpdateModelMixin, GenericAPIView):
         return self.request.user
 
 
-class ChangeEmailAPIView(GenericAPIView):
+class ChangeEmailAPIView(APIView):
     from_email = settings.DEFAULT_FROM_EMAIL
     email_template_name = 'accounts/change_email.html'
     subject_template_name = 'accounts/change_email_subject.txt'
@@ -62,7 +63,7 @@ class ChangeEmailAPIView(GenericAPIView):
         return Response()
 
 
-class ConfirmChangeEmailAPIView(RetrieveModelMixin, GenericAPIView):
+class ConfirmChangeEmailAPIView(RetrieveModelMixin, APIView):
     token_generator = default_token_generator
     serializer_class = UserSerializer
 

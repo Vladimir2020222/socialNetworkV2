@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
 from django.apps import apps
@@ -9,7 +8,7 @@ from rest_framework.views import APIView
 from feed.services import rate_obj
 
 
-class RateAPIView(GenericAPIView):
+class RateAPIView(APIView):
     def post(self, request, model_name, pk, action):
         user = request.user
         if user.is_anonymous:
@@ -20,7 +19,7 @@ class RateAPIView(GenericAPIView):
         return Response()
 
 
-class BaseRatedByAPIView(GenericAPIView):
+class BaseRatedByAPIView(APIView):
     object_attr_name = None
 
     def get(self, request, model_name):

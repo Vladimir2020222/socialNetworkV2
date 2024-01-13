@@ -7,6 +7,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from accounts.utils import api_login_required
 from feed.mixins import BaseAuthorMixin
@@ -17,9 +18,7 @@ from feed.serializers import PostSerializer
 User = get_user_model()
 
 
-class AddImagesToPostAPIView(GenericAPIView):
-    queryset = Post.objects.all()
-
+class AddImagesToPostAPIView(APIView):
     @method_decorator(api_login_required)
     def post(self, request, pk):
         post = Post.objects.get(pk=pk)
@@ -32,7 +31,7 @@ class AddImagesToPostAPIView(GenericAPIView):
         return Response({'images': [image.content.url for image in images]})
 
 
-class AddPostToViewedAPIView(GenericAPIView):
+class AddPostToViewedAPIView(APIView):
     def get(self, request, pk):
         user = request.user
         file = open((settings.MEDIA_URL + '1x1.png')[1:], mode='rb')

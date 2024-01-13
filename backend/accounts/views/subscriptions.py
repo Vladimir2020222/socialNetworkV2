@@ -1,11 +1,11 @@
 from rest_framework import status
-from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from accounts.services import subscribe, unsubscribe, is_subscribed_to
 
 
-class SubscribeAPIView(GenericAPIView):
+class SubscribeAPIView(APIView):
     def post(self, request):
         user = request.user
         if user.is_anonymous:
@@ -15,7 +15,7 @@ class SubscribeAPIView(GenericAPIView):
         return Response({'success': True})
 
 
-class UnsubscribeAPIView(GenericAPIView):
+class UnsubscribeAPIView(APIView):
     def post(self, request):
         user = request.user
         if user.is_anonymous:
@@ -25,7 +25,7 @@ class UnsubscribeAPIView(GenericAPIView):
         return Response({'success': True})
 
 
-class IsSubscribedAPIView(GenericAPIView):
+class IsSubscribedAPIView(APIView):
     def post(self, request):
         user = request.user
         if user.is_anonymous:
