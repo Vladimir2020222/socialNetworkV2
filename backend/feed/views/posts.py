@@ -76,3 +76,6 @@ class PostAPIView(
 ):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+    def options(self, request, *args, **kwargs):
+        return Response('')

@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'request.middleware.RequestMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'backend.middleware.TimezoneMiddleware',
     'backend.middleware.AccessControlHeadersMiddleware'
 ]
 
@@ -84,7 +85,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "socialnetwork",
+        'NAME': "socialnetworkempty",
         'HOST': "localhost",
         'PORT': '6432',
         'USER': 'postgres',
@@ -198,3 +199,4 @@ CACHES = {
 }
 
 JWT_AUTH_COOKIES_NAME = 'jwt_auth'
+TIMEZONE_SESSION_KEY = 'timezone'

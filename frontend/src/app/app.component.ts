@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivationStart, Data, Router } from "@angular/router";
 import { ThemesEnum } from 'src/app/enums/themes'
 import { Theme } from "./interface/theme.module";
 import { themes } from "./constants";
+import { CommonService } from "./services/common-.service";
 
 
 @Component({
@@ -10,14 +11,15 @@ import { themes } from "./constants";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   useMainContentWrapper: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private commonService: CommonService) {}
 
   ngOnInit(): void {
     this.setUseMainContentWrapper();
     this.setTheme();
+    this.setTimezone();
   }
 
   setUseMainContentWrapper(): void {
@@ -48,5 +50,12 @@ export class AppComponent {
     })
   }
 
-    protected readonly localStorage = localStorage;
+  setTimezone(): void {
+    let lastTimezone: string | null = localStorage.getItem('timezone');
+    let currentTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (lastTimezone != currentTimezone) {
+      this.commonService.setTimezone(currentTimezone)
+        .subscribe(_ => localStorage.setItem('timezone', currentTimezone));
+    }
+  }
 }

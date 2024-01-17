@@ -15,10 +15,10 @@ class BaseLikeablePubUpdDateSerializer(serializers.Serializer):
         fields = ['likes', 'dislikes', 'current_user_rate', 'pub_date', 'upd_date']
 
     def get_pub_date(self, obj):
-        return obj.pub_date.strftime("%Y-%m-%d %H:%M:%S")
+        return obj.pub_date.strftime("%Y-%m-%d %H:%M:%S%z")
 
     def get_upd_date(self, obj):
-        return obj.pub_date.strftime("%Y-%m-%d %H:%M:%S")
+        return obj.pub_date.strftime("%Y-%m-%d %H:%M:%S%z")
 
     def get_dislikes(self, obj):
         return obj.disliked_by.count()
