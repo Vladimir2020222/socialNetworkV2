@@ -27,6 +27,7 @@ export class ChangePasswordComponent implements OnInit {
       this.passwordMatches = false;
       return;
     }
+    this.passwordMatches = true;
     this.accountService.changePassword(data);
     this.router.navigate(['accounts/profile']);
   }
