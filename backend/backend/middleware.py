@@ -23,8 +23,16 @@ class TimezoneMiddleware:
 
     def __call__(self, request):
         tzname = request.session.get(settings.TIMEZONE_SESSION_KEY) or getattr(request.user, 'timezone_name', None)
+        self.update_user_tzname(request, tzname)
         if tzname:
             timezone.activate(zoneinfo.ZoneInfo(tzname))
         else:
             timezone.deactivate()
         return self.get_response(request)
+
+    def update_user_tzname(self, request, tzname):
+        user = request.user
+        if tzname is None or user.is_anonymous or user.timezone_name == tzname:
+            return
+        user.timezone_name = tzname
+        user.save()
