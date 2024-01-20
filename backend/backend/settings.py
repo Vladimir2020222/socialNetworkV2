@@ -85,11 +85,57 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "socialnetworkempty",
+        'NAME': "socialnetwork",
         'HOST': "localhost",
         'PORT': '6432',
         'USER': 'postgres',
         'PASSWORD': '12345'
+    }
+}
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        },
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'style': '{',
+            'format': '{name}-{levelname}: {message} | {module}.{funcName}:{lineno:d}'
+        },
+        'simple': {
+            'style': '{',
+            'format': '{levelname}: {message}'
+        }
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'formatter': 'verbose'
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'logs' / 'django.log',
+            'level': 'WARNING',
+            'filters': ['require_debug_false'],
+            'formatter': 'verbose',
+        }
+    },
+    'loggers': {
+        'root': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
+            'propagate': True
+        }
     }
 }
 
