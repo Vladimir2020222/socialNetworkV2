@@ -50,7 +50,7 @@ class PostSerializer(serializers.ModelSerializer, BaseLikeablePubUpdDateSerializ
         }
 
     def get_images(self, obj):
-        images = obj.images.only('content')
+        images = obj.images.only('content', 'post_id')  # django retrieves related post on for reach image and idk why
         return [image.content.url for image in images]
 
 
