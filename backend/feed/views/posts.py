@@ -34,7 +34,7 @@ class AddImagesToPostAPIView(APIView):
 class AddPostToViewedAPIView(APIView):
     def get(self, request, pk):
         user = request.user
-        file = open((settings.BASE_DIR / '1x1.png')[1:], mode='rb')
+        file = open('1x1.png', mode='rb')
         response = HttpResponse(file.read(), content_type='image/jpeg')
         file.close()
         if user.is_authenticated:
