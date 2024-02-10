@@ -3,7 +3,6 @@ from time import time
 
 from django.conf import settings
 from django.core.exceptions import MiddlewareNotUsed
-from django.db import connection
 from django.utils import timezone
 
 from database_queries_logger import queries_logger
@@ -15,7 +14,7 @@ class AccessControlHeadersMiddleware:
 
     def __call__(self, request):
         response = self.get_response(request)
-        response["Access-Control-Allow-Origin"] = "http://localhost:4200"
+        response["Access-Control-Allow-Origin"] = request.META['HTTP_REFERER'][:-1]
         response["Access-Control-Allow-Methods"] = "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
         response["Access-Control-Allow-Headers"] = "Content-Type"
         response["Access-Control-Allow-Credentials"] = 'true'
