@@ -1,0 +1,7 @@
+.docker
+.venv
+media
+postgresql
+.gitignore
+db.json
+test.py

@@ -1,0 +1,8 @@
+__pycache__
+.idea
+media/
+db.json
+test.py
+logs/
+.env
+postgresql
