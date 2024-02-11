@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-jjgbqbbg+jf)!7mor#sdtddf6u0pob_*+q1x9ny=kouieuy40q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', '::']
 
 
 # Application definition
@@ -87,10 +87,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': "socialnetwork",
-        'HOST': "localhost",
-        'PORT': '6432',
-        'USER': 'postgres',
-        'PASSWORD': '12345'
+        'HOST': os.getenv("PGBOUNCER_HOST", "localhost"),
+        'PORT': os.getenv("PGBOUNCER_PORT", "6432"),
+        'USER': os.getenv('DB_USER', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD', '12345')  # FIXME: REPLACE 12345 WITH '' LATER
     }
 }
 
@@ -198,13 +198,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-REQUEST_BASE_URL = 'http://127.0.0.1:8000/'
-
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = os.environ.get('email_host_user')
-EMAIL_HOST_PASSWORD = os.environ.get('email_host_password')
-DEFAULT_FROM_EMAIL = os.environ.get('default_from_email')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -241,7 +238,7 @@ REST_FRAMEWORK = {
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379'
+        'LOCATION': f'redis://{os.getenv('REDIS_HOST', 'localhost')}:6379'
     }
 }
 

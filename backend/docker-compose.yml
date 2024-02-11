@@ -1,0 +1,55 @@
+version: "3.9"
+
+services:
+    socialnetwork_backend:
+        image: socialnetwork/backend
+        container_name: django_app
+        ports:
+            - "8000:8000"
+        depends_on:
+            - socialnetwork_redis
+            - socialnetwork_pgbouncer
+        env_file:
+            - .env
+        volumes:
+            - ./media:/code/media
+            - ./logs:/code/logs
+    socialnetwork_nginx:
+        image: nginx
+        container_name: socialnetwork_nginx
+        env_file:
+            - .env
+        ports:
+            - "8080:8080"
+        depends_on:
+            - socialnetwork_backend
+        volumes:
+            - ./.docker/nginx/nginx-conf.d:/etc/nginx/conf.d
+    socialnetwork_db:
+        image: postgres
+        container_name: socialnetwork_db
+        ports:
+            - "${DB_PORT}:${DB_PORT}"
+        env_file:
+            - .env
+        volumes:
+            - ./postgresql/data:/var/lib/postgresql/data
+    socialnetwork_pgbouncer:
+        build:
+            context: .docker/pgbouncer
+            dockerfile: Dockerfile
+            args:
+                DB_USER: ${DB_USER}
+                DB_PASSWORD: ${DB_PASSWORD}
+        container_name: socialnetwork_pgbouncer
+        ports:
+            - "6432:6432"
+        depends_on:
+            - socialnetwork_db
+        env_file:
+            - .env
+    socialnetwork_redis:
+        image: redis
+        container_name: socialnetwork_redis
+        env_file:
+            - .env

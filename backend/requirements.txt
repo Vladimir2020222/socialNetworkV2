@@ -1,0 +1,13 @@
+asgiref==3.7.2
+Django==5.0.2
+django-request==1.6.3
+djangorestframework==3.14.0
+djangorestframework-camel-case==1.4.2
+pillow==10.2.0
+psycopg2-binary==2.9.9
+PyJWT==2.8.0
+python-dateutil==2.8.2
+pytz==2024.1
+redis==5.0.1
+six==1.16.0
+sqlparse==0.4.4
