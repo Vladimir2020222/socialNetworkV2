@@ -47,6 +47,7 @@ class DebugMiddleware:
     def __init__(self, get_response):
         if not settings.DEBUG or settings.DISABLE_DEBUG_MIDDLEWARE:
             raise MiddlewareNotUsed()
+        self.time_spent_list = []
         self.get_response = get_response
 
     def __call__(self, request):
@@ -54,8 +55,10 @@ class DebugMiddleware:
         response = self.get_response(request)
         end = time()
         time_spent = end - start
+        self.time_spent_list.append(time_spent)
 
         print(queries_logger)
         print(f'{len(queries_logger)} queries; spent {time_spent} seconds;')
+        print("AVERAGE TIME OF REQUEST IS", sum(self.time_spent_list) / len(self.time_spent_list))
         queries_logger.clear()
         return response
