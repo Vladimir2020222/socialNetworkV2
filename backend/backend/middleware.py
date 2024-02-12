@@ -14,7 +14,8 @@ class AccessControlHeadersMiddleware:
 
     def __call__(self, request):
         response = self.get_response(request)
-        response["Access-Control-Allow-Origin"] = request.META['HTTP_REFERER'][:-1]
+        if http_referer := request.META.get('HTTP_REFERER'):
+            response["Access-Control-Allow-Origin"] = http_referer[:-1]
         response["Access-Control-Allow-Methods"] = "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
         response["Access-Control-Allow-Headers"] = "Content-Type"
         response["Access-Control-Allow-Credentials"] = 'true'
