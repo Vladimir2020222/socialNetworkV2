@@ -45,7 +45,7 @@ class TimezoneMiddleware:
 
 class DebugMiddleware:
     def __init__(self, get_response):
-        if not settings.DEBUG:
+        if not settings.DEBUG or settings.DISABLE_DEBUG_MIDDLEWARE:
             raise MiddlewareNotUsed()
         self.get_response = get_response
 
