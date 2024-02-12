@@ -11,5 +11,5 @@ WORKDIR /code
 
 RUN pip install -r requirements.txt
 
-ENTRYPOINT ["python3"]
-CMD ["manage.py", "runserver", "0.0.0.0:8000"]
+ENTRYPOINT [""]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000"]

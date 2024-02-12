@@ -6,3 +6,4 @@ test.py
 logs/
 .env
 postgresql
+spam.py
