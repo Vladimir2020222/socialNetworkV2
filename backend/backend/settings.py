@@ -25,6 +25,7 @@ SECRET_KEY = 'django-insecure-jjgbqbbg+jf)!7mor#sdtddf6u0pob_*+q1x9ny=kouieuy40q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG') == 'true'
 DISABLE_DEBUG_MIDDLEWARE = os.getenv('DISABLE_DEBUG_MIDDLEWARE') == 'true'
+DISABLE_DEBUG_MIDDLEWARE_QUERIES_OUTPUT = os.getenv('DISABLE_DEBUG_MIDDLEWARE_QUERIES_OUTPUT') == 'true'
 
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', '::']
 

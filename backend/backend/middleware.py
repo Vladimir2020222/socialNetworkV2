@@ -57,7 +57,8 @@ class DebugMiddleware:
         time_spent = end - start
         self.time_spent_list.append(time_spent)
 
-        print(queries_logger)
+        if not settings.DISABLE_DEBUG_MIDDLEWARE_QUERIES_OUTPUT:
+            print(queries_logger)
         print(f'{len(queries_logger)} queries; spent {time_spent} seconds;')
         print("AVERAGE TIME OF REQUEST IS", sum(self.time_spent_list) / len(self.time_spent_list))
         queries_logger.clear()
