@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-jjgbqbbg+jf)!7mor#sdtddf6u0pob_*+q1x9ny=kouieuy40q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG') == 'true'
 
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', '::']
 
@@ -90,7 +90,7 @@ DATABASES = {
         'HOST': os.getenv("PGBOUNCER_HOST", "localhost"),
         'PORT': os.getenv("PGBOUNCER_PORT", "6432"),
         'USER': os.getenv('DB_USER', 'postgres'),
-        'PASSWORD': os.getenv('DB_PASSWORD', '12345')  # FIXME: REPLACE 12345 WITH '' LATER
+        'PASSWORD': os.getenv('DB_PASSWORD', '')
     }
 }
 
