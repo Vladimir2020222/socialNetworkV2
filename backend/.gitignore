@@ -7,3 +7,4 @@ logs/
 .env
 postgresql
 spam.py
+.docker-env

@@ -12,7 +12,7 @@ services:
             - socialnetwork_redis
             - socialnetwork_pgbouncer
         env_file:
-            - .env
+            - .docker-env
         volumes:
             - ./media:/code/media
             - ./logs:/code/logs
@@ -20,7 +20,7 @@ services:
         image: nginx
         container_name: socialnetwork_nginx
         env_file:
-            - .env
+            - .docker-env
         ports:
             - "8080:8080"
         depends_on:
@@ -33,7 +33,7 @@ services:
         ports:
             - "${DB_PORT}:${DB_PORT}"
         env_file:
-            - .env
+            - .docker-env
         volumes:
             - ./postgresql/data:/var/lib/postgresql/data
     socialnetwork_pgbouncer:
@@ -49,9 +49,9 @@ services:
         depends_on:
             - socialnetwork_db
         env_file:
-            - .env
+            - .docker-env
     socialnetwork_redis:
         image: redis
         container_name: socialnetwork_redis
         env_file:
-            - .env
+            - .docker-env
