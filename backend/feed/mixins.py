@@ -41,3 +41,8 @@ class BaseAuthorMixin(
         if self.user_allowed_to_change_object():
             return self.partial_update(request)
         return Response(status=status.HTTP_403_FORBIDDEN)
+
+    def get_object(self):
+        lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
+        if lookup_url_kwarg in self.kwargs:
+            return super().get_object()
