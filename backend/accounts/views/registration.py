@@ -19,7 +19,13 @@ class SignUpAPIView(RetrieveModelMixin, GenericAPIView):
         self.user = serializer.save()
         jwt = generate_new_jwt_auth(self.user.pk)
         response = self.retrieve(request)
-        response.set_cookie(key=settings.JWT_AUTH_COOKIES_NAME, value=jwt, httponly=True, samesite='none', secure=True)
+        response.set_cookie(
+            key=settings.JWT_AUTH_COOKIES_NAME,
+            value=jwt,
+            httponly=True,
+            samesite='none',
+            secure=request.is_secure()
+        )
         return response
 
     def get_object(self):
@@ -36,7 +42,13 @@ class SignInAPIView(RetrieveModelMixin, GenericAPIView):
             return Response({'success': False})
         jwt = generate_new_jwt_auth(user.pk)
         response = self.retrieve(request)
-        response.set_cookie(key=settings.JWT_AUTH_COOKIES_NAME, value=jwt, httponly=True, samesite='none', secure=True)
+        response.set_cookie(
+            key=settings.JWT_AUTH_COOKIES_NAME,
+            value=jwt,
+            httponly=True,
+            samesite='none',
+            secure=request.is_secure()
+        )
         return response
 
     def get_object(self):
