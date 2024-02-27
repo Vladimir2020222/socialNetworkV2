@@ -26,7 +26,15 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='post',
             name='pub_date',
-            field=models.DateTimeField(auto_now_add=True, default=datetime.datetime(2022, 5, 11, 5, 5, 5)),
+            field=models.DateTimeField(auto_now_add=True, default=datetime.datetime(
+                2022,
+                5,
+                11,
+                5,
+                5,
+                5,
+                tzinfo=datetime.timezone.utc
+            )),
             preserve_default=False,
         ),
         migrations.AddField(
