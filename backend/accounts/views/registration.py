@@ -59,7 +59,7 @@ class SignOutAPIView(APIView):
     def post(self, request):
         remove_profile_cache(request)
         response = Response({'success': True})
-        response.delete_cookie(key='jwt', samesite='none')
+        response.delete_cookie(key=settings.JWT_AUTH_COOKIES_NAME, samesite='none')
         return response
 
 
