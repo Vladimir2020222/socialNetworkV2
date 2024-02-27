@@ -5,7 +5,7 @@ urlpatterns = [
     path('logout', SignOutAPIView.as_view(), name='logout'),
     path('login', SignInAPIView.as_view(), name='login'),
     path('signup', SignUpAPIView.as_view(), name='signup'),
-    path('is_authenticated', IsLoggedInAPIView.as_view(), name='is_authenticated'),
+    path('is_authenticated', IsAuthenticatedAPIView.as_view(), name='is_authenticated'),
 
     path('profile', ProfileAPIView.as_view(), name='profile'),
     path('change_email', ChangeEmailAPIView.as_view(), name='change_email'),

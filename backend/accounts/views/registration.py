@@ -63,6 +63,6 @@ class SignOutAPIView(APIView):
         return response
 
 
-class IsLoggedInAPIView(APIView):
+class IsAuthenticatedAPIView(APIView):
     def get(self, request):
-        return Response(bool(request.user))
+        return Response(request.user.is_authenticated)

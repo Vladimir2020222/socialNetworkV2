@@ -4,7 +4,7 @@ from django.views.decorators.cache import cache_page
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import RetrieveModelMixin
 
-from .registration import SignInAPIView, SignOutAPIView, SignUpAPIView, IsLoggedInAPIView
+from .registration import SignInAPIView, SignOutAPIView, SignUpAPIView, IsAuthenticatedAPIView
 from .profile import ProfileAPIView, ConfirmChangeEmailAPIView, ChangeEmailAPIView
 from .subscriptions import SubscribeAPIView, UnsubscribeAPIView, IsSubscribedAPIView
 from .passwords import PasswordChangeAPIView, PasswordResetAPIView, PasswordResetConfirmAPIView
@@ -16,7 +16,7 @@ __all__ = [
     'SignInAPIView',
     'SignOutAPIView',
     'SignUpAPIView',
-    'IsLoggedInAPIView',
+    'IsAuthenticatedAPIView',
     'ProfileAPIView',
     'SubscribeAPIView',
     'UnsubscribeAPIView',
