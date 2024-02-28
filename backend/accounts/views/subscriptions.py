@@ -26,9 +26,9 @@ class UnsubscribeAPIView(APIView):
 
 
 class IsSubscribedAPIView(APIView):
-    def post(self, request):
+    def get(self, request):
         user = request.user
         if user.is_anonymous:
             return Response(False)
-        to = int(request.data.get('to'))
+        to = int(request.GET.get('to'))
         return Response(is_subscribed_to(user, to))

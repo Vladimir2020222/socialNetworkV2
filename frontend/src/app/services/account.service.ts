@@ -193,9 +193,8 @@ export class AccountService {
   }
 
   isSubscribedTo(to: number): Observable<boolean> {
-    return this.http.post<boolean>(
-      serverUrl + 'accounts/is_subscribed',
-      JSON.stringify({to: to}),
+    return this.http.get<boolean>(
+      serverUrl + `accounts/is_subscribed?to=${to}`,
       {
         withCredentials: true,
         headers: new HttpHeaders({
