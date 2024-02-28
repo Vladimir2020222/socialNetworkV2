@@ -63,8 +63,9 @@ class ChangeEmailAPIView(APIView):
         return Response()
 
 
-class ConfirmChangeEmailAPIView(RetrieveModelMixin, APIView):
+class ConfirmChangeEmailAPIView(RetrieveModelMixin, GenericAPIView):
     token_generator = default_token_generator
+    serializer_class = UserSerializer
 
     def post(self, request):
         user, email = get_user_and_email_by_jwt(request.data.get('token').encode())
