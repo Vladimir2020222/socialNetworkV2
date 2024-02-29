@@ -1,5 +1,6 @@
 from django.utils.decorators import method_decorator
 from rest_framework import status
+from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin, UpdateModelMixin, DestroyModelMixin
 from rest_framework.response import Response
 
@@ -7,15 +8,16 @@ from accounts.utils import api_login_required
 from common.mixins import CachedGetObjectMixin
 
 
-class BaseAuthorMixin(
+class BaseAuthorOwnedModelAPIView(
     CachedGetObjectMixin,
     RetrieveModelMixin,
     CreateModelMixin,
     UpdateModelMixin,
-    DestroyModelMixin
+    DestroyModelMixin,
+    GenericAPIView
 ):
     def user_allowed_to_change_object(self):
-        return self.get_object().author == self.request.user or self.request.user.is_superuser
+        return self.get_object().author == self.request.user or self.request.user.has_perm('feed.del_post')
 
     def get(self, request, pk):
         return self.retrieve(request)

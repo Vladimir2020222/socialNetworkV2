@@ -1,10 +1,9 @@
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
-from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from feed.mixins import BaseAuthorMixin
+from feed.mixins import BaseAuthorOwnedModelAPIView
 from feed.models import Reply, Comment
 from feed.serializers import CommentSerializer, ReplySerializer
 
@@ -23,8 +22,7 @@ class GetCommentsAmountAPIView(APIView):
 
 @method_decorator(cache_page(120), name='dispatch')  # cache_page caches response only if request.method in (GET, HEAD)
 class CommentAPIView(
-    BaseAuthorMixin,
-    GenericAPIView
+    BaseAuthorOwnedModelAPIView
 ):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
@@ -32,8 +30,7 @@ class CommentAPIView(
 
 @method_decorator(cache_page(120), name='dispatch')  # cache_page caches response only if request.method in (GET, HEAD)
 class ReplyAPIView(
-    BaseAuthorMixin,
-    GenericAPIView
+    BaseAuthorOwnedModelAPIView
 ):
     serializer_class = ReplySerializer
     queryset = Reply.objects.all()

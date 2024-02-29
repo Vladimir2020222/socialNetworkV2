@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.files.images import ImageFile
 from django.db.models import Subquery
@@ -10,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from accounts.utils import api_login_required
-from feed.mixins import BaseAuthorMixin
+from feed.mixins import BaseAuthorOwnedModelAPIView
 from feed.models import Post, Image
 from feed.serializers import PostSerializer
 
@@ -71,8 +70,7 @@ class GetAdditionalPostsForFeedAPIView(GenericAPIView):
 
 @method_decorator(cache_page(120), name='dispatch')  # cache_page caches response only if request.method in (GET, HEAD)
 class PostAPIView(
-    BaseAuthorMixin,
-    GenericAPIView
+    BaseAuthorOwnedModelAPIView
 ):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
