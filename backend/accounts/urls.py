@@ -15,7 +15,7 @@ urlpatterns = [
     path('unsubscribe', UnsubscribeAPIView.as_view(), name='unsubscribe'),
     path('is_subscribed', IsSubscribedAPIView.as_view(), name='is_subscribed'),
 
-    path('change_password', PasswordChangeAPIView.as_view(), name='password_change_view'),
+    path('change_password', PasswordChangeAPIView.as_view(), name='password_change'),
     path('password_reset', PasswordResetAPIView.as_view(), name='password_reset'),
     path('password_reset_confirm', PasswordResetConfirmAPIView.as_view(), name='password_reset_confirm'),
 

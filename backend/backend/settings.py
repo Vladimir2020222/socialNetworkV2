@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os.path
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -89,8 +90,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': "socialnetwork",
-        'HOST': os.getenv("PGBOUNCER_HOST", "localhost"),
-        'PORT': os.getenv("PGBOUNCER_PORT", "6432"),
+        # when running tests, delete test database would be impossible because pgbouncer does not release connection
+        # to test database. So postgres returns error: database "test_socialnetwork" is being accessed by other users
+        'HOST': os.getenv("PGBOUNCER_HOST" if 'test' not in sys.argv else "DB_HOST", "localhost"),
+        'PORT': os.getenv("PGBOUNCER_PORT" if 'test' not in sys.argv else "DB_PORT", "6432"),
         'USER': os.getenv('DB_USER', 'postgres'),
         'PASSWORD': os.getenv('DB_PASSWORD', '')
     }
