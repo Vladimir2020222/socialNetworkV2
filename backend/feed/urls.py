@@ -17,7 +17,7 @@ urlpatterns = [
     path('posts/by/<int:pk>', PostsByUserScrollableAPIView.as_view(), name='posts_by_user'),
     path('comment_replies/<int:pk>', CommentRepliesScrollableAPIView.as_view(), name='comment_replies'),
     path('post/<int:pk>/comments', PostCommentsScrollableAPIView.as_view(), name='post_comments'),
-    path('comment_replies/<int:pk>/amount', GetRepliesAmountAPIView.as_view(), name='get_comments_amount'),
+    path('comment_replies/<int:pk>/amount', GetRepliesAmountAPIView.as_view(), name='get_replies_amount'),
     path('post/<int:pk>/comments/amount', GetCommentsAmountAPIView.as_view(), name='get_comments_amount'),
 
     path('<str:action>/<str:model_name>/<int:pk>', RateAPIView.as_view(), name='rate')
