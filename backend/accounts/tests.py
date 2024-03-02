@@ -5,16 +5,9 @@ from django.test import TestCase
 from django.urls import reverse
 from django.core import mail
 from rest_framework import status
+from common.tests import send_login_request
 
 User = get_user_model()
-
-
-def send_login_request(client, username='user1', password='12345'):
-    return client.post(
-        reverse('login'),
-        {'username': username, 'password': password},
-        content_type='application/json'
-    )
 
 
 class AuthenticationTestCase(TestCase):

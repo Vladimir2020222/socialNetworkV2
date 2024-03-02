@@ -1,3 +1,9 @@
-from django.test import TestCase
+from django.urls import reverse
 
-# Create your tests here.
+
+def send_login_request(client, username='user1', password='12345'):
+    return client.post(
+        reverse('login'),
+        {'username': username, 'password': password},
+        content_type='application/json'
+    )
