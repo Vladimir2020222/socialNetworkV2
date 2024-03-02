@@ -60,7 +60,7 @@ class BaseScrollableAPIView(GenericAPIView):
         return len(response.data) == amount
 
 
-class PostsByUserScrollableAPIView(BaseScrollableAPIView):
+class PostsByUserAPIView(BaseScrollableAPIView):
     serializer_class = PostSerializer
 
 
@@ -74,12 +74,12 @@ conditional_cache_decorator = method_decorator(
 
 
 @conditional_cache_decorator
-class PostCommentsScrollableAPIView(BaseScrollableAPIView):
+class PostCommentsAPIView(BaseScrollableAPIView):
     serializer_class = CommentSerializer
     fk_field_name = 'post'
 
 
 @conditional_cache_decorator
-class CommentRepliesScrollableAPIView(BaseScrollableAPIView):
+class CommentRepliesAPIView(BaseScrollableAPIView):
     serializer_class = ReplySerializer
     fk_field_name = 'to'
