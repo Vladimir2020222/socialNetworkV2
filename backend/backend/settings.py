@@ -16,7 +16,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -25,11 +24,12 @@ SECRET_KEY = 'django-insecure-jjgbqbbg+jf)!7mor#sdtddf6u0pob_*+q1x9ny=kouieuy40q
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG') == 'true'
+RUNNING_TESTS = 'test' in sys.argv
+
 DISABLE_DEBUG_MIDDLEWARE = os.getenv('DISABLE_DEBUG_MIDDLEWARE') == 'true'
 DISABLE_DEBUG_MIDDLEWARE_QUERIES_OUTPUT = os.getenv('DISABLE_DEBUG_MIDDLEWARE_QUERIES_OUTPUT') == 'true'
 
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', '::']
-
 
 # Application definition
 
@@ -92,8 +92,8 @@ DATABASES = {
         'NAME': "socialnetwork",
         # when running tests, delete test database would be impossible because pgbouncer does not release connection
         # to test database. So postgres returns error: database "test_socialnetwork" is being accessed by other users
-        'HOST': os.getenv("PGBOUNCER_HOST" if 'test' not in sys.argv else "DB_HOST", "localhost"),
-        'PORT': os.getenv("PGBOUNCER_PORT" if 'test' not in sys.argv else "DB_PORT", "6432"),
+        'HOST': os.getenv("PGBOUNCER_HOST" if not RUNNING_TESTS else "DB_HOST", "localhost"),
+        'PORT': os.getenv("PGBOUNCER_PORT" if not RUNNING_TESTS else "DB_PORT", "6432"),
         'USER': os.getenv('DB_USER', 'postgres'),
         'PASSWORD': os.getenv('DB_PASSWORD', '')
     }
@@ -242,7 +242,8 @@ REST_FRAMEWORK = {
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache' if not RUNNING_TESTS
+        else 'django.core.cache.backends.dummy.DummyCache',
         'LOCATION': f'redis://{os.getenv('REDIS_HOST', 'localhost')}:6379'
     }
 }
