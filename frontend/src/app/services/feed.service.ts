@@ -112,6 +112,19 @@ export class FeedService {
     );
   }
 
+  updateComment(pk: number, text: string): Observable<Comment> {
+    return this.http.patch<Comment>(
+      serverUrl + `feed/comment/${pk}`,
+      JSON.stringify({text: text}),
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        }),
+        withCredentials: true
+      }
+    );
+  }
+
   //endregion
 
   // region replies
@@ -124,6 +137,19 @@ export class FeedService {
         to: commentPk,
         replyTo: replyTo
       }),
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        }),
+        withCredentials: true
+      }
+    );
+  }
+
+  updateReply(pk: number, text: string, replyTo: number[]): Observable<CommentReply> {
+    return this.http.patch<CommentReply>(
+      serverUrl + `feed/reply/${pk}`,
+      JSON.stringify({text: text, replyTo: replyTo}),
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json'
