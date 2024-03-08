@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { User } from "../../../../models/user";
 import { AccountService } from "../../../../services/account.service";
-import { PostService } from "../../../../services/post.service";
+import { FeedService } from "../../../../services/feed.service";
 
 @Component({
   selector: 'app-profile',
@@ -12,7 +12,7 @@ export class ProfileComponent implements OnInit {
   @Input() user!: User | null;
   userIsCurrentUser: boolean = true;  // if it would be false by default, ProfileSubscribeButtonComponents would send
                                       // redundant request to server to check if current user is subscribed to this user
-  constructor(private accountService: AccountService, private postService: PostService) {}
+  constructor(private accountService: AccountService, private feedService: FeedService) {}
 
   ngOnInit(): void {
     this.accountService.userIsInitialized

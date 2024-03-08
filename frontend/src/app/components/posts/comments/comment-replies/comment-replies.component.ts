@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import { CommentReply } from "../../../../models/comment-reply";
-import { PostService } from "../../../../services/post.service";
+import { FeedService } from "../../../../services/feed.service";
 import { Comment } from "../../../../models/comment"
 
 @Component({
@@ -18,7 +18,7 @@ export class CommentRepliesComponent implements OnInit, OnChanges {
   repliesIncrement = 5;
   showReplies: boolean = false;
 
-  constructor(private postService: PostService) {}
+  constructor(private feedService: FeedService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['newReplies']) {
@@ -35,7 +35,7 @@ export class CommentRepliesComponent implements OnInit, OnChanges {
   }
 
   setTotalRepliesAmount(): void {
-    this.postService.getRepliesAmount(this.comment.pk)
+    this.feedService.getRepliesAmount(this.comment.pk)
       .subscribe((totalRepliesAmount: number): void => {
         this.totalRepliesAmount = totalRepliesAmount;
       })
@@ -49,7 +49,7 @@ export class CommentRepliesComponent implements OnInit, OnChanges {
   }
 
   loadAdditionalReplies(amount: number): void {
-    this.postService.getCommentsReplies(this.comment.pk, this.replies.length, amount)
+    this.feedService.getCommentsReplies(this.comment.pk, this.replies.length, amount)
       .subscribe((replies: CommentReply[]): void => {
         this.replies.push(...replies);
         if (this.showReplies)

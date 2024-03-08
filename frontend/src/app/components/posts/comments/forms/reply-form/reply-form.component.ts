@@ -8,7 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Comment } from "../../../../../models/comment";
-import { PostService } from "../../../../../services/post.service";
+import { FeedService } from "../../../../../services/feed.service";
 import { CommentReply } from "../../../../../models/comment-reply";
 import { User } from "../../../../../models/user";
 import { getUserFromCache } from "../../../../../utils";
@@ -26,7 +26,7 @@ export class ReplyFormComponent extends Common implements OnChanges {
   @Input() replyTo: number[] = [];
   @Input() clickedReplyPk!: number | null;
 
-  constructor(private postService: PostService) {
+  constructor(private feedService: FeedService) {
     super();
   }
 
@@ -62,6 +62,6 @@ export class ReplyFormComponent extends Common implements OnChanges {
   }
 
   submit(): void {
-      this.postService.createReply(this.comment.pk, this.text, this.replyTo).subscribe(this.submitCallback.bind(this));
+      this.feedService.createReply(this.comment.pk, this.text, this.replyTo).subscribe(this.submitCallback.bind(this));
   }
 }

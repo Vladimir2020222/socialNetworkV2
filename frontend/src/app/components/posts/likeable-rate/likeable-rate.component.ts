@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { LikeableRateEnum } from "../../../enums/likeable-rate";
 import { Likeable } from "../../../models/likeable";
-import { PostService } from "../../../services/post.service";
+import { FeedService } from "../../../services/feed.service";
 import { likeableObjectsNames } from "../../../types/likeable-objects-names";
 
 @Component({
@@ -14,15 +14,15 @@ export class LikeableRateComponent {
   @Input() objectName!: likeableObjectsNames;
   protected readonly LikeableRateEnum = LikeableRateEnum;
 
-  constructor(private postService: PostService) {}
+  constructor(private feedService: FeedService) {}
 
   likeClick(): void {
     if (this.object.currentUserRate === LikeableRateEnum.like) {
-      this.postService.removeLike(this.object.pk, this.objectName);
+      this.feedService.removeLike(this.object.pk, this.objectName);
       this.object.currentUserRate = LikeableRateEnum.none;
       this.object.likes--;
     } else {
-      this.postService.like(this.object.pk, this.objectName);
+      this.feedService.like(this.object.pk, this.objectName);
       if (this.object.currentUserRate === LikeableRateEnum.dislike)
         this.object.dislikes--;
       this.object.currentUserRate = LikeableRateEnum.like;
@@ -32,11 +32,11 @@ export class LikeableRateComponent {
 
   dislikeClick(): void {
     if (this.object.currentUserRate === LikeableRateEnum.dislike) {
-      this.postService.removeDislike(this.object.pk, this.objectName);
+      this.feedService.removeDislike(this.object.pk, this.objectName);
       this.object.currentUserRate = LikeableRateEnum.none
       this.object.dislikes--;
     } else {
-      this.postService.dislike(this.object.pk, this.objectName);
+      this.feedService.dislike(this.object.pk, this.objectName);
       if (this.object.currentUserRate === LikeableRateEnum.like)
         this.object.likes--;
       this.object.currentUserRate = LikeableRateEnum.dislike;

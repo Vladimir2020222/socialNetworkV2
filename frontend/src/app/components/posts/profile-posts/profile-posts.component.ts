@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { User } from "../../../models/user";
 import { Post } from "../../../models/post";
-import { PostService } from "../../../services/post.service";
+import { FeedService } from "../../../services/feed.service";
 
 @Component({
   selector: 'app-profile-posts',
@@ -14,7 +14,7 @@ export class ProfilePostsComponent implements OnInit {
   readonly postsAmountPerRequest: number = 3;
   offset: number = 0;
 
-  constructor(private postService: PostService) {
+  constructor(private feedService: FeedService) {
   }
 
   ngOnInit(): void {
@@ -22,7 +22,7 @@ export class ProfilePostsComponent implements OnInit {
   }
 
   loadAdditionalPosts(): void {
-    this.postService.getPostsByUser(this.user.pk, this.offset, this.postsAmountPerRequest)
+    this.feedService.getPostsByUser(this.user.pk, this.offset, this.postsAmountPerRequest)
       .subscribe((posts: Post[]): void => {
         this.posts.push(...posts);
       });

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PostService } from "../../../services/post.service";
+import { FeedService } from "../../../services/feed.service";
 import { Post } from "../../../models/post";
 
 @Component({
@@ -9,13 +9,13 @@ import { Post } from "../../../models/post";
 })
 export class CreatePostComponent implements OnInit {
   post: Post | undefined;
-  constructor(private postService: PostService) {}
+  constructor(private feedService: FeedService) {}
 
   ngOnInit(): void {
   }
 
   submit(images: FileList | null, text: string): void {
-    this.postService.createPost(images, text)
+    this.feedService.createPost(images, text)
       .subscribe(post => {
         this.post = post;
       });

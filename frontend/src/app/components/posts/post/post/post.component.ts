@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Post } from "../../../../models/post";
 import { Comment } from "../../../../models/comment";
-import { PostService } from "../../../../services/post.service";
+import { FeedService } from "../../../../services/feed.service";
 import { serverUrl } from "../../../../constants";
 
 
@@ -16,7 +16,7 @@ export class PostComponent {
   showComments: boolean = false;
   @Output() outPostIdViewed: EventEmitter<number> = new EventEmitter<number>;
 
-  constructor(private postService: PostService) {}
+  constructor(private feedService: FeedService) {}
 
   getSrcForAddingPostToViewed(): string {
     return serverUrl + `feed/add_post_to_viewed/${this.post.pk}`

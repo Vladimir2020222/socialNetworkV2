@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Post } from "../../../../models/post";
-import { PostService } from "../../../../services/post.service";
+import { FeedService } from "../../../../services/feed.service";
 import { Comment } from "../../../../models/comment";
 
 @Component({
@@ -16,14 +16,14 @@ export class CommentsComponent implements OnInit {
   totalCommentsAmount: number = 0;
   showLoadMoreCommentsButton: boolean = false;
 
-  constructor(private postService: PostService) {}
+  constructor(private FeedService: FeedService) {}
 
   ngOnInit(): void {
     this.setTotalCommentsAmount();
   }
 
   setTotalCommentsAmount(): void {
-    this.postService.getCommentsAmount(this.post.pk)
+    this.FeedService.getCommentsAmount(this.post.pk)
       .subscribe((totalCommentsAmount: number): void => {
         this.totalCommentsAmount = totalCommentsAmount;
         if (this.totalCommentsAmount != 0)
@@ -42,7 +42,7 @@ export class CommentsComponent implements OnInit {
   }
 
   loadAdditionalComments(amount: number): void {
-    this.postService.getPostComments(this.post.pk, this.comments.length, amount)
+    this.FeedService.getPostComments(this.post.pk, this.comments.length, amount)
       .subscribe((comments: Comment[]): void => {
         this.comments.push(...comments);
       });

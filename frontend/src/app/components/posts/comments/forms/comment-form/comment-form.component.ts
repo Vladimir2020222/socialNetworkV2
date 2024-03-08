@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Comment } from "../../../../../models/comment";
-import { PostService } from "../../../../../services/post.service";
+import { FeedService } from "../../../../../services/feed.service";
 import { Post } from "../../../../../models/post";
 import { Common } from "../common";
 
@@ -15,7 +15,7 @@ export class CommentFormComponent extends Common {
   @Input() post!: Post;
   @Output() newComment: EventEmitter<Comment> = new EventEmitter<Comment>();
 
-  constructor(private postService: PostService) {
+  constructor(private postService: FeedService) {
     super();
   }
 

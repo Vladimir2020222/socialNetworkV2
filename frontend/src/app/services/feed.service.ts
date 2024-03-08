@@ -9,7 +9,7 @@ import { Comment } from "../models/comment";
 @Injectable({
   providedIn: 'root'
 })
-export class PostService {
+export class FeedService {
 
   constructor(private http: HttpClient) {}
 

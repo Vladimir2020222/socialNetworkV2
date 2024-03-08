@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PostService } from "../../../services/post.service";
+import { FeedService } from "../../../services/feed.service";
 import { Post } from "../../../models/post";
 
 @Component({
@@ -12,7 +12,7 @@ export class PostsComponent implements OnInit {
   @Output() outPostIdViewed: EventEmitter<number> = new EventEmitter<number>();
   postsAreFromInput: boolean = false;
 
-  constructor(private postService: PostService) {}
+  constructor(private feedService: FeedService) {}
 
   ngOnInit(): void {
     if (!this.posts) {
@@ -23,7 +23,7 @@ export class PostsComponent implements OnInit {
   }
 
   loadAdditionalPosts(): void {
-    this.postService.getAdditionalPosts()
+    this.feedService.getAdditionalPosts()
       .subscribe(posts => {
         if (!this.posts) {
           this.posts = [];
