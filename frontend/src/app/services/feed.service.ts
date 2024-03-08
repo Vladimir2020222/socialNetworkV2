@@ -81,18 +81,6 @@ export class FeedService {
 
   // region comments
 
-  getCommentLikedBy(pk: number): Observable<number[]> {
-    return this.http.get<number[]>(
-      serverUrl + 'feed/users_liked_comment_list'
-    )
-  }
-
-  getCommentDislikedBy(pk: number): Observable<number[]> {
-    return this.http.get<number[]>(
-      serverUrl + 'feed/users_disliked_comment_list'
-    )
-  }
-
   getCommentsAmount(postPk: number): Observable<number> {
     return this.http.get<number>(
       serverUrl + `feed/post/${postPk}/comments/amount`
@@ -163,18 +151,6 @@ export class FeedService {
   // endregion
 
   // region common
-
-  getObjectLikedBy(objectName: string, pk: number): Observable<number[]> {
-    return this.http.get<number[]>(
-      serverUrl + `feed/users_liked_${objectName}_list?pk=${pk}`
-    )
-  }
-
-  getObjectDislikedBy(objectName: string, pk: number): Observable<number[]> {
-    return this.http.get<number[]>(
-      serverUrl + `feed/users_disliked_${objectName}_list?pk=${pk}`
-    )
-  }
 
   like(pk: number, objectName: string): void {
     this._rate(pk, objectName, 'like');
