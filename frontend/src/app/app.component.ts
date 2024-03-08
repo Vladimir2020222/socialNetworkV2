@@ -3,7 +3,7 @@ import { ActivationStart, Data, Router } from "@angular/router";
 import { ThemesEnum } from 'src/app/enums/themes'
 import { Theme } from "./interface/theme.module";
 import { themes } from "./constants";
-import { CommonService } from "./services/common-.service";
+import { CommonService } from "./services/common.service";
 
 
 @Component({
