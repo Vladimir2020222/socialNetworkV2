@@ -15,7 +15,7 @@ export class CommentFormComponent extends Common {
   @Input() post!: Post;
   @Output() newComment: EventEmitter<Comment> = new EventEmitter<Comment>();
 
-  constructor(private postService: FeedService) {
+  constructor(private feedService: FeedService) {
     super();
   }
 
@@ -29,6 +29,6 @@ export class CommentFormComponent extends Common {
   }
 
   submit(): void {
-    this.postService.createComment(this.post.pk, this.text).subscribe(this.submitCallback.bind(this));
+    this.feedService.createComment(this.post.pk, this.text).subscribe(this.submitCallback.bind(this));
   }
 }
