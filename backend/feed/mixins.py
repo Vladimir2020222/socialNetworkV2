@@ -33,12 +33,6 @@ class BaseAuthorOwnedModelAPIView(
         return Response(status=status.HTTP_403_FORBIDDEN)
 
     @method_decorator(api_login_required)
-    def put(self, request, pk):
-        if self.user_allowed_to_change_object():
-            return self.update(request)
-        return Response(status=status.HTTP_403_FORBIDDEN)
-
-    @method_decorator(api_login_required)
     def patch(self, request, pk):
         if self.user_allowed_to_change_object():
             return self.partial_update(request)
