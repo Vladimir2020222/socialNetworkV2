@@ -1,6 +1,6 @@
 <div class="comment content-block-border">
   <app-author-mixin-header [object]="comment"></app-author-mixin-header>
-  <p class="comment-text whitespace-pre" (click)="showReplyForm = true">
+  <p class="comment-text whitespace-pre-wrap" (click)="showReplyForm = true">
     {{ comment.text }}
   </p>
   <app-likeable-rate [object]="comment" objectName="comment"></app-likeable-rate>
