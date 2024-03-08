@@ -13,6 +13,8 @@ export class PostService {
 
   constructor(private http: HttpClient) {}
 
+  // region posts
+
   getAdditionalPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(
       serverUrl + 'feed/get_additional_posts',
@@ -66,22 +68,78 @@ export class PostService {
     });
   }
 
-  getPostLikedBy(pk: number): Observable<number[]> {
-    return this.http.get<number[]>(
-      serverUrl + 'feed/users_liked_post_list'
-    )
-  }
-
-  getPostDislikedBy(pk: number): Observable<number[]> {
-    return this.http.get<number[]>(
-      serverUrl + 'feed/users_disliked_post_list'
-    )
-  }
-
   getPostsByUser(userPk: number, offset: number, amount: number): Observable<Post[]> {
     return this.http.get<Post[]>(
       serverUrl + `feed/posts/by/${userPk}?offset=${offset}&amount=${amount}`,
       {
+        withCredentials: true
+      }
+    );
+  }
+
+  // endregion
+
+  // region comments
+
+  getCommentLikedBy(pk: number): Observable<number[]> {
+    return this.http.get<number[]>(
+      serverUrl + 'feed/users_liked_comment_list'
+    )
+  }
+
+  getCommentDislikedBy(pk: number): Observable<number[]> {
+    return this.http.get<number[]>(
+      serverUrl + 'feed/users_disliked_comment_list'
+    )
+  }
+
+  getCommentsAmount(postPk: number): Observable<number> {
+    return this.http.get<number>(
+      serverUrl + `feed/post/${postPk}/comments/amount`
+    );
+  }
+
+  getPostComments(postPk: number, offset: number, amount: number): Observable<Comment[]> {
+    return this.http.get<Comment[]>(
+      serverUrl + `feed/post/${postPk}/comments?offset=${offset}&amount=${amount}`,
+      {
+        withCredentials: true
+      }
+    );
+  }
+
+  createComment(postPk: number, text: string): Observable<Comment> {
+    return this.http.post<Comment>(
+      serverUrl + 'feed/comment',
+      JSON.stringify({
+        text: text,
+        post: postPk
+      }),
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        }),
+        withCredentials: true
+      }
+    );
+  }
+
+  //endregion
+
+  // region replies
+
+  createReply(commentPk: number, text: string, replyTo: number[]): Observable<CommentReply> {
+    return this.http.post<CommentReply>(
+      serverUrl + 'feed/reply',
+      JSON.stringify({
+        text: text,
+        to: commentPk,
+        replyTo: replyTo
+      }),
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        }),
         withCredentials: true
       }
     );
@@ -96,25 +154,26 @@ export class PostService {
     )
   }
 
-  getPostComments(postPk: number, offset: number, amount: number): Observable<Comment[]> {
-    return this.http.get<Comment[]>(
-      serverUrl + `feed/post/${postPk}/comments?offset=${offset}&amount=${amount}`,
-      {
-        withCredentials: true
-      }
-    );
-  }
-
   getRepliesAmount(commentPk: number): Observable<number> {
     return this.http.get<number>(
       serverUrl + `feed/comment_replies/${commentPk}/amount`
     )
   }
 
-  getCommentsAmount(postPk: number): Observable<number> {
-    return this.http.get<number>(
-      serverUrl + `feed/post/${postPk}/comments/amount`
-    );
+  // endregion
+
+  // region common
+
+  getObjectLikedBy(objectName: string, pk: number): Observable<number[]> {
+    return this.http.get<number[]>(
+      serverUrl + `feed/users_liked_${objectName}_list?pk=${pk}`
+    )
+  }
+
+  getObjectDislikedBy(objectName: string, pk: number): Observable<number[]> {
+    return this.http.get<number[]>(
+      serverUrl + `feed/users_disliked_${objectName}_list?pk=${pk}`
+    )
   }
 
   like(pk: number, objectName: string): void {
@@ -143,36 +202,5 @@ export class PostService {
     ).subscribe();
   }
 
-  createComment(postPk: number, text: string): Observable<Comment> {
-    return this.http.post<Comment>(
-      serverUrl + 'feed/comment',
-      JSON.stringify({
-        text: text,
-        post: postPk
-      }),
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json'
-        }),
-        withCredentials: true
-      }
-    );
-  }
-
-  createReply(commentPk: number, text: string, replyTo: number[]): Observable<CommentReply> {
-    return this.http.post<CommentReply>(
-      serverUrl + 'feed/reply',
-      JSON.stringify({
-        text: text,
-        to: commentPk,
-        replyTo: replyTo
-      }),
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json'
-        }),
-        withCredentials: true
-      }
-    );
-  }
+  // endregion
 }
