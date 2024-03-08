@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { Post } from "../models/post";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse} from "@angular/common/http";
 import { serverUrl } from "../constants";
 import { CommentReply } from "../models/comment-reply";
 import { Comment } from "../models/comment";
@@ -176,6 +176,26 @@ export class FeedService {
         withCredentials: true
       }
     ).subscribe();
+  }
+
+  deleteObject(pk: number, objectName: string): Observable<boolean> {
+    // returns if object is successfully deleted
+    return new Observable<boolean>(observer => {
+      this.http.delete<HttpResponse<any>>(
+        serverUrl + `feed/${objectName}/${pk}`,
+        {
+          withCredentials: true
+        }
+      )
+        .subscribe({
+          next: (response: HttpResponse<any>): void => {
+            observer.next(response.status === 204);
+          },
+          error: (response: HttpErrorResponse): void => {
+            observer.next(false);
+          }
+        });
+    });
   }
 
   // endregion
