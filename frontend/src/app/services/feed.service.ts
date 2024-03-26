@@ -77,6 +77,21 @@ export class FeedService {
     );
   }
 
+  // changing posts
+
+  updatePost(pk: number, text: string): Observable<Post> {
+    return this.http.patch<Post>(
+      serverUrl + `/feed/post/${pk}`,
+      JSON.stringify({text: text}),
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        }),
+        withCredentials: true
+      }
+    );
+  }
+
   // endregion
 
   // region comments
