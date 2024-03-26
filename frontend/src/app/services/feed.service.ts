@@ -92,6 +92,12 @@ export class FeedService {
     );
   }
 
+  getPostByPk(pk: number): Observable<Post> {
+    return this.http.get<Post>(
+      serverUrl + `feed/post/${pk}`
+    );
+  }
+
   // endregion
 
   // region comments
@@ -137,6 +143,12 @@ export class FeedService {
         }),
         withCredentials: true
       }
+    );
+  }
+
+  getCommentByPk(pk: number): Observable<Comment> {
+    return this.http.get<Comment>(
+      serverUrl + `feed/comment/${pk}`
     );
   }
 
@@ -187,6 +199,12 @@ export class FeedService {
     return this.http.get<number>(
       serverUrl + `feed/comment_replies/${commentPk}/amount`
     )
+  }
+
+  getReplyByPk(pk: number): Observable<CommentReply> {
+    return this.http.get<CommentReply>(
+      serverUrl + `feed/reply/${pk}`
+    );
   }
 
   // endregion
