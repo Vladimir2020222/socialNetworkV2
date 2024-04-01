@@ -1,0 +1,37 @@
+.option-link {
+  text-decoration: none;
+  font-size: 18px;
+  color: inherit;
+}
+
+.option {
+  border-radius: 10px;
+  height: 30px;
+  padding: 3px 3px 3px 10px;
+  margin: 7px 0 7px 0;
+  position: relative;
+  animation: slideOut 100ms forwards;
+}
+
+.option:hover {
+  background-color: rgba(100, 100, 100, 0.20);
+  animation: slideIn 100ms forwards;
+}
+
+@keyframes slideIn {
+  from {
+    left: 0;
+  }
+  to {
+    left: 7px;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    left: 7px;
+  }
+  to {
+    left: 0;
+  }
+}

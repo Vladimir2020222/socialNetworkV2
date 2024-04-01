@@ -42,6 +42,8 @@ import { CommentReplyComponent } from './components/posts/comments/comment-reply
 import { AuthorMixinHeaderComponent } from "./components/posts/author-mixin-header/author-mixin-header.component";
 import { ReplyFormComponent } from './components/posts/comments/forms/reply-form/reply-form.component';
 import { CommentFormComponent } from './components/posts/comments/forms/comment-form/comment-form.component';
+import { NavigationMenuComponent } from './components/navigation-menu/navigation-menu/navigation-menu.component';
+import { NavigationMenuOptionComponent } from './components/navigation-menu/navigation-menu-option/navigation-menu-option.component';
 
 
 @NgModule({
@@ -77,6 +79,8 @@ import { CommentFormComponent } from './components/posts/comments/forms/comment-
     AuthorMixinHeaderComponent,
     ReplyFormComponent,
     CommentFormComponent,
+    NavigationMenuComponent,
+    NavigationMenuOptionComponent,
   ],
     imports: [
         BrowserModule,

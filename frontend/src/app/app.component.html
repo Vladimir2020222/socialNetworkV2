@@ -1,3 +1,4 @@
+<app-navigation-menu *ngIf="useMainContentWrapper"></app-navigation-menu>
 <div [ngClass]="{'main-content': useMainContentWrapper}">
   <router-outlet></router-outlet>
 </div>
