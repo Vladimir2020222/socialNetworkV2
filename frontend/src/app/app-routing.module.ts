@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProfileComponent } from "./components/accounts/profile/profile/profile.component";
 import { LoginComponent } from "./components/accounts/login/login.component";
 import { LogoutComponent } from "./components/accounts/logout/logout.component";
 import { SignupComponent } from "./components/accounts/signup/signup.component";
@@ -13,8 +12,8 @@ import {
 } from "./components/accounts/passwords/reset-password-confirm/reset-password-confirm.component";
 import { CurrentUserProfileComponent } from "./components/accounts/current-user-profile/current-user-profile.component";
 import { UserProfileComponent } from "./components/accounts/user-profile/user-profile.component";
-import { PostsComponent } from "./components/posts/posts/posts.component";
-import { CreatePostComponent } from "./components/posts/create-post/create-post.component";
+import { PostsComponent } from "./components/feed/posts/posts.component";
+import { CreatePostComponent } from "./components/feed/create-post/create-post.component";
 
 const routes: Routes = [
   {
