@@ -12,31 +12,19 @@ import { FeedService } from "../../../../../services/feed.service";
 import { CommentReply } from "../../../../../models/comment-reply";
 import { User } from "../../../../../models/user";
 import { getUserFromCache } from "../../../../../utils";
-import { Common } from "../common";
 
 @Component({
   selector: 'app-reply-form',
   templateUrl: '../template.html',
   styleUrls: ['../styles.css']
 })
-export class ReplyFormComponent extends Common implements OnChanges {
-  readonly document = document;
+export class ReplyFormComponent implements OnChanges {
   @Input() comment!: Comment;
   @Output() newReply: EventEmitter<CommentReply> = new EventEmitter<CommentReply>();
   @Input() replyTo: number[] = [];
   @Input() clickedReplyPk!: number | null;
 
-  constructor(private feedService: FeedService) {
-    super();
-  }
-
-  getIdForMainInputElement(): string {
-    return `main-input-comment-${this.comment.pk}`;
-  }
-
-  get placeholder(): string {
-    return this.getPlaceholderForInput();
-  }
+  constructor(private feedService: FeedService) {  }
 
   ngOnChanges(changes: SimpleChanges): void {
     const clickedReplyPkChange: SimpleChange = changes['clickedReplyPk'];
@@ -49,19 +37,18 @@ export class ReplyFormComponent extends Common implements OnChanges {
     }
   }
 
-  getPlaceholderForInput(): string {
+  get placeholder(): string {
     const author: User | undefined = getUserFromCache(this.comment.author);
     if (!author)
       return '';
     return `reply to ${author.firstName} ${author.lastName}`
   }
 
-  submitCallback(obj: CommentReply): void {
-    this.newReply.emit(obj);
-    this.clear();
-  }
-
-  submit(): void {
-      this.feedService.createReply(this.comment.pk, this.text, this.replyTo).subscribe(this.submitCallback.bind(this));
+  submit(text: string): void {
+      this.feedService.createReply(this.comment.pk, text, this.replyTo).subscribe(
+        (reply: CommentReply): void => {
+          this.newReply.emit(reply);
+        }
+      );
   }
 }

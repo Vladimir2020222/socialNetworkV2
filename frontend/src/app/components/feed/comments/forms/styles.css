@@ -1,46 +1,21 @@
-.main-div-input {
+.input {
   width: 72%;
   display: inline-block;
   height: 30px;
   padding: 3px 5px 0 5px;
+  outline: none;
+  color: inherit;
+  font-size: 16px;
+  border: none;
+  background-color: #00000000;
   border-bottom: 1px solid rgba(128, 128, 128, 0.5);
   margin: 10px 0 10px 0;
 }
 
-.main-input-wrapper button, .main-div-input {
+.submit-button {
   border: none;
   background: var(--primary-color);
   color: var(--secondary-color);
   font-size: 16px;
-}
-
-.main-input-wrapper button {
   width: 15%;
-  padding: 20px;
-}
-
-.main-input {
-  width: 0;
-  height: 0;
-  border: none;
-  outline: none;
-  opacity: 0;
-}
-
-.caret {
-  font-weight: 900;
-  display: inline-block;
-  width: 0;
-}
-
-.main-div-input-text {
-  letter-spacing: 1px;
-}
-
-.text-before-caret {
-  margin-right: -7px;
-}
-
-.text-after-caret {
-  margin-left: -3px;
 }
