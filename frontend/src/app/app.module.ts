@@ -44,6 +44,10 @@ import { ReplyFormComponent } from './components/feed/comments/forms/reply-form/
 import { CommentFormComponent } from './components/feed/comments/forms/comment-form/comment-form.component';
 import { NavigationMenuComponent } from './components/navigation-menu/navigation-menu/navigation-menu.component';
 import { NavigationMenuOptionComponent } from './components/navigation-menu/navigation-menu-option/navigation-menu-option.component';
+import {
+  EditReplyCommentFormComponent
+} from "./components/feed/comments/forms/edit-reply-comment-form/edit-reply-comment-form.component";
+import {EditCommentFormComponent} from "./components/feed/comments/forms/edit-comment-form/edit-comment-form.component";
 
 
 @NgModule({
@@ -79,6 +83,8 @@ import { NavigationMenuOptionComponent } from './components/navigation-menu/navi
     AuthorMixinHeaderComponent,
     ReplyFormComponent,
     CommentFormComponent,
+    EditReplyCommentFormComponent,
+    EditCommentFormComponent,
     NavigationMenuComponent,
     NavigationMenuOptionComponent,
   ],

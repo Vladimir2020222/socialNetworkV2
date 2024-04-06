@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CommentReply } from "../../../../models/comment-reply";
 import { FeedService } from "../../../../services/feed.service";
 import { Comment } from "../../../../models/comment"
@@ -15,8 +15,9 @@ export class CommentRepliesComponent implements OnInit, OnChanges {
   @Output() showedRepliesAmount: EventEmitter<number> = new EventEmitter<number>();
   @Output() clickedReplyPk: EventEmitter<number> = new EventEmitter<number>();
   totalRepliesAmount: number = 0;
-  repliesIncrement = 5;
+  repliesIncrement: number = 5;
   showReplies: boolean = false;
+  lastClickedReplyData: {authorName: string, pk: number} | null = null;
 
   constructor(private feedService: FeedService) {}
 
@@ -30,8 +31,9 @@ export class CommentRepliesComponent implements OnInit, OnChanges {
     this.setTotalRepliesAmount();
   }
 
-  clickedReply(pk: number): void {
-    this.clickedReplyPk.emit(pk);
+  clickedReply(data: {authorName: string, pk: number}): void {
+    this.clickedReplyPk.emit(data.pk);
+    this.lastClickedReplyData = data;
   }
 
   setTotalRepliesAmount(): void {

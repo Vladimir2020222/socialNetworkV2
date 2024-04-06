@@ -1,9 +1,21 @@
-<div class="comment content-block-border">
+<div class="content-block-border">
   <app-author-mixin-header [object]="comment"></app-author-mixin-header>
-  <p class="comment-text whitespace-pre-wrap" (click)="showReplyForm = true">
+  <p class="comment-text whitespace-pre-wrap" (click)="showReplyForm = true; showEditCommentForm = false">
     {{ comment.text }}
   </p>
+  <div
+    *ngIf="currentUserIsAuthor"
+    (click)="showReplyForm = false; showEditCommentForm = true"
+    class="show-edit-comment-form"
+  >
+    edit
+  </div>
   <app-likeable-rate [object]="comment" objectName="comment"></app-likeable-rate>
+  <app-edit-comment-form
+    *ngIf="showEditCommentForm"
+    [comment]="comment"
+    (submitted)="showEditCommentForm = false"
+  ></app-edit-comment-form>
   <div class="replies-wrapper">
     <app-reply-form
       [comment]="comment"

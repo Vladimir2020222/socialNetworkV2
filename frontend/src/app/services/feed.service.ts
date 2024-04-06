@@ -174,6 +174,7 @@ export class FeedService {
   }
 
   updateReply(pk: number, text: string, replyTo: number[]): Observable<CommentReply> {
+    replyTo = Array.from(new Set(replyTo));
     return this.http.patch<CommentReply>(
       serverUrl + `feed/reply/${pk}`,
       JSON.stringify({text: text, replyTo: replyTo}),

@@ -1,0 +1,11 @@
+.show-edit-comment-form {
+  display: inline;
+  height: 20px;
+  width: 8%;
+  text-align: right;
+}
+
+.comment-text {
+  display: inline-block;
+  width: 88%;
+}

@@ -1,12 +1,25 @@
-<div class="comment content-block-border" (click)="onclick()">
+<div class="content-block-border" (click)="onclick()">
   <app-author-mixin-header [object]="reply"></app-author-mixin-header>
   <p class="comment-text">
-    <span class="reply-answer-to-username" *ngFor="let to of replyToNames">
-      @{{ to }}
+    <span class="reply-answer-to-username" *ngFor="let to of replyTo">
+      @{{ to.authorName }}
     </span>
     <span class="whitespace-pre-wrap">
       {{ reply.text }}
     </span>
   </p>
+  <div
+    *ngIf="currentUserIsAuthor"
+    (click)="showEditReplyCommentForm = true"
+    class="show-edit-comment-form"
+  >
+    edit
+  </div>
   <app-likeable-rate [object]="reply" objectName="reply"></app-likeable-rate>
+  <app-edit-reply-comment-form
+    *ngIf="showEditReplyCommentForm"
+    [reply]="reply"
+    [replyTo]="replyTo.concat(replyToEditForm)"
+    (submitted)="showEditReplyCommentForm = false; setReplyToNames()"
+  ></app-edit-reply-comment-form>
 </div>
