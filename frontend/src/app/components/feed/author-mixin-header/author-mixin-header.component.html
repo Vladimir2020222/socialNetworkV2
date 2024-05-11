@@ -11,6 +11,11 @@
       </div>
     </a>
   </div>
+  <div *ngIf="currentUserIsAuthor" class="delete-object-button" (click)="deleteObject()">
+    <span *ngIf="showDeleteFailedMessage">try later</span>
+    <br>
+    delete
+  </div>
   <div class="time-data">
     <div class="pub-age">{{ pubAge }}</div>
     <div class="upd-age" *ngIf="updAge != pubAge">{{ updAge }}</div>

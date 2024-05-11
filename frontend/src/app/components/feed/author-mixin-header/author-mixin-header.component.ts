@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { User } from "../../../models/user";
 import { AccountService } from "../../../services/account.service";
-import { AuthorMixin } from "../../../models/author-mixin";
-import { PubUpdDateMixin } from "../../../models/pub-upd-date-mixin";
+import { Post } from "../../../models/post";
+import { Comment } from "../../../models/comment";
+import { CommentReply } from "../../../models/comment-reply";
 import { getBackendDatetimeAge } from "../../../utils";
+import {FeedService} from "../../../services/feed.service";
 
 @Component({
   selector: 'app-author-mixin-header',
@@ -11,12 +13,15 @@ import { getBackendDatetimeAge } from "../../../utils";
   styleUrls: ['./author-mixin-header.component.css']
 })
 export class AuthorMixinHeaderComponent implements OnInit {
-  @Input() object!: AuthorMixin & PubUpdDateMixin;
+  @Input() object!: Post | Comment | CommentReply;
+  @Input() objectName!: string;
   author: User | undefined;
+  currentUserIsAuthor: boolean = false;
+  showDeleteFailedMessage: boolean = false;
   pubAge!: string;
   updAge!: string;
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService, private feedService: FeedService) {}
 
   ngOnInit(): void {
     this.setAuthor();
@@ -33,6 +38,18 @@ export class AuthorMixinHeaderComponent implements OnInit {
       .subscribe((author: User | null): void => {
         if (!author) return;
         this.author = author;
+        this.accountService.userProfile
+          .subscribe((currentUser: User | null): void => {
+            if (!currentUser) return;
+            this.currentUserIsAuthor = currentUser.pk === author.pk;
+          })
+      });
+  }
+
+  deleteObject(): void {
+    this.feedService.deleteObject(this.object.pk, this.objectName)
+      .subscribe(success => {
+        this.showDeleteFailedMessage = !success;
       });
   }
 }

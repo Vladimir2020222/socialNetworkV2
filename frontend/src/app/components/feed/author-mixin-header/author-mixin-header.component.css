@@ -26,3 +26,17 @@
   position: absolute;
   font-size: 24px;
 }
+
+.user-data {
+  width: 85%;
+  display: inline-block;
+}
+
+.delete-object-button {
+  width: 10%;
+  display: inline-block;
+}
+
+.time-data {
+  display: inline-block;
+}

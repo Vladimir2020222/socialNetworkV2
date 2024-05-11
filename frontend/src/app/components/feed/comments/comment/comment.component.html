@@ -1,5 +1,5 @@
 <div class="content-block-border">
-  <app-author-mixin-header [object]="comment"></app-author-mixin-header>
+  <app-author-mixin-header [object]="comment" objectName="comment"></app-author-mixin-header>
   <p class="comment-text whitespace-pre-wrap" (click)="showReplyForm = true; showEditCommentForm = false">
     {{ comment.text }}
   </p>
