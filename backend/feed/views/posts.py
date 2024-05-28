@@ -37,7 +37,7 @@ class ChangePostImagesAPIView(APIView):
             return Response('', status=status.HTTP_403_FORBIDDEN)
         files_pks = request.GET.get('files_pks')
         post.images.filter(pk__in=files_pks).delete()
-        return Response(status.HTTP_204_NO_CONTENT)
+        return Response('', status=status.HTTP_204_NO_CONTENT)
 
 
 class AddPostToViewedAPIView(APIView):
