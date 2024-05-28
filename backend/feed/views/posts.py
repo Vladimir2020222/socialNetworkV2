@@ -4,6 +4,7 @@ from django.db.models import Subquery
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
+from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -17,17 +18,26 @@ from feed.serializers import PostSerializer
 User = get_user_model()
 
 
-class AddImagesToPostAPIView(APIView):
+class ChangePostImagesAPIView(APIView):
     @method_decorator(api_login_required)
     def post(self, request, pk):
         post = Post.objects.get(pk=pk)
         if not request.user == post.author:
-            return Response('You can not add images to this post because you are not its author')
+            return Response('', status=status.HTTP_403_FORBIDDEN)
         files = request.FILES.getlist('images')
         images = Image.objects.bulk_create(
             [Image(post=post, content=ImageFile(file)) for file in files]
         )
-        return Response({'images': [image.content.url for image in images]})
+        return Response({'images': [{'pk': image.pk, 'url': image.content.url} for image in images]})
+
+    @method_decorator(api_login_required)
+    def delete(self, request, post_pk):
+        post = Post.objects.get(pk=post_pk)
+        if not request.user == post.author:
+            return Response('', status=status.HTTP_403_FORBIDDEN)
+        files_pks = request.GET.get('files_pks')
+        post.images.filter(pk__in=files_pks).delete()
+        return Response(status.HTTP_204_NO_CONTENT)
 
 
 class AddPostToViewedAPIView(APIView):
