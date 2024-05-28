@@ -26,7 +26,7 @@ export class FeedService {
 
   createPost(files: FileList | null, text: string): Observable<Post> {
     return new Observable<Post>(observer => {
-      let post: Post | undefined; // post object returned by server
+      // let post: Post | undefined; // post object returned by server
 
       this.http.post<Post>(
         serverUrl + 'feed/post',
@@ -40,32 +40,55 @@ export class FeedService {
           withCredentials: true
         }
       )  // creating post
-        .subscribe((value: Post): void => {
-          if (!files) {
-            return
-          }
-          post = value; // assigning value returned by server to variable
-
-          const formDataImages: FormData = new FormData();
-          for (const file of Array.from(files)) { // adding files passed to createPost method to FormData object
-            formDataImages.append('images', file, file.name);
-          }
-
-          const images$ = this.http.post<{images: string[]}>(
-            serverUrl + 'feed/add_images_to_post/' + String(value.pk),
-            formDataImages,
-            {
-              withCredentials: true
-            }
-          ) // adding images to the post
+        .subscribe((created_post: Post): void => {
+          this.addImagesToPost(created_post.pk, files) // adding images to the post
             .subscribe(images => {
-              if (post) { // this is necessary because post type is Post|undefined
-                post.images = images["images"];
-                observer.next(post);
+              if (created_post) { // this is necessary because post type is Post|undefined
+                created_post.images = images;
+                observer.next(created_post);
               }
             })
         });
     });
+  }
+
+  addImagesToPost(postPk: number, files: FileList | null): Observable<Post['images']> {
+    if (!files) {
+      return new Observable(
+        observer => observer.next([])
+      );
+    }
+
+    const formDataImages: FormData = new FormData();
+    for (const file of Array.from(files)) { // adding files passed to createPost method to FormData object
+      formDataImages.append('images', file, file.name);
+    }
+
+    return this.http.post<Post['images']>(
+      serverUrl + `feed/post/${postPk}/images/add`,
+      formDataImages,
+      {
+        withCredentials: true
+      }
+    )
+  }
+
+  deleteImagesFromPost(postPk: number, imagesPks: number[]): Observable<boolean> {
+    return new Observable(observer => {
+      this.http.delete<HttpResponse<any>>(
+        serverUrl + `feed/post/${postPk}/images/delete?${imagesPks.join()}`,
+        {
+          withCredentials: true
+        }
+      ).subscribe({
+        next: (response: HttpResponse<any>): void => {
+          observer.next(response.status === 204);
+        },
+          error: (response: HttpErrorResponse): void => {
+          observer.next(false);
+        }
+      });
+    })
   }
 
   getPostsByUser(userPk: number, offset: number, amount: number): Observable<Post[]> {
