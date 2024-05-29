@@ -1,0 +1,32 @@
+.image-wrapper {
+  display: inline-block;
+  padding: 17px;
+  width: 210px;
+  height: 115px
+}
+
+.image {
+  width: 200px;
+  height: 112px;
+}
+
+.text-wrapper {
+  padding: 20px 30px 20px 30px;
+}
+
+.text {
+  padding: 10px;
+  resize: vertical;
+  border: 1px solid var(--secondary-color);
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.delete-image-button {
+  position: relative;
+  bottom: 6px;
+  left: 9px;
+  float: right;
+  display: block;
+  filter: invert(var(--is-dark-theme));
+}

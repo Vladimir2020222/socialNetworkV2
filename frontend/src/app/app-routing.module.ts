@@ -14,6 +14,7 @@ import { CurrentUserProfileComponent } from "./components/accounts/current-user-
 import { UserProfileComponent } from "./components/accounts/user-profile/user-profile.component";
 import { PostsComponent } from "./components/feed/posts/posts.component";
 import { CreatePostComponent } from "./components/feed/create-post/create-post.component";
+import {EditPostComponent} from "./components/feed/edit-post/edit-post.component";
 
 const routes: Routes = [
   {
@@ -93,6 +94,13 @@ const routes: Routes = [
   {
     path: 'create_post',
     component: CreatePostComponent,
+    data: {
+      useMainContentWrapper: true
+    }
+  },
+  {
+    path: 'update_post/:postPk',
+    component: EditPostComponent,
     data: {
       useMainContentWrapper: true
     }

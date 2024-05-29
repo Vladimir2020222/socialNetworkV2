@@ -1,0 +1,15 @@
+<div *ngIf="post !== null">
+  <div class="text-wrapper">
+    <textarea rows="10" cols="96" class='text' [(ngModel)]="post.text"></textarea>
+  </div>
+  <div>
+    <div class="image-wrapper" *ngFor="let image of post.images">
+      <img class="image" [src]="serverUrl + image['url']">
+      <div class="delete-image-button" (click)="deleteImageButtonClicked(image)">
+        <img ngSrc="assets/cross.svg" width="20" height="20">
+      </div>
+    </div>
+  </div>
+  <input type="file" accept="image/*" multiple #images>
+  <button (click)="submit(images.files)">confirm</button>
+</div>

@@ -76,7 +76,7 @@ export class FeedService {
   deleteImagesFromPost(postPk: number, imagesPks: number[]): Observable<boolean> {
     return new Observable(observer => {
       this.http.delete<HttpResponse<any>>(
-        serverUrl + `feed/post/${postPk}/images/delete?${imagesPks.join()}`,
+        serverUrl + `feed/post/${postPk}/images/delete?files_pks=${imagesPks.join()}`,
         {
           withCredentials: true
         }

@@ -1,5 +1,5 @@
 <app-center-content [useInterval]="true" [time]="250">
-  <img [src]="serverUrl + images[activeImage]" class="image">
+  <img [src]="serverUrl + images[activeImage]['url']" class="image">
   <button type="button" *ngIf="images.length -1 > activeImage" (click)="activeImage = activeImage +1">
     next
   </button>

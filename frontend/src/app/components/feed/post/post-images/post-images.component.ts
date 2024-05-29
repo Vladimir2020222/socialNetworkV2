@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { serverUrl } from "../../../../constants";
+import {Post} from "../../../../models/post";
 
 @Component({
   selector: 'app-post-images',
@@ -7,7 +8,7 @@ import { serverUrl } from "../../../../constants";
   styleUrls: ['./post-images.component.css']
 })
 export class PostImagesComponent {
-  @Input() images!: string[];
+  @Input() images!: Post['images'];
   activeImage: number = 0;
   serverUrl = serverUrl;
 }

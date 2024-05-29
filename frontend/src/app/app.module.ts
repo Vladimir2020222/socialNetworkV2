@@ -48,6 +48,7 @@ import {
   EditReplyCommentFormComponent
 } from "./components/feed/comments/forms/edit-reply-comment-form/edit-reply-comment-form.component";
 import {EditCommentFormComponent} from "./components/feed/comments/forms/edit-comment-form/edit-comment-form.component";
+import { EditPostComponent } from './components/feed/edit-post/edit-post.component';
 
 
 @NgModule({
@@ -87,6 +88,7 @@ import {EditCommentFormComponent} from "./components/feed/comments/forms/edit-co
     EditCommentFormComponent,
     NavigationMenuComponent,
     NavigationMenuOptionComponent,
+    EditPostComponent,
   ],
     imports: [
         BrowserModule,

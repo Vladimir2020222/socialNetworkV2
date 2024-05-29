@@ -4,6 +4,6 @@ import { PubUpdDateMixin } from "./pub-upd-date-mixin";
 
 export interface Post extends Likeable, AuthorMixin, PubUpdDateMixin {
   pk: number,
-  images: string[],
+  images: {pk: number, url: string}[],
   text: string,
 }
