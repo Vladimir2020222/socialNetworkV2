@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { Post } from "../../../models/post";
 import { FeedService } from "../../../services/feed.service";
-import {ActivatedRoute} from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { serverUrl } from "../../../constants";
 
 @Component({
@@ -15,7 +15,7 @@ export class EditPostComponent implements OnInit {
   initialText: string | undefined = undefined;
   imagesToRemove: Post['images'] = [];
 
-  constructor(private feedService: FeedService, private route: ActivatedRoute) {}
+  constructor(private feedService: FeedService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     let pk: number = Number(this.route.snapshot.paramMap.get('postPk'));
@@ -53,5 +53,6 @@ export class EditPostComponent implements OnInit {
           this.post.images.push(...images);
         });
     }
+    this.router.navigate(['/post/', this.post.pk]);
   }
 }

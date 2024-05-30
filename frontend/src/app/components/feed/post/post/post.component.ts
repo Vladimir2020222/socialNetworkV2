@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Post } from "../../../../models/post";
 import { Comment } from "../../../../models/comment";
-import { FeedService } from "../../../../services/feed.service";
 import { serverUrl } from "../../../../constants";
+import {ActivatedRoute} from "@angular/router";
+import { FeedService } from "../../../../services/feed.service";
 
 
 @Component({
@@ -10,19 +11,30 @@ import { serverUrl } from "../../../../constants";
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
-export class PostComponent {
-  @Input() post!: Post;
+export class PostComponent implements OnInit {
+  @Input() post: Post | null = null;
   newComments: Comment[] = [];
   showComments: boolean = false;
   @Output() outPostIdViewed: EventEmitter<number> = new EventEmitter<number>;
 
-  constructor(private feedService: FeedService) {}
+  constructor(private feedService: FeedService, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    if (this.post !== null) return;
+    let postPk: number = Number(this.route.snapshot.paramMap.get('postPk'));
+    if (isNaN(postPk)) return;
+    this.feedService.getPostByPk(postPk)
+      .subscribe((post: Post): void => {
+        this.post = post;
+      });
+  }
 
   getSrcForAddingPostToViewed(): string {
-    return serverUrl + `feed/add_post_to_viewed/${this.post.pk}`
+    return serverUrl + `feed/add_post_to_viewed/${this.post?.pk}`
   }
 
   postViewed(): void {
+    if (!this.post) return;
     this.outPostIdViewed.emit(this.post.pk);
   }
 }

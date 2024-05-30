@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FeedService } from "../../../services/feed.service";
 import { Post } from "../../../models/post";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-create-post',
@@ -9,7 +10,7 @@ import { Post } from "../../../models/post";
 })
 export class CreatePostComponent implements OnInit {
   post: Post | undefined;
-  constructor(private feedService: FeedService) {}
+  constructor(private feedService: FeedService, private router: Router) {}
 
   ngOnInit(): void {
   }
@@ -18,6 +19,7 @@ export class CreatePostComponent implements OnInit {
     this.feedService.createPost(images, text)
       .subscribe(post => {
         this.post = post;
+        this.router.navigate(['/post/', post.pk]);
       });
   }
 }

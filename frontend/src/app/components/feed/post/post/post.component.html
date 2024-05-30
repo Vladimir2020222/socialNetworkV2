@@ -1,4 +1,4 @@
-<div class="post content-block-border">
+<div *ngIf="post" class="post content-block-border">
   <app-author-mixin-header [object]="post" objectName="post"></app-author-mixin-header>
   <p class="post-text whitespace-pre-wrap">{{ post.text }}</p>
   <app-post-images [images]="post.images" *ngIf="post.images.length"></app-post-images>
