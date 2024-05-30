@@ -1,4 +1,4 @@
-<div class="post-header" *ngIf="author">
+<div *ngIf="author">
   <div class="user-data">
     <a class="user-data-link" [routerLink]="['/user', author.pk]">
       <img class="author-ava" src="{{ author.ava }}" alt="{{ author.pk }}">
@@ -15,6 +15,9 @@
     <span *ngIf="showDeleteFailedMessage">try later</span>
     <br>
     delete
+  </div>
+  <div class="update-object-button" *ngIf="objectName === 'post' && currentUserIsAuthor">
+    <a class="update-object-link" [routerLink]="['/update_post/' + this.object.pk]">update</a>
   </div>
   <div class="time-data">
     <div class="pub-age">{{ pubAge }}</div>

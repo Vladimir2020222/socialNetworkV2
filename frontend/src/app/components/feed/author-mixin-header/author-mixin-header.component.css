@@ -28,15 +28,26 @@
 }
 
 .user-data {
-  width: 85%;
+  width: 75%;
   display: inline-block;
 }
 
-.delete-object-button {
+.delete-object-button, .update-object-button {
   width: 10%;
   display: inline-block;
 }
 
+.delete-object-button {
+  position: relative;
+  left: 77px;
+  bottom: 40px;
+}
+
 .time-data {
   display: inline-block;
+}
+
+.update-object-link {
+  text-decoration: none;
+  color: inherit;
 }
