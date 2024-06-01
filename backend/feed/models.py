@@ -93,3 +93,18 @@ def image_upload_to(instance, filename):
 class Image(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='images')
     content = models.ImageField(upload_to=image_upload_to)
+
+
+class Notification(models.Model):
+    class TypeChoices(models.TextChoices):
+        new_post = "new post"
+        new_subscriber = "new subscriber"
+        post_commented = "post commented"
+        comment_replied = "comment replied"
+        reply_replied = "reply replied"
+
+    users = models.ManyToManyField(User)
+    text = models.CharField(max_length=255)
+    type = models.CharField(choices=TypeChoices.choices)
+    object_pk = models.IntegerField()
+    time = models.DateTimeField(auto_now_add=True)

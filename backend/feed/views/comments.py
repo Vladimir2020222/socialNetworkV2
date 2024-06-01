@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 
 from feed.mixins import BaseAuthorOwnedModelAPIView
 from feed.models import Reply, Comment
+from feed.notifications import send_comment_replied_notification, send_reply_replied_notification
 from feed.serializers import CommentSerializer, ReplySerializer
 
 
@@ -34,3 +35,8 @@ class ReplyAPIView(
 ):
     serializer_class = ReplySerializer
     queryset = Reply.objects.all()
+
+    def send_object_created_notification(self, reply):
+        send_comment_replied_notification(reply)
+        if self.request.data.get("reply_to"):
+            send_reply_replied_notification(reply)

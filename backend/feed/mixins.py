@@ -16,8 +16,15 @@ class BaseAuthorOwnedModelAPIView(
     DestroyModelMixin,
     GenericAPIView
 ):
+    def send_object_created_notification(self, instance):
+        pass
+
     def user_allowed_to_change_object(self):
         return self.get_object().author == self.request.user or self.request.user.has_perm('feed.del_post')
+
+    def perform_create(self, serializer):
+        super().perform_create(serializer)
+        self.send_object_created_notification(serializer.instance)
 
     def get(self, request, pk):
         return self.retrieve(request)

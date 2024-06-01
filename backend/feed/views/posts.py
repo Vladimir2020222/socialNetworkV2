@@ -11,7 +11,8 @@ from rest_framework.views import APIView
 
 from accounts.utils import api_login_required
 from feed.mixins import BaseAuthorOwnedModelAPIView
-from feed.models import Post, Image
+from feed.models import Post, Image, Notification
+from feed.notifications import send_post_created_notifications
 from feed.serializers import PostSerializer
 
 
@@ -84,3 +85,4 @@ class PostAPIView(
 ):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    send_object_created_notification = send_post_created_notifications
