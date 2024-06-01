@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from feed.enums import RateEnum
-from feed.models import Post, Comment, Reply
+from feed.models import Post, Comment, Reply, Notification
 
 
 class BaseLikeablePubUpdDateSerializer(serializers.Serializer):
@@ -77,3 +77,9 @@ class ReplySerializer(serializers.ModelSerializer, BaseLikeablePubUpdDateSeriali
                 'allow_empty': True
             }
         }
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = ['pk', 'text', 'type', 'object_pk', 'time']

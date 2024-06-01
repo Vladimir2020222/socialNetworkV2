@@ -21,6 +21,6 @@ urlpatterns = [
     path('post/<int:pk>/comments', PostCommentsAPIView.as_view(), name='post_comments'),
     path('comment_replies/<int:pk>/amount', GetRepliesAmountAPIView.as_view(), name='get_replies_amount'),
     path('post/<int:pk>/comments/amount', GetCommentsAmountAPIView.as_view(), name='get_comments_amount'),
-
+    path('notifications', NotificationsAPIView.as_view(), name='notifications'),
     path('<str:action>/<str:model_name>/<int:pk>', RateAPIView.as_view(), name='rate')
 ]

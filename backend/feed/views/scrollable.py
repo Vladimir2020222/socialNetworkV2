@@ -4,7 +4,8 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
 from common.decorators import conditional_cache_page
-from feed.serializers import PostSerializer, CommentSerializer, ReplySerializer
+from feed.models import Notification
+from feed.serializers import PostSerializer, CommentSerializer, ReplySerializer, NotificationSerializer
 
 
 class BaseScrollableAPIView(GenericAPIView):
@@ -83,3 +84,10 @@ class PostCommentsAPIView(BaseScrollableAPIView):
 class CommentRepliesAPIView(BaseScrollableAPIView):
     serializer_class = ReplySerializer
     fk_field_name = 'to'
+
+
+class NotificationsAPIView(BaseScrollableAPIView):
+    serializer_class = NotificationSerializer
+
+    def get_queryset(self):
+        return Notification.objects.filter(users=self.request.user)
