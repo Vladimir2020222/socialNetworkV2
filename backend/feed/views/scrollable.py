@@ -1,5 +1,6 @@
 from django.db.models import ForeignKey
 from django.utils.decorators import method_decorator
+from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
@@ -13,6 +14,7 @@ class BaseScrollableAPIView(GenericAPIView):
     amount_get_param_name = 'amount'
     fk_field_name = None
     pk_url_kwarg = 'pk'
+    max_amount = 40
 
     def __init__(self, **kwargs):
         assert 'offset_get_param_name' not in kwargs, 'offset_get_param_name cannot be passed to as_view()'
@@ -22,6 +24,8 @@ class BaseScrollableAPIView(GenericAPIView):
     def get(self, request, pk):
         self._validate_attributes()
         offset, amount = self.get_offset_and_amount(request)
+        if (offset, amount) == (None, None):
+            return Response(status=status.HTTP_403_FORBIDDEN)
         queryset = self.get_queryset()[offset:amount+offset]
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
@@ -53,12 +57,17 @@ class BaseScrollableAPIView(GenericAPIView):
     def get_offset_and_amount(cls, request):
         offset = int(request.GET.get(cls.offset_get_param_name))
         amount = int(request.GET.get(cls.amount_get_param_name))
+        if amount > cls.max_amount:
+            return None, None
         return offset, amount
 
     @classmethod
     def should_cache(cls, request, response):
         offset, amount = cls.get_offset_and_amount(request)
-        return len(response.data) == amount
+        try:
+            return len(response.data) == amount
+        except TypeError:
+            return False
 
 
 class PostsByUserAPIView(BaseScrollableAPIView):
