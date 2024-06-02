@@ -41,6 +41,11 @@ export class NavigationMenuComponent {
       title: 'create new post',
       href: 'create_post',
       ifLoggedIn: true
+    },
+    {
+      title: 'notifications',
+      href: 'notifications',
+      ifLoggedIn: true
     }
   ];
 }

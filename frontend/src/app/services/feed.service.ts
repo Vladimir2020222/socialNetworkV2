@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { Post } from "../models/post";
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse} from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from "@angular/common/http";
 import { serverUrl } from "../constants";
 import { CommentReply } from "../models/comment-reply";
 import { Comment } from "../models/comment";
+import { Notification } from "../models/notification";
 
 @Injectable({
   providedIn: 'root'
@@ -279,6 +280,15 @@ export class FeedService {
           }
         });
     });
+  }
+
+  getNotifications(offset: number, amount: number): Observable<Notification[]> {
+    return this.http.get<Notification[]>(
+      serverUrl + `feed/notifications?amount=${amount}&offset=${offset}`,
+      {
+        withCredentials: true
+      }
+    );
   }
 
   // endregion

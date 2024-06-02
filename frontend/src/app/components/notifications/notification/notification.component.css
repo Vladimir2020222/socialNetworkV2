@@ -1,0 +1,18 @@
+.notification {
+  margin: 20px;
+  padding: 3px;
+}
+
+.notification-age {
+  color: gray;
+  font-size: 14px;
+}
+
+.notification-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.notification-text {
+  font-size: 17px;
+}

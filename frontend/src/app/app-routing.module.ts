@@ -16,6 +16,7 @@ import { PostsComponent } from "./components/feed/posts/posts.component";
 import { CreatePostComponent } from "./components/feed/create-post/create-post.component";
 import {EditPostComponent} from "./components/feed/edit-post/edit-post.component";
 import {PostComponent} from "./components/feed/post/post/post.component";
+import {NotificationsComponent} from "./components/notifications/notifications/notifications.component";
 
 const routes: Routes = [
   {
@@ -109,6 +110,13 @@ const routes: Routes = [
   {
     path: 'post/:postPk',
     component: PostComponent,
+    data: {
+      useMainContentWrapper: true
+    }
+  },
+  {
+    path: 'notifications',
+    component: NotificationsComponent,
     data: {
       useMainContentWrapper: true
     }

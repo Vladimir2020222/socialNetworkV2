@@ -49,6 +49,8 @@ import {
 } from "./components/feed/comments/forms/edit-reply-comment-form/edit-reply-comment-form.component";
 import {EditCommentFormComponent} from "./components/feed/comments/forms/edit-comment-form/edit-comment-form.component";
 import { EditPostComponent } from './components/feed/edit-post/edit-post.component';
+import { NotificationsComponent } from './components/notifications/notifications/notifications.component';
+import { NotificationComponent } from './components/notifications/notification/notification.component';
 
 
 @NgModule({
@@ -89,6 +91,8 @@ import { EditPostComponent } from './components/feed/edit-post/edit-post.compone
     NavigationMenuComponent,
     NavigationMenuOptionComponent,
     EditPostComponent,
+    NotificationsComponent,
+    NotificationComponent,
   ],
     imports: [
         BrowserModule,
