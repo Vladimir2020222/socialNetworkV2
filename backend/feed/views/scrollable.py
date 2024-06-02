@@ -99,4 +99,4 @@ class NotificationsAPIView(BaseScrollableAPIView):
     serializer_class = NotificationSerializer
 
     def get_queryset(self):
-        return Notification.objects.filter(users=self.request.user)
+        return Notification.objects.filter(users=self.request.user).order_by('-time')
