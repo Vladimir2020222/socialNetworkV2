@@ -30,7 +30,7 @@ export class AuthorMixinHeaderComponent implements OnInit {
 
   setPubAndUpdAges(): void {
     this.pubAge = getBackendDatetimeAge(this.object.pubDate);
-    this.pubAge = getBackendDatetimeAge(this.object.updDate);
+    this.updAge = getBackendDatetimeAge(this.object.updDate);
   }
 
   setAuthor(): void {
