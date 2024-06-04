@@ -21,7 +21,7 @@ class BaseScrollableAPIView(GenericAPIView):
         assert 'amount_get_param_name' not in kwargs, 'amount_get_param_name cannot be passed to as_view()'
         super().__init__(**kwargs)
 
-    def get(self, request, pk):
+    def get(self, request, *args, **kwargs):
         self._validate_attributes()
         offset, amount = self.get_offset_and_amount(request)
         if (offset, amount) == (None, None):

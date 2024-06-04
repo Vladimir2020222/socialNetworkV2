@@ -97,11 +97,11 @@ class Image(models.Model):
 
 class Notification(models.Model):
     class TypeChoices(models.TextChoices):
-        new_post = "new post"
-        new_subscriber = "new subscriber"
-        post_commented = "post commented"
-        comment_replied = "comment replied"
-        reply_replied = "reply replied"
+        new_post = "newPost"
+        new_subscriber = "newSubscriber"
+        post_commented = "postCommented"
+        comment_replied = "commentReplied"
+        reply_replied = "replyReplied"
 
     users = models.ManyToManyField(User)
     text = models.CharField(max_length=255)
