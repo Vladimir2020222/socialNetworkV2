@@ -1,11 +1,14 @@
 from django.contrib.auth import get_user_model
 
+from feed.notifications import send_new_subscriber_notification
+
 User = get_user_model()
 
 
 def subscribe(user, to: int):
     to = User.objects.get(pk=to)
     user.subscribe(to)
+    send_new_subscriber_notification(to, user)
 
 
 def unsubscribe(user, from_: int):

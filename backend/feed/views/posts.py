@@ -85,4 +85,6 @@ class PostAPIView(
 ):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    send_object_created_notification = send_post_created_notifications
+
+    def send_object_created_notification(self, instance):
+        send_post_created_notifications(instance)

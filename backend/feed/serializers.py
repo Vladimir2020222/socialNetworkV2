@@ -82,4 +82,4 @@ class ReplySerializer(serializers.ModelSerializer, BaseLikeablePubUpdDateSeriali
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
-        fields = ['pk', 'text', 'type', 'object_pk', 'time']
+        fields = ['pk', 'text', 'type', 'object_pk', 'time', 'meta']

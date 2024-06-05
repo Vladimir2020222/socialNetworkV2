@@ -26,26 +26,27 @@ def send_post_commented_notification(comment):
     notification = Notification.objects.create(
         text=f'your post was commented by {comment.author.get_full_name()}: {text}',
         type=Notification.TypeChoices.post_commented,
-        object_pk=comment.pk
+        object_pk=comment.pk,
+        meta={'postPk': comment.post.pk}
     )
     notification.users.add(comment.post.author)
 
 
-def send_comment_replied_notification(reply):
+def _create_reply_notification(reply):
     text = reply.text if len(reply.text) < 35 else reply.text[:30] + '...'
-    notification = Notification.objects.create(
-        text=f'{reply.author.get_full_name()} replied to your comment: {text}',
-        type=Notification.TypeChoices.comment_replied,
-        object_pk=reply.pk
+    return Notification.objects.create(
+        text=f'{reply.author.get_full_name()} replied to your reply: {text}',
+        type=Notification.TypeChoices.reply_replied,
+        object_pk=reply.pk,
+        meta={'postPk': reply.to.post.pk}
     )
+
+
+def send_comment_replied_notification(reply):
+    notification = _create_reply_notification(reply)
     notification.users.add(reply.to.author)
 
 
 def send_reply_replied_notification(reply):
-    text = reply.text if len(reply.text) < 35 else reply.text[:30] + '...'
-    notification = Notification.objects.create(
-        text=f'{reply.author.get_full_name()} replied to your reply: {text}',
-        type=Notification.TypeChoices.reply_replied,
-        object_pk=reply.pk
-    )
+    notification = _create_reply_notification(reply)
     notification.users.add(*reply.reply_to.values_list('author_id', flat=True))

@@ -1,6 +1,7 @@
 import datetime
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models import Value
 
 User = get_user_model()
 
@@ -108,3 +109,4 @@ class Notification(models.Model):
     type = models.CharField(choices=TypeChoices.choices)
     object_pk = models.IntegerField()
     time = models.DateTimeField(auto_now_add=True)
+    meta = models.JSONField(default=dict)

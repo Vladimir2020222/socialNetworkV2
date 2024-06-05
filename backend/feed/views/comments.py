@@ -5,7 +5,8 @@ from rest_framework.views import APIView
 
 from feed.mixins import BaseAuthorOwnedModelAPIView
 from feed.models import Reply, Comment
-from feed.notifications import send_comment_replied_notification, send_reply_replied_notification
+from feed.notifications import send_comment_replied_notification, send_reply_replied_notification, \
+    send_post_commented_notification
 from feed.serializers import CommentSerializer, ReplySerializer
 
 
@@ -27,6 +28,9 @@ class CommentAPIView(
 ):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
+
+    def send_object_created_notification(self, instance):
+        send_post_commented_notification(instance)
 
 
 @method_decorator(cache_page(120), name='dispatch')  # cache_page caches response only if request.method in (GET, HEAD)
