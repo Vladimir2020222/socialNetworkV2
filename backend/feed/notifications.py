@@ -9,7 +9,7 @@ def send_post_created_notifications(post):
         object_pk=post.pk
     )
     subscribers = author.subscribers.all()
-    notification.users.add(subscribers)
+    notification.users.add(*subscribers)
 
 
 def send_new_subscriber_notification(user, subscriber):

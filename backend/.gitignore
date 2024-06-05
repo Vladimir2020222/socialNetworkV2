@@ -8,3 +8,4 @@ logs/
 postgresql
 spam.py
 .docker-env
+populate_db.py
