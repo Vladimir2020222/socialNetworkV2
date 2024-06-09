@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db.models import ForeignKey
 from django.utils.decorators import method_decorator
 from rest_framework import status
@@ -57,7 +58,7 @@ class BaseScrollableAPIView(GenericAPIView):
     def get_offset_and_amount(cls, request):
         offset = int(request.GET.get(cls.offset_get_param_name))
         amount = int(request.GET.get(cls.amount_get_param_name))
-        if amount > cls.max_amount:
+        if amount > cls.max_amount and not settings.DEBUG:
             return None, None
         return offset, amount
 
