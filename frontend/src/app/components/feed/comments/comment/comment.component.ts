@@ -11,6 +11,8 @@ import {User} from "../../../../models/user";
 })
 export class CommentComponent implements OnInit {
   @Input() comment!: Comment;
+  @Input() lightUp: boolean = false;
+  @Input() openReplyPk: number | null = null;
   newReplies: CommentReply[] = [];
   showReplyForm: boolean = false;
   showEditCommentForm: boolean = false;

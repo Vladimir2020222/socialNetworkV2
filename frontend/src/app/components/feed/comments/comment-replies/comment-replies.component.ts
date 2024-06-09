@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { CommentReply } from "../../../../models/comment-reply";
 import { FeedService } from "../../../../services/feed.service";
 import { Comment } from "../../../../models/comment"
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-comment-replies',
@@ -10,6 +11,7 @@ import { Comment } from "../../../../models/comment"
 })
 export class CommentRepliesComponent implements OnInit, OnChanges {
   @Input() comment!: Comment;
+  @Input() openReplyPk: number | null = null;
   replies: CommentReply[] = [];
   @Input() newReplies: CommentReply[] = [];
   @Output() showedRepliesAmount: EventEmitter<number> = new EventEmitter<number>();
@@ -22,13 +24,44 @@ export class CommentRepliesComponent implements OnInit, OnChanges {
   constructor(private feedService: FeedService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['newReplies']) {
+    if (changes['newReplies'] && !changes['newReplies'].isFirstChange()) {
       this.showReplies = true;
     }
   }
 
   ngOnInit(): void {
-    this.setTotalRepliesAmount();
+    this.setTotalRepliesAmount().subscribe(value => this.openReply());
+  }
+
+  openReply(): void {
+    if (this.openReplyPk) {
+      this.showReplies = true;
+      const loadMore = (): void => {
+        this.loadAdditionalReplies(1)
+          .subscribe((loaded: boolean): void => {
+            if ((!loaded) || this.openReplyPk === null) return;  // to satisfy typescript
+            if (this.replies.map(x => x.pk).includes(this.openReplyPk)) {
+              this.scrollToReply(this.openReplyPk);
+            }
+            loadMore();
+          })
+      }
+      loadMore();
+    }
+  }
+
+  scrollToReply(replyPk: number): void {
+    let interval: number;
+    const retryDelay = 150;
+    const retryAttempts = 20;
+    const tryScrolling = (): void => {
+      const element = document.getElementById(`reply-${this.openReplyPk}`);
+      if (element === null) return;
+      element.scrollIntoView();
+      clearInterval(interval);
+    }
+    interval = setInterval(tryScrolling, retryDelay);
+    setTimeout(() => clearInterval(interval), retryDelay * retryAttempts);
   }
 
   clickedReply(data: {authorName: string, pk: number}): void {
@@ -36,27 +69,36 @@ export class CommentRepliesComponent implements OnInit, OnChanges {
     this.lastClickedReplyData = data;
   }
 
-  setTotalRepliesAmount(): void {
-    this.feedService.getRepliesAmount(this.comment.pk)
-      .subscribe((totalRepliesAmount: number): void => {
-        this.totalRepliesAmount = totalRepliesAmount;
-      })
+  setTotalRepliesAmount(): Observable<any> {
+    return new Observable(observer => {
+      this.feedService.getRepliesAmount(this.comment.pk)
+        .subscribe((totalRepliesAmount: number): void => {
+          this.totalRepliesAmount = totalRepliesAmount;
+          observer.next(1);
+        })
+    })
   }
 
-  showMoreReplies(): void {
-    let amount: number = this.repliesIncrement;
-    if (this.totalRepliesAmount - this.replies.length - this.repliesIncrement <= 0)
+  showMoreReplies(amount?: number): void {
+    this.loadAdditionalReplies(amount).subscribe(x => {});
+  }
+
+  loadAdditionalReplies(amount?: number): Observable<boolean> {
+    return new Observable(observer => {
+      amount = amount || this.repliesIncrement;
+      if (this.totalRepliesAmount - this.replies.length <= 0) {
+        observer.next(false);
+        return
+      }
       amount = this.totalRepliesAmount - this.replies.length;
-    this.loadAdditionalReplies(amount);
-  }
-
-  loadAdditionalReplies(amount: number): void {
-    this.feedService.getCommentsReplies(this.comment.pk, this.replies.length, amount)
-      .subscribe((replies: CommentReply[]): void => {
-        this.replies.push(...replies);
-        if (this.showReplies)
-          this.showedRepliesAmount.emit(this.replies.length)
-      });
+      this.feedService.getCommentsReplies(this.comment.pk, this.replies.length, amount)
+        .subscribe((replies: CommentReply[]): void => {
+          this.replies.push(...replies);
+          observer.next(true);
+          if (this.showReplies)
+            this.showedRepliesAmount.emit(this.replies.length);
+        });
+    });
   };
 
   toggleReplies(): void {

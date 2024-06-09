@@ -7,4 +7,5 @@ export interface Notification extends PkMixin {
   type: NotificationType;
   objectPk: number;
   time: backendDatetimeType;
+  meta: { [key: string]: string };
 }

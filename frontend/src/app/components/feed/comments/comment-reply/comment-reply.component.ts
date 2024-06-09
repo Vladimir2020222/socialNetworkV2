@@ -10,6 +10,7 @@ import { AccountService } from "../../../../services/account.service";
 })
 export class CommentReplyComponent implements OnInit, OnChanges {
   @Input() reply!: CommentReply;
+  @Input() lightUp: boolean = false;
   @Input() allReplies!: CommentReply[];
   @Input() clickedReplyDataInput: {authorName: string, pk: number} | null = null;
   @Output() clickedReplyDataOutput: EventEmitter<{authorName: string, pk: number}> = new EventEmitter();

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Post } from "../../../../models/post";
 import { Comment } from "../../../../models/comment";
 import { serverUrl } from "../../../../constants";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Params} from "@angular/router";
 import { FeedService } from "../../../../services/feed.service";
 
 
@@ -15,6 +15,8 @@ export class PostComponent implements OnInit {
   @Input() post: Post | null = null;
   newComments: Comment[] = [];
   showComments: boolean = false;
+  openReplyPk: number | null = null;
+  openCommentPk: number | null = null;
   @Output() outPostIdViewed: EventEmitter<number> = new EventEmitter<number>;
 
   constructor(private feedService: FeedService, private route: ActivatedRoute) {}
@@ -27,6 +29,25 @@ export class PostComponent implements OnInit {
       .subscribe((post: Post): void => {
         this.post = post;
       });
+    this.openCommentOrReply();
+  }
+
+  openCommentOrReply(): void {
+    this.route.queryParams.subscribe(
+      (params: Params): void => {
+        const commentPk: number = Number(params['commentPk']);
+        if (!isNaN(commentPk)) {
+          this.openCommentPk = commentPk;
+          this.showComments = true;
+          return;
+        }
+        const replyPk: number = Number(params['replyPk']);
+        if (!isNaN(replyPk)) {
+          this.openReplyPk = replyPk;
+          this.showComments = true;
+        }
+      }
+    )
   }
 
   getSrcForAddingPostToViewed(): string {

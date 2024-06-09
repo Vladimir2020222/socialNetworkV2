@@ -5,7 +5,13 @@
   <app-likeable-rate [object]="post" objectName="post"></app-likeable-rate>
   <div class="comments-wrapper">
     <app-comment-form [post]="post" *ngIf="showComments" (newComment)="newComments.unshift($event)"></app-comment-form>
-    <app-comments [newComments]="newComments" [post]="post" *ngIf="showComments"></app-comments>
+    <app-comments
+      [openCommentPk]="openCommentPk"
+      [openReplyPk]="openReplyPk"
+      [newComments]="newComments"
+      [post]="post"
+      *ngIf="showComments"
+    ></app-comments>
   </div>
   <div style="background-color: red; height: 20px; width: 20px" (click)="showComments=!showComments"></div>
   <img loading="lazy" [src]="getSrcForAddingPostToViewed()" (load)="postViewed()">

@@ -1,4 +1,5 @@
 <app-comment-reply
+  [lightUp]="reply.pk === openReplyPk"
   [reply]="reply"
   [allReplies]="replies"
   (clickedReplyDataOutput)="clickedReply($event)"

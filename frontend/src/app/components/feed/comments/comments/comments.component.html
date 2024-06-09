@@ -1,4 +1,9 @@
-<app-comment [comment]="comment" *ngFor="let comment of newComments.concat(comments)"></app-comment>
+<app-comment
+  [openReplyPk]="passOpenReplyPkCommentPk === comment.pk ? openReplyPk : null"
+  [lightUp]="openCommentPk === comment.pk"
+  [comment]="comment"
+  *ngFor="let comment of newComments.concat(comments)"
+></app-comment>
 <div class="load-more-comments" (click)="showMoreComments()" *ngIf="showLoadMoreCommentsButton">
   load more comments ({{ totalCommentsAmount - comments.length }})
 </div>

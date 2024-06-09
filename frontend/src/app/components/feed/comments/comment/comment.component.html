@@ -1,4 +1,4 @@
-<div class="content-block-border">
+<div class="content-block-border" [class.light-up]="lightUp">
   <app-author-mixin-header [object]="comment" objectName="comment"></app-author-mixin-header>
   <p class="comment-text whitespace-pre-wrap" (click)="showReplyForm = true; showEditCommentForm = false">
     {{ comment.text }}
@@ -24,10 +24,11 @@
       (newReply)="newReplies.unshift($event)"
     ></app-reply-form>
     <app-comment-replies
-            [comment]="comment"
-            [newReplies]="newReplies"
-            (clickedReplyPk)="clickedReplyPk = $event"
-            (showedRepliesAmount)="showedRepliesAmountChanged($event)"
+      [openReplyPk]="openReplyPk"
+      [comment]="comment"
+      [newReplies]="newReplies"
+      (clickedReplyPk)="clickedReplyPk = $event"
+      (showedRepliesAmount)="showedRepliesAmountChanged($event)"
     ></app-comment-replies>
   </div>
 </div>

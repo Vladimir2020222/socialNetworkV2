@@ -22,10 +22,21 @@ export class NotificationComponent {
       case "newSubscriber":
         return `/user/${pk}`
       case "postCommented":
-        return `/comment/${pk}`
       case "commentReplied":
       case "replyReplied":
-        return `/reply/${pk}`
+        return `/post/${this.notification.meta['postPk']}`
     }
+  }
+
+  getQueryParams(): { [key: string]: any } {
+    const pk: number = this.notification.objectPk;
+    switch (this.notification.type) {
+      case "postCommented":
+        return { commentPk: pk }
+      case "replyReplied":
+      case "commentReplied":
+        return { replyPk: pk }
+    }
+    return {};
   }
 }
