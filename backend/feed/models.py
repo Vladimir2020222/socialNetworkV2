@@ -32,7 +32,8 @@ class LikeableMixin(models.Model):
 
 
 class PostQuerySet(models.QuerySet):
-    pass
+    def order_by_relevance(self):
+        return self.order_by('-pub_date')
 
 
 class Post(LikeableMixin, PublishedUpdatedDateMixin):
@@ -58,7 +59,9 @@ class CommentBase(LikeableMixin, PublishedUpdatedDateMixin):
 
 
 class CommentQuerySet(CommentBaseQuerySet):
-    pass
+
+    def order_by_relevance(self):
+        return self.annotate(models.Count('liked_by')).order_by('-liked_by__count')
 
 
 class Comment(CommentBase):
@@ -67,7 +70,9 @@ class Comment(CommentBase):
 
 
 class ReplyQuerySet(CommentBaseQuerySet):
-    pass
+
+    def order_by_relevance(self):
+        return self.order_by('-pub_date')
 
 
 class Reply(CommentBase):
@@ -96,7 +101,14 @@ class Image(models.Model):
     content = models.ImageField(upload_to=image_upload_to)
 
 
+class NotificationQuerySet(models.QuerySet):
+    def order_by_relevance(self):
+        return self.order_by('-time')
+
+
 class Notification(models.Model):
+    objects = NotificationQuerySet.as_manager()
+
     class TypeChoices(models.TextChoices):
         new_post = "newPost"
         new_subscriber = "newSubscriber"

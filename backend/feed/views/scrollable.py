@@ -36,7 +36,7 @@ class BaseScrollableAPIView(GenericAPIView):
     def get_queryset(self):
         field = self.get_fk_field_name() + '_id'
         value = self.kwargs.get(self.pk_url_kwarg)
-        return self.model.objects.filter(**{field: value})
+        return self.model.objects.filter(**{field: value}).order_by_relevance()
 
     def get_fk_field_name(self):
         if self.fk_field_name:
